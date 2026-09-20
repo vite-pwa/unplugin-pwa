@@ -1,0 +1,20 @@
+{
+  "name": "vite6-ts",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vite-pwa/unplugin-pwa-vite": "workspace:*",
+    "@vite-pwa/workbox-build": "catalog:pwa",
+    "magic-string": "catalog:utils",
+    "magicast": "catalog:utils",
+    "rolldown": "catalog:utils",
+    "vite": "catalog:vite6",
+    "vite-plugin-inspect": "catalog:vite-plugin-inspect-legacy"
+  }
+}
