@@ -1,0 +1,64 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "WebWorker", "WebWorker.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@vite-pwa/workbox-build": [
+        "./packages/workbox/build/src/index.ts"
+      ],
+      "@vite-pwa/workbox-build/build/webpack": [
+        "./packages/workbox/build/src/build/webpack/index.ts"
+      ],
+      "@vite-pwa/workbox-build/build/rspack": [
+        "./packages/workbox/build/src/build/rspack/index.ts"
+      ],
+      "@vite-pwa/workbox-build/build/vite/plugin": [
+        "./packages/workbox/build/src/build/vite/plugin/index.ts"
+      ],
+      "@vite-pwa/workbox-build/build/vite/plugin/*": [
+        "./packages/workbox/build/src/build/vite/plugin/*.ts"
+      ],
+      "@vite-pwa/workbox-build/build/*": [
+        "./packages/workbox/build/src/build/*.ts"
+      ],
+      "@vite-pwa/workbox-build/config": [
+        "./packages/workbox/build/src/config/index.ts"
+      ],
+      "@vite-pwa/workbox-build/config/types": [
+        "./packages/workbox/build/src/config/types.ts"
+      ],
+      "@vite-pwa/workbox-swkit": [
+        "./packages/workbox/swkit/src/index.ts"
+      ],
+      "@vite-pwa/workbox-swkit/*": [
+        "./packages/workbox/swkit/src/*.ts"
+      ],
+      "@vite-pwa/workbox-window": [
+        "./packages/workbox/window/src/index.ts"
+      ],
+      "@vite-pwa/workbox-window/*": [
+        "./packages/workbox/window/src/*.ts"
+      ],
+      "@vite-pwa/workbox-build/*": [
+        "./packages/workbox/build/src/*.ts"
+      ]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
+    "strict": true,
+    "strictNullChecks": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "**/dist/**",
+    "**/node_modules/**"
+  ]
+}

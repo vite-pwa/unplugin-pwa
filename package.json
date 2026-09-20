@@ -1,0 +1,52 @@
+{
+  "name": "unplugin-pwa",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "description": "Top-level scripts and dependencies for the workbox monorepo.",
+  "author": "Google's Web DevRel Team, Vite PWA's Team",
+  "contributors": [
+    "userquin <userquin@gmail.com>"
+  ],
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/vite-pwa/workbox#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vite-pwa/unplugin-pwa.git"
+  },
+  "bugs": "https://github.com/vite-pwa/unplugin-pwa/issues",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "test": "pnpm -r --filter=\"./packages/**/\" run test",
+    "test:ci": "pnpm -r --filter=\"./packages/**/\" run test:ci",
+    "test:typecheck": "pnpm -r --filter=\"./packages/**/\" run test:typecheck",
+    "build": "pnpm -r --filter=\"./packages/**/\" run build",
+    "update:deps": "taze -I",
+    "update:workflows": "pnpm dlx actions-up -y",
+    "update:workflows:dry": "pnpm dlx actions-up --dry-run"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "catalog:eslint",
+    "@antfu/ni": "catalog:utils",
+    "@arethetypeswrong/core": "catalog:utils",
+    "@types/node": "catalog:types",
+    "@types/trusted-types": "catalog:types",
+    "@vitest/ui": "catalog:test",
+    "ansis": "catalog:utils",
+    "cac": "catalog:utils",
+    "consola": "catalog:utils",
+    "eslint": "catalog:eslint",
+    "eslint-plugin-antfu": "catalog:eslint",
+    "picocolors": "catalog:utils",
+    "publint": "catalog:utils",
+    "taze": "catalog:utils",
+    "tsdown": "catalog:build",
+    "typescript": "catalog:typescript",
+    "unrun": "catalog:utils",
+    "verkit": "catalog:utils",
+    "vitest": "catalog:test"
+  }
+}
