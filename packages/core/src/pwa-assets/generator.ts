@@ -1,0 +1,30 @@
+import type { PWAPluginContext } from '../context-types'
+import type { PWAAssetsGenerator } from './types'
+import { generate } from './build'
+import { loadAssetsGeneratorContext } from './config'
+import { checkHotUpdate, findIconAsset } from './dev'
+import { resolveHtmlAssets, transformIndexHtml } from './html'
+import { injectManifestIcons } from './manifest'
+import { extractIcons } from './utils'
+
+export async function loadInstructions(ctx: PWAPluginContext<any, any, any>) {
+  const assetsGeneratorContext = await loadAssetsGeneratorContext(ctx)
+  if (!assetsGeneratorContext) {
+    return
+  }
+
+  // make a copy
+  const sources = Array.from(assetsGeneratorContext.sources)
+
+  return {
+    sources: () => sources,
+    generate: () => generate(assetsGeneratorContext),
+    findIconAsset: (path: string) => findIconAsset(path, assetsGeneratorContext),
+    resolveHtmlAssets: () => resolveHtmlAssets(ctx, assetsGeneratorContext),
+    transformIndexHtml: (html: string) => transformIndexHtml(html, ctx, assetsGeneratorContext),
+    injectManifestIcons: () => injectManifestIcons(ctx, assetsGeneratorContext),
+    instructions: () => assetsGeneratorContext.assetsInstructions,
+    icons: () => extractIcons(assetsGeneratorContext.assetsInstructions),
+    checkHotUpdate: file => checkHotUpdate(file, ctx, assetsGeneratorContext),
+  } satisfies PWAAssetsGenerator
+}
