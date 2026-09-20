@@ -84,5 +84,6 @@ sequenceDiagram
     Builder-->>Vite: Hook finished
     deactivate Builder
 ```
+## 📄 License
 
 [MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)
