@@ -1,0 +1,12 @@
+html,
+body,
+#vite-pwa-inspector {
+    height: 100%;
+    overflow: hidden;
+}
+
+html.dark {
+    color-scheme: dark;
+    background: #080808;
+    color: white;
+}
