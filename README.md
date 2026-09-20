@@ -4,7 +4,7 @@
     <img src='https://github.com/vite-pwa/unplugin-pwa/blob/main/workbox.svg' alt="Vite PWA workbox">
 </p>
 
-<h1 align="center">Vite PWA Ecosystem (unplugin-pwa)</h1>
+<h1 align="center">Vite PWA Ecosystem<br/>unplugin-pwa</h1>
 
 <p align='center'>
 <a href="https://github.com/vite-pwa/unplugin-pwa" target="__blank">
