@@ -9,6 +9,7 @@ export default defineConfig({
     {
       '*': ['./src/*.ts'],
       'dev/*': ['./src/dev/*.ts'],
+      'pwa-assets/*': ['./src/pwa-assets/*.ts'],
     },
   ],
   platform: 'node',
@@ -20,6 +21,7 @@ export default defineConfig({
   },
   deps: {
     neverBundle: [
+      'hookable',
       'vite',
       'rolldown',
       '@vite-pwa/workbox-window',
@@ -31,6 +33,7 @@ export default defineConfig({
       await cleanupDistFiles(cwd, [
         'types.mjs',
         'context-types.mjs',
+        'pwa-assets/types.mjs',
       ])
     },
   },

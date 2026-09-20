@@ -54,7 +54,18 @@
     "./prepare-pwa-context": "./dist/prepare-pwa-context.mjs",
     "./prepare-sw-names": "./dist/prepare-sw-names.mjs",
     "./dev/prepare-sw-names-and-glob-directory": "./dist/dev/prepare-sw-names-and-glob-directory.mjs",
-    "./dev/prepare-temp-folder": "./dist/dev/prepare-temp-folder.mjs"
+    "./dev/prepare-temp-folder": "./dist/dev/prepare-temp-folder.mjs",
+    "./pwa-assets/build": "./dist/pwa-assets/build.mjs",
+    "./pwa-assets/config": "./dist/pwa-assets/config.mjs",
+    "./pwa-assets/dev": "./dist/pwa-assets/dev.mjs",
+    "./pwa-assets/generator": "./dist/pwa-assets/generator.mjs",
+    "./pwa-assets/html": "./dist/pwa-assets/html.mjs",
+    "./pwa-assets/manifest": "./dist/pwa-assets/manifest.mjs",
+    "./pwa-assets/options": "./dist/pwa-assets/options.mjs",
+    "./pwa-assets/types": {
+      "types": "./dist/pwa-assets/types.d.mts"
+    },
+    "./pwa-assets/utils": "./dist/pwa-assets/utils.mjs"
   },
   "files": [
     "dist"
@@ -63,7 +74,7 @@
     "node": ">=22.14.0"
   },
   "scripts": {
-    "build": "tsdown --config-loader unrun && vite build inspector",
+    "build": "tsdown --config-loader unrun",
     "test:typecheck": "tsc --noEmit",
     "prepack": "pnpm run build",
     "test:ci": "vitest run",
@@ -80,6 +91,7 @@
   "dependencies": {
     "@vite-pwa/unplugin-pwa-types": "workspace:*",
     "@vite-pwa/workbox-build": "catalog:pwa",
+    "hookable": "catalog:utils",
     "picocolors": "catalog:utils"
   },
   "devDependencies": {
