@@ -4,7 +4,7 @@
     <img src='https://github.com/userquin/unplugin-pwa/blob/main/workbox.svg' alt="Vite PWA workbox">
 </p>
 
-<h1 align="center">Unplugin PWA</h1>
+<h1 align="center">Vite PWA Ecosystem (unplugin-pwa)</h1>
 
 <p align='center'>
 <a href="https://github.com/userquin/unplugin-pwa" target="__blank">
@@ -16,7 +16,7 @@
 
 ```mermaid
 graph TD
-    subgraph Monorepo ["@vite-pwa Ecosystem (Monorepo)"]
+    subgraph Monorepo ["Vite PWA Ecosystem (unplugin-pwa)"]
         direction TB
 
         Core["📦 @vite-pwa/core<br/>(Context, Configuration, Helpers)"]
@@ -32,7 +32,6 @@ graph TD
         subgraph Extras ["Optional"]
             direction LR
             Client["📦 @vite-pwa/client<br/>(React, Vue, Svelte types...)"]
-            DevTools["📦 @vite-pwa/devtools"]
         end
 
     %% Internal Relations
@@ -66,7 +65,7 @@ sequenceDiagram
     actor Dev as User / Framework (Nuxt)
     participant Core as 📦 @vite-pwa/core
     participant Builder as 📦 @vite-pwa/vite
-    participant Vite as Vite (Bundler)
+    participant Vite as Vite (Builder)
     participant WB as 📦 @vite-pwa/workbox-build
 
     Note over Dev, Core: Phase 1: Controlled Initialization
