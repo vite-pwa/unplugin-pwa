@@ -5,44 +5,26 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@vite-pwa/workbox-build": [
-        "./packages/workbox/build/src/index.ts"
+      "@vite-pwa/unplugin-pwa-types": [
+        "./packages/types/types/index.d.ts"
       ],
-      "@vite-pwa/workbox-build/build/webpack": [
-        "./packages/workbox/build/src/build/webpack/index.ts"
+      "@vite-pwa/unplugin-pwa-types/*": [
+        "./packages/types/*.ts"
       ],
-      "@vite-pwa/workbox-build/build/rspack": [
-        "./packages/workbox/build/src/build/rspack/index.ts"
+      "@vite-pwa/unplugin-pwa-core/*": [
+        "./packages/core/*.ts"
       ],
-      "@vite-pwa/workbox-build/build/vite/plugin": [
-        "./packages/workbox/build/src/build/vite/plugin/index.ts"
+      "@vite-pwa/unplugin-pwa-vite": [
+        "./packages/vite/src/index.ts"
       ],
-      "@vite-pwa/workbox-build/build/vite/plugin/*": [
-        "./packages/workbox/build/src/build/vite/plugin/*.ts"
+      "@vite-pwa/unplugin-pwa-vite/devtools": [
+        "./packages/vite/devtools.d.ts"
       ],
-      "@vite-pwa/workbox-build/build/*": [
-        "./packages/workbox/build/src/build/*.ts"
+      "@vite-pwa/unplugin-pwa-vite/hmr-entry-point": [
+        "./packages/vite/hmr-entry-point.d.ts"
       ],
-      "@vite-pwa/workbox-build/config": [
-        "./packages/workbox/build/src/config/index.ts"
-      ],
-      "@vite-pwa/workbox-build/config/types": [
-        "./packages/workbox/build/src/config/types.ts"
-      ],
-      "@vite-pwa/workbox-swkit": [
-        "./packages/workbox/swkit/src/index.ts"
-      ],
-      "@vite-pwa/workbox-swkit/*": [
-        "./packages/workbox/swkit/src/*.ts"
-      ],
-      "@vite-pwa/workbox-window": [
-        "./packages/workbox/window/src/index.ts"
-      ],
-      "@vite-pwa/workbox-window/*": [
-        "./packages/workbox/window/src/*.ts"
-      ],
-      "@vite-pwa/workbox-build/*": [
-        "./packages/workbox/build/src/*.ts"
+      "@vite-pwa/unplugin-pwa-vite/*": [
+        "./packages/vite/src/*.ts"
       ]
     },
     "resolveJsonModule": true,
