@@ -1,0 +1,19 @@
+{
+  "name": "vite5-inject-manifest",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@vite-pwa/unplugin-pwa-vite": "workspace:*",
+    "magic-string": "catalog:utils",
+    "magicast": "catalog:utils",
+    "rolldown": "catalog:utils",
+    "vite": "catalog:vite5",
+    "vite-plugin-inspect": "catalog:vite-plugin-inspect-ancient"
+  }
+}
