@@ -1,14 +1,14 @@
 <br>
 
 <p align='center'>
-    <img src='https://github.com/userquin/unplugin-pwa/blob/main/workbox.svg' alt="Vite PWA workbox">
+    <img src='https://github.com/vite-pwa/unplugin-pwa/blob/main/workbox.svg' alt="Vite PWA workbox">
 </p>
 
 <h1 align="center">Vite PWA Ecosystem (unplugin-pwa)</h1>
 
 <p align='center'>
-<a href="https://github.com/userquin/unplugin-pwa" target="__blank">
-<img alt="GitHub stars" src="https://img.shields.io/github/stars/userquin/unplugin-pwa?style=social">
+<a href="https://github.com/vite-pwa/unplugin-pwa" target="__blank">
+<img alt="GitHub stars" src="https://img.shields.io/github/stars/vite-pwa/unplugin-pwa?style=social">
 </a>
 </p>
 
@@ -19,19 +19,19 @@ graph TD
     subgraph Monorepo ["Vite PWA Ecosystem (unplugin-pwa)"]
         direction TB
 
-        Core["📦 @vite-pwa/core<br/>(Context, Configuration, Helpers)"]
+        Core["📦 @vite-pwa/unplugin-pwa-core<br/>(Context, Configuration, Helpers)"]
         WB["📦 @vite-pwa/workbox-build<br/>(SW Generation, lazy-loaded)"]
 
         subgraph Builders ["Adapters / Builders"]
             direction LR
-            Vite["📦 @vite-pwa/vite"]
-            Webpack["📦 @vite-pwa/webpack"]
-            Rspack["📦 @vite-pwa/rspack"]
+            Vite["📦 @vite-pwa/unplugin-pwa-vite"]
+            Webpack["📦 @vite-pwa/unplugin-pwa-webpack"]
+            Rspack["📦 @vite-pwa/unplugin-pwa-rspack"]
         end
 
         subgraph Extras ["Optional"]
             direction LR
-            Client["📦 @vite-pwa/client<br/>(React, Vue, Svelte types...)"]
+            Client["📦 @vite-pwa/unplugin-pwa-types<br/>(React, Vue, Svelte types...)"]
         end
 
     %% Internal Relations
@@ -63,8 +63,8 @@ graph TD
 sequenceDiagram
     autonumber
     actor Dev as User / Framework (Nuxt)
-    participant Core as 📦 @vite-pwa/core
-    participant Builder as 📦 @vite-pwa/vite
+    participant Core as 📦 @vite-pwa/unplugin-pwa-core
+    participant Builder as 📦 @vite-pwa/unplugin-pwa-vite
     participant Vite as Vite (Builder)
     participant WB as 📦 @vite-pwa/workbox-build
 
@@ -89,7 +89,7 @@ sequenceDiagram
     activate Builder
     Builder->>Core: ctx.runBuild()
     activate Core
-    Core->>WB: dynamic import (generateSW / injectManifest)
+    Core->>WB: dynamic import (generateSW / buildSW)
     activate WB
     WB-->>Core: Generates Service Worker and Assets
     deactivate WB
@@ -98,7 +98,5 @@ sequenceDiagram
     Builder-->>Vite: Hook finished
     deactivate Builder
 ```
-
-### 
 
 [MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)
