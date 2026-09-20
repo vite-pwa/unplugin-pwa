@@ -1,0 +1,85 @@
+{
+  "name": "@vite-pwa/unplugin-pwa-types",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "TypeScript definitions for unplugin-pwa virtual modules",
+  "author": "Vite PWA's Team",
+  "maintainers": [
+    "userquin <userquin@gmail.com>"
+  ],
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/vite-pwa/unplugin-pwa/packages/types#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vite-pwa/unplugin-pwa.git"
+  },
+  "bugs": "https://github.com/vite-pwa/unplugin-pwa/issues",
+  "keywords": [
+    "react",
+    "pwa",
+    "vue",
+    "preact",
+    "svelte",
+    "sveltekit",
+    "solidjs"
+  ],
+  "sideEffects": false,
+  "types": "./types/index.d.ts",
+  "exports": {
+    "./types": {
+      "types": "./types/index.d.ts"
+    },
+    "./preact": {
+      "types": "./preact.d.ts"
+    },
+    "./react": {
+      "types": "./react.d.ts"
+    },
+    "./react-legacy": {
+      "types": "./react-legacy.d.ts"
+    },
+    "./solid": {
+      "types": "./solid.d.ts"
+    },
+    "./svelte": {
+      "types": "./svelte.d.ts"
+    },
+    "./vanillajs": {
+      "types": "./vanillajs.d.ts"
+    },
+    "./vue": {
+      "types": "./vue.d.ts"
+    },
+    "./client": {
+      "types": "./client.d.ts"
+    },
+    "./info": {
+      "types": "./info.d.ts"
+    },
+    "./pwa-assets": {
+      "types": "./pwa-assets.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.d.ts",
+    "types"
+  ],
+  "scripts": {
+    "test:typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@types/trusted-types": "catalog:types"
+  },
+  "devDependencies": {
+    "@types/react": "catalog:react",
+    "@vite-pwa/assets-generator": "catalog:pwa",
+    "preact": "catalog:preact",
+    "react": "catalog:react",
+    "solid-js": "catalog:solid-js",
+    "svelte": "catalog:svelte",
+    "vite": "catalog:vite",
+    "vue": "catalog:vue"
+  }
+}
