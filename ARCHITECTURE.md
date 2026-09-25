@@ -100,7 +100,7 @@ sequenceDiagram
     autonumber
     participant Setup as 📦 @vite-pwa/nuxt
     participant Core as 📦 @vite-pwa/unplugin-pwa (Core)
-    participant Builder as 📦 @vite-pwa/vite (Builder)
+    participant Builder as 📦 @vite-pwa/vite
     participant Nuxt as Nuxt Engine
     participant Nitro as Nitro Engine
     participant Vite as Vite (@nuxt/vite-builder)
