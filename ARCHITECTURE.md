@@ -91,13 +91,14 @@ sequenceDiagram
 
 ### Nuxt + Vite Lifecycle Diagram (Execution Flow)
 
-> Note on Lifecycle Execution:
-While the sequence diagram represents a chronological flow, it is important to understand that the architecture is highly event-driven. During Phase 1, the Nuxt Module only resolves the initial context and registers the lifecycle hooks. The execution is not blocking or strictly sequential thereafter. Phases 2, 3, and 4 are executed asynchronously in complete isolation whenever the underlying Nuxt and Nitro engines reach those specific milestones in their internal build processes.
- 
+> [!NOTE]
+> **On Lifecycle Execution:**
+> While the sequence diagram represents a chronological flow, it is important to understand that the architecture is highly **event-driven**. During Phase 1, the Nuxt Module (`@vite-pwa/nuxt`) only resolves the initial context and registers the lifecycle hooks. The execution is not blocking or strictly sequential thereafter. Phases 2, 3, and 4 are executed asynchronously in complete isolation whenever the underlying Nuxt and Nitro engines reach those specific milestones in their internal build processes.
+
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Setup as Nuxt Module
+    participant Setup as 📦 @vite-pwa/nuxt
     participant Core as 📦 @vite-pwa/unplugin-pwa (Core)
     participant Builder as 📦 @vite-pwa/vite (Builder)
     participant Nuxt as Nuxt Engine
