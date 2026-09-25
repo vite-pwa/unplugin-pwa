@@ -113,16 +113,16 @@ sequenceDiagram
     Core-->>Builder: Returns base agnostic `ctx`
     Builder-->>Setup: Returns base `ctx`
     deactivate Builder
-    
+
+    Note over Setup: prepareModule(ctx) execution:
     Setup->>Nuxt: Registers Nuxt hooks (e.g., build:before)
     Setup->>Nitro: Registers Nitro hooks (e.g., nitro:init, nitro:build:public-assets)
     Note over Setup, Nitro: Setup finishes execution. Awaiting events...
 
-    Note over Setup, Nitro: Phase 2: Nitro Init (Enrichment & Paths)
+    Note over Setup, Nitro: Phase 2: Nitro Init (Enrichment)
     Nitro-)Setup: Asynchronous Hook: 'nitro:init'
     activate Setup
-    Note over Setup, Builder: Enriches `ctx` with Nitro properties
-    Note over Setup: prepareModule(ctx) (Resolves aliases & paths)
+    Note over Setup, Builder: Enriches `ctx`: Loads PWA config using resolved Nuxt aliases & paths
     deactivate Setup
 
     Note over Setup, Vite: Phase 3: Plugin Registration
