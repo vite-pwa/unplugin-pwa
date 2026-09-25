@@ -5,14 +5,14 @@ graph TD
     subgraph Monorepo ["Vite PWA Ecosystem (unplugin-pwa)"]
         direction TB
 
-        Core["📦 @vite-pwa/unplugin-pwa-core<br/>(Context, Configuration, Helpers)"]
+        Core["📦 @vite-pwa/unplugin-pwa<br/>(Context, Configuration, Helpers)"]
         WB["📦 @vite-pwa/workbox-build<br/>(SW Generation, lazy-loaded)"]
 
         subgraph Builders ["Adapters / Builders"]
             direction LR
-            Vite["📦 @vite-pwa/unplugin-pwa-vite"]
-            Webpack["📦 @vite-pwa/unplugin-pwa-webpack"]
-            Rspack["📦 @vite-pwa/unplugin-pwa-rspack"]
+            Vite["📦 @vite-pwa/vite"]
+            Webpack["📦 @vite-pwa/webpack"]
+            Rspack["📦 @vite-pwa/rspack"]
         end
 
         subgraph Extras ["Optional"]
@@ -43,32 +43,36 @@ graph TD
     class Nuxt,Vanilla framework;
 ```
 
-### The Lifecycle Diagram (Execution Flow)
+### Vanilla Vite Lifecycle Diagram (Execution Flow)
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Dev as User / Framework (Nuxt)
-    participant Core as 📦 @vite-pwa/unplugin-pwa-core
-    participant Builder as 📦 @vite-pwa/unplugin-pwa-vite
-    participant Vite as Vite (Builder)
+    actor Dev as User
+    participant Config as vite.config.ts
+    participant Builder as 📦 @vite-pwa/vite
+    participant Core as 📦 @vite-pwa/unplugin-pwa
+    participant Vite as Vite (Engine)
     participant WB as 📦 @vite-pwa/workbox-build
 
-    Note over Dev, Core: Phase 1: Controlled Initialization
-    Dev->>Core: preparePWAContext(options)
-    activate Core
-    Core-->>Dev: Returns `ctx` (Empty/base context)
-    deactivate Core
-
-    Note over Dev: Framework resolves aliases and paths (e.g., buildAssetsDir)
-    Dev->>Dev: Injects resolved configuration into `ctx`
-
-    Note over Dev, Vite: Phase 2: Plugin Registration
-    Dev->>Builder: Calls VitePWA(ctx)
+    Note over Dev, Core: Phase 1: Configuration & Facade Initialization
+    Dev->>Config: Imports and configures VitePWA(options)
+    Config->>Builder: Calls VitePWA(options)
     activate Builder
-    Builder-->>Dev: Returns Array of modular Plugins
+    Builder->>Core: preparePWAContext(options) (Internal call)
+    activate Core
+    Core-->>Builder: Returns empty/base `ctx`
+    deactivate Core
+    Builder-->>Config: Returns Array of modular Plugins
     deactivate Builder
-    Dev->>Vite: Registers plugins in Vite configuration
+    Config->>Vite: Registers plugins in Vite
+
+    Note over Builder, Vite: Phase 2: Context Enrichment
+    Vite->>Builder: Hook: configResolved
+    activate Builder
+    Builder->>Builder: Extracts Vite's base, build outDir, etc.
+    Builder->>Core: Injects resolved Vite config into `ctx`
+    deactivate Builder
 
     Note over Vite, WB: Phase 3: Build / Dev Execution
     Vite->>Builder: Hook: closeBundle / buildEnd
@@ -84,6 +88,65 @@ sequenceDiagram
     Builder-->>Vite: Hook finished
     deactivate Builder
 ```
+
+### Nuxt + Vite Lifecycle Diagram (Execution Flow)
+
+> Note on Lifecycle Execution:
+While the sequence diagram represents a chronological flow, it is important to understand that the architecture is highly event-driven. During Phase 1, the Nuxt Module only resolves the initial context and registers the lifecycle hooks. The execution is not blocking or strictly sequential thereafter. Phases 2, 3, and 4 are executed asynchronously in complete isolation whenever the underlying Nuxt and Nitro engines reach those specific milestones in their internal build processes.
+ 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Setup as Nuxt Module
+    participant Core as 📦 @vite-pwa/unplugin-pwa (Core)
+    participant Builder as 📦 @vite-pwa/vite (Builder)
+    participant Nuxt as Nuxt Engine
+    participant Nitro as Nitro Engine
+    participant Vite as Vite (@nuxt/vite-builder)
+    participant WB as 📦 @vite-pwa/workbox-build
+
+    Note over Setup, Builder: Phase 1: Context Creation & Hook Registration
+    Setup->>Builder: createViteNuxtPwaContext(options)
+    activate Builder
+    Builder->>Core: createCustomVitePWAContext('vite')
+    Core-->>Builder: Returns base agnostic `ctx`
+    Builder-->>Setup: Returns base `ctx`
+    deactivate Builder
+    Note over Setup, Nitro: Setup finishes executing. Hooks are registered and waiting.
+
+    Note over Setup, Nitro: Phase 2: Nitro Init (Enrichment & Paths)
+    Nitro-)Setup: Asynchronous Hook: 'nitro:init'
+    activate Setup
+    Note over Setup, Builder: Enriches `ctx` with Nitro properties
+    Note over Setup: prepareModule(ctx) (Resolves aliases & paths)
+    deactivate Setup
+
+    Note over Setup, Vite: Phase 3: Plugin Registration
+    Nuxt-)Setup: Asynchronous Hook: 'build:before'
+    activate Setup
+    Setup->>Builder: ctx.nuxt.prepareNuxtOptions()
+    activate Builder
+    Note over Builder: Instantiates plugins (Main, Dev, Assets...)
+    Builder->>Vite: Nuxt Kit: addVitePlugin(plugins)
+    deactivate Builder
+    deactivate Setup
+
+    Note over Setup, WB: Phase 4: PWA Generation
+    Nitro-)Setup: Asynchronous Hook: 'nitro:build:public-assets' (or rollup:before)
+    activate Setup
+    Setup->>Core: buildPwaAssets(ctx)
+    activate Core
+    Note over Core: Generates Web Manifest & Icons
+    Note over Core: Executes ctx.runBuild()
+    Core->>WB: dynamic import (generateSW / buildSW)
+    activate WB
+    WB-->>Core: Generates Service Worker
+    deactivate WB
+    Core-->>Setup: PWA Build complete
+    deactivate Core
+    deactivate Setup
+```
+
 ## 📄 License
 
 [MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)
