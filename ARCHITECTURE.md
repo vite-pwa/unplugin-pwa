@@ -122,7 +122,7 @@ sequenceDiagram
     Note over Setup, Nitro: Phase 2: Nitro Init (Enrichment)
     Nitro-)Setup: Asynchronous Hook: 'nitro:init'
     activate Setup
-    Note over Setup, Builder: Enriches `ctx`: Loads PWA config using resolved Nuxt aliases & paths
+    Note over Setup, Builder: Enriches `ctx`: Loads PWA config using resolved Nuxt aliases & Nitro output paths when required
     deactivate Setup
 
     Note over Setup, Vite: Phase 3: Plugin Registration
