@@ -32,12 +32,20 @@ It integrates seamlessly with your bundler via the `@unplugin-pwa/core` package,
 ### 📸 UI Sneak Peek
 
 <br>
-<!-- Add your general UI overview screenshot here -->
-<br>
+
+![Web Manifest at Vite Devtools](./vite-devtools-manifest.png)
 
 <br>
-<!-- Add your detailed Service Worker or Manifest view screenshot here -->
+
+![Web Manifest Shortcuts at Vite Devtools](./vite-devtools-manifest-shortcuts.png)
+
 <br>
+
+![Web Manifest Screenshots at Vite Devtools](./vite-devtools-manifest-screenshots.png)
+
+<br>
+
+![Service Worker Info at Vite Devtools](./vite-devtools-sw-info.png)
 
 ## 📄 License
 
