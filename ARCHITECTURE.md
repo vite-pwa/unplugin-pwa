@@ -5,19 +5,19 @@ graph TD
     subgraph Monorepo ["Vite PWA Ecosystem (unplugin-pwa)"]
         direction TB
 
-        Core["📦 @vite-pwa/unplugin-pwa<br/>(Context, Configuration, Helpers)"]
+        Core["📦 @unplugin-pwa/core<br/>(Context, Configuration, Helpers)"]
         WB["📦 @vite-pwa/workbox-build<br/>(SW Generation, lazy-loaded)"]
 
         subgraph Builders ["Adapters / Builders"]
             direction LR
-            Vite["📦 @vite-pwa/vite"]
-            Webpack["📦 @vite-pwa/webpack"]
-            Rspack["📦 @vite-pwa/rspack"]
+            Vite["📦 @unplugin-pwa/vite"]
+            Webpack["📦 @unplugin-pwa/webpack"]
+            Rspack["📦 @unplugin-pwa/rspack"]
         end
 
         subgraph Extras ["Optional"]
             direction LR
-            Client["📦 @vite-pwa/unplugin-pwa-types<br/>(React, Vue, Svelte types...)"]
+            Client["📦 @unplugin-pwa/core<br/>(React, Vue, Svelte types...)"]
         end
 
     %% Internal Relations
@@ -50,9 +50,9 @@ sequenceDiagram
     autonumber
     actor Dev as User
     participant Config as vite.config.ts
-    participant Builder as 📦 @vite-pwa/vite
-    participant Core as 📦 @vite-pwa/unplugin-pwa
-    participant Vite as Vite (Engine)
+    participant Builder as 📦 @unplugin-pwa/vite
+    participant Core as 📦 @unplugin-pwa/core
+    participant Vite as Vite
     participant WB as 📦 @vite-pwa/workbox-build
 
     Note over Dev, Core: Phase 1: Configuration & Facade Initialization
@@ -99,11 +99,11 @@ sequenceDiagram
 sequenceDiagram
     autonumber
     participant Setup as 📦 @vite-pwa/nuxt
-    participant Core as 📦 @vite-pwa/unplugin-pwa (Core)
-    participant Builder as 📦 @vite-pwa/vite
-    participant Nuxt as Nuxt Engine
-    participant Nitro as Nitro Engine
-    participant Vite as Vite (@nuxt/vite-builder)
+    participant Core as 📦 @unplugin-pwa/core
+    participant Builder as 📦 @unplugin-pwa/vite
+    participant Nuxt as Nuxt
+    participant Nitro as Nitro
+    participant Vite as Vite<br>(@nuxt/vite-builder)
     participant WB as 📦 @vite-pwa/workbox-build
 
     Note over Setup, Builder: Phase 1: Context Creation & Hook Registration
@@ -136,7 +136,7 @@ sequenceDiagram
     deactivate Setup
 
     Note over Setup, WB: Phase 4: PWA Generation
-    Nitro-)Setup: Asynchronous Hook: 'nitro:build:public-assets' (or rollup:before)
+    Nuxt-)Setup: Asynchronous Hook: 'nitro:build:public-assets'
     activate Setup
     Setup->>Core: buildPwaAssets(ctx)
     activate Core
