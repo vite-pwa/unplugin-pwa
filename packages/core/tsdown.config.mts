@@ -7,7 +7,7 @@ const cwd = fileURLToPath(new URL('.', import.meta.url))
 export default defineConfig({
   entry: [
     {
-      '*': ['./src/*.ts'],
+      '*': ['./src/*.ts', '!./src/types.ts'],
       'dev/*': ['./src/dev/*.ts'],
       'pwa-assets/*': ['./src/pwa-assets/*.ts'],
     },
@@ -24,6 +24,7 @@ export default defineConfig({
       'hookable',
       'vite',
       'rolldown',
+      '@vite-pwa/assets-generator',
       '@vite-pwa/workbox-window',
       '@vite-pwa/workbox-build',
     ],
@@ -31,7 +32,7 @@ export default defineConfig({
   hooks: {
     'build:done': async () => {
       await cleanupDistFiles(cwd, [
-        'types.mjs',
+        'index.mjs',
         'context-types.mjs',
         'pwa-assets/types.mjs',
       ])

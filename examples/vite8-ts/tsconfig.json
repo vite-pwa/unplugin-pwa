@@ -10,8 +10,8 @@
     "resolveJsonModule": true,
     "types": [
       "vite/client",
-      "@vite-pwa/unplugin-pwa-types/info",
-      "@vite-pwa/unplugin-pwa-types/vanillajs"
+      "@unplugin-pwa/core/info",
+      "@unplugin-pwa/core/vanillajs"
     ],
     "allowImportingTsExtensions": true,
 

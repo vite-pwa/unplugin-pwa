@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@vite-pwa/unplugin-pwa-vite": "workspace:*",
+    "@unplugin-pwa/vite": "workspace:*",
     "@vite-pwa/workbox-build": "catalog:pwa",
     "magic-string": "catalog:utils",
     "magicast": "catalog:utils",

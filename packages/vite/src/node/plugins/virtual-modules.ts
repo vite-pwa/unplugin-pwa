@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type {
   SWType,
 } from '@vite-pwa/workbox-build/types'
@@ -11,8 +11,8 @@ import {
   VIRTUAL_MODULES,
   VIRTUAL_MODULES_MAP,
   VIRTUAL_MODULES_RESOLVE_PREFIX,
-} from '@vite-pwa/unplugin-pwa-core/constants'
-import { generateVirtualModule } from '@vite-pwa/unplugin-pwa-core/generate-virtual-module'
+} from '@unplugin-pwa/core/constants'
+import { generateVirtualModule } from '@unplugin-pwa/core/generate-virtual-module'
 
 export function VirtualModulesPlugin<
   UserStrategy extends VitePWAStrategy,

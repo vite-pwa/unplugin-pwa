@@ -1,10 +1,22 @@
-import type { BuildGenerateSWOptions, BuildWithSourcesResult } from '@vite-pwa/workbox-build/build/types'
-import type { InjectManifestStrategyOptions, SelfDestroyingStrategyOptions } from '@vite-pwa/workbox-build/config/types'
+import type {
+  BuildGenerateSWOptions,
+  BuildWithSourcesResult,
+} from '@vite-pwa/workbox-build/build/types'
+import type {
+  InjectManifestStrategyOptions,
+  SelfDestroyingStrategyOptions,
+} from '@vite-pwa/workbox-build/config/types'
 import type { BuildResult, SWType } from '@vite-pwa/workbox-build/types'
 import type { Hookable } from 'hookable'
 import type { ResolvedConfig } from 'vite'
 import type { PWAAssetsGenerator } from './pwa-assets/types'
-import type { RegisterSWData, ResolvedVitePWAOptions, VitePWAOptions, VitePWAStrategy, WebManifestData } from './types'
+import type {
+  RegisterSWData,
+  ResolvedVitePWAOptions,
+  VitePWAOptions,
+  VitePWAStrategy,
+  WebManifestData,
+} from './types'
 
 export type Bundler = 'vite' | 'vite-legacy' | 'webpack' | 'rspack'
 
@@ -125,6 +137,7 @@ export interface ConfigurePWAOptions {
   immutableAssets: string
   cwd: string
 }
+// TODO: remove vite resolved config from the context
 export type ConfigurePWAOptionsFn = (
   forClient: boolean,
   config: ResolvedConfig,

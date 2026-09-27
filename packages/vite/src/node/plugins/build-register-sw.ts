@@ -1,11 +1,11 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { Plugin } from 'vite'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
-import { FILE_SW_REGISTER } from '@vite-pwa/unplugin-pwa-core/constants'
-import { generateRegisterSW } from '@vite-pwa/unplugin-pwa-core/generate-register-sw'
-import { injectGenerateRegisterSW } from '@vite-pwa/unplugin-pwa-core/inject-generate-register-sw'
-import { injectWebManifestHtmlLink } from '@vite-pwa/unplugin-pwa-core/inject-web-manifest-html-link'
+import { FILE_SW_REGISTER } from '@unplugin-pwa/core/constants'
+import { generateRegisterSW } from '@unplugin-pwa/core/generate-register-sw'
+import { injectGenerateRegisterSW } from '@unplugin-pwa/core/inject-generate-register-sw'
+import { injectWebManifestHtmlLink } from '@unplugin-pwa/core/inject-web-manifest-html-link'
 
 export function BuildRegisterSWPlugin<
   UserStrategy extends VitePWAStrategy,

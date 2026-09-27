@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { Plugin } from 'vite'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
@@ -6,7 +6,7 @@ import { exactRegex } from '@rolldown/pluginutils'
 import {
   PWA_INFO_VIRTUAL,
   RESOLVED_PWA_INFO_VIRTUAL,
-} from '@vite-pwa/unplugin-pwa-core/constants'
+} from '@vite-pwa/unplugin-pwa/constants'
 
 export function InfoPlugin<
   UserStrategy extends VitePWAStrategy,

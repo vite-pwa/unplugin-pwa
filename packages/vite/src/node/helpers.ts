@@ -1,10 +1,10 @@
-import type { ExtractStrategy } from '@vite-pwa/unplugin-pwa-core/context-types'
 import type {
   ResolvedBuildSW,
   ResolvedGenerateSW,
   ResolvedInjectManifest,
   VitePWAStrategy,
-} from '@vite-pwa/unplugin-pwa-core/types'
+} from '@unplugin-pwa/core'
+import type { ExtractStrategy } from '@unplugin-pwa/core/context-types'
 import type {
   BasePartial,
   OptionalGlobDirectoryPartial,
@@ -23,8 +23,8 @@ import {
   resolveBasePath,
   resolveFrom,
   resolveSWSrc,
-} from '@vite-pwa/unplugin-pwa-core/helpers'
-import { prepareSwNames } from '@vite-pwa/unplugin-pwa-core/prepare-sw-names'
+} from '@unplugin-pwa/core/helpers'
+import { prepareSwNames } from '@unplugin-pwa/core/prepare-sw-names'
 
 /**
  * Configures the PWA strategy at the resolved PWA options.
@@ -167,7 +167,7 @@ export async function preparePWAContextDefaults<
     return
   }
   await Promise.all([
-    import('@vite-pwa/unplugin-pwa-core/config').then(({
+    import('@vite-pwa/unplugin-pwa/config').then(({
       resolvePwaConfiguration,
     }) => resolvePwaConfiguration<UserStrategy, T>(
       ctx.consumerOptions,
@@ -219,7 +219,10 @@ export async function preparePWAContextDefaults<
   let immutableAssets = config.build.assetsDir ?? 'assets'
   let cwd = config.root
   if (ctx.configurePWAOptions) {
-    const pwaOptions = await ctx.configurePWAOptions(forClient, config)
+    const pwaOptions = await ctx.configurePWAOptions(
+      forClient,
+      config,
+    )
     if (pwaOptions) {
       outDir = pwaOptions.outDir
       immutableAssets = pwaOptions.immutableAssets

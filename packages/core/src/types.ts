@@ -1,3 +1,5 @@
+import type { HtmlLinkPreset } from '@vite-pwa/assets-generator/api'
+import type { BuiltInPreset, Preset } from '@vite-pwa/assets-generator/config'
 import type {
   BuildServiceWorkerOptions as RolldownBuildServiceWorkerOptions,
 } from '@vite-pwa/workbox-build/build/rolldown/types'
@@ -18,8 +20,6 @@ import type {
   SelfDestroyingOptions,
   SWType,
 } from '@vite-pwa/workbox-build/types'
-import type { HtmlLinkPreset } from '@vite-pwa/assets-generator/api'
-import type { BuiltInPreset, Preset } from '@vite-pwa/assets-generator/config'
 
 export interface PWAAssetsIntegrationOptions {
   /**

@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { Plugin, ViteDevServer } from 'vite'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
@@ -15,10 +15,10 @@ import {
   RESOLVED_DEV_SW_VIRTUAL,
   VIRTUAL_MODULES,
   VIRTUAL_MODULES_RESOLVE_PREFIX,
-} from '@vite-pwa/unplugin-pwa-core/constants'
-import { prepareSwNamesAndGlobDirectory } from '@vite-pwa/unplugin-pwa-core/dev/prepare-sw-names-and-glob-directory'
-import { isDualServiceWorker } from '@vite-pwa/unplugin-pwa-core/dual-sw-utilities'
-import { injectWebManifestHtmlLink } from '@vite-pwa/unplugin-pwa-core/inject-web-manifest-html-link'
+} from '@vite-pwa/unplugin-pwa/constants'
+import { prepareSwNamesAndGlobDirectory } from '@vite-pwa/unplugin-pwa/dev/prepare-sw-names-and-glob-directory'
+import { isDualServiceWorker } from '@vite-pwa/unplugin-pwa/dual-sw-utilities'
+import { injectWebManifestHtmlLink } from '@vite-pwa/unplugin-pwa/inject-web-manifest-html-link'
 import { createHmrScript } from '../dev/create-hmr-script'
 import { injectHmrScript } from '../dev/inject-hmr-script'
 import { prepareRegisterSw } from '../dev/prepare-register-sw'

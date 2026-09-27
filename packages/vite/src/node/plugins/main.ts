@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type {
   SWType,
 } from '@vite-pwa/workbox-build/types'

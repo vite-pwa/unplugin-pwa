@@ -1,4 +1,4 @@
-import type { VitePWAOptions, VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAOptions, VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { PluginOption } from 'vite'
 import { BuildPwaAssetsPlugin } from './plugins/build-pwa-assets'

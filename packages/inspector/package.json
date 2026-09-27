@@ -1,0 +1,58 @@
+{
+  "name": "@unplugin-pwa/inspector",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Zero-config PWA for Vite",
+  "author": "antfu <anthonyfu117@hotmail.com>",
+  "maintainers": [
+    "userquin <userquin@gmail.com>"
+  ],
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/vite-pwa/unplugin-pwa/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vite-pwa/unplugin-pwa.git",
+    "directory": "packages/inspector"
+  },
+  "bugs": "https://github.com/vite-pwa/unplugin-pwa/issues",
+  "keywords": [
+    "pwa",
+    "pwa-inspector",
+    "inspector",
+    "debugger"
+  ],
+  "sideEffects": false,
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test:typecheck": "vue-tsc --noEmit",
+    "prepack": "pnpm run build"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "catalog:inspector",
+    "@iconify-json/svg-spinners": "catalog:inspector",
+    "@iconify-json/tabler": "catalog:inspector",
+    "@types/react": "catalog:react",
+    "@unocss/reset": "catalog:inspector",
+    "@unplugin-pwa/core": "workspace:*",
+    "@vitejs/devtools": "catalog:inspector",
+    "@vitejs/devtools-kit": "catalog:inspector",
+    "@vitejs/plugin-vue": "catalog:vue",
+    "@vueuse/core": "catalog:inspector",
+    "devframe": "catalog:inspector",
+    "unocss": "catalog:inspector",
+    "vite": "catalog:vite",
+    "vue": "catalog:vue",
+    "vue-router": "catalog:inspector",
+    "vue-tsc": "catalog:vue"
+  }
+}

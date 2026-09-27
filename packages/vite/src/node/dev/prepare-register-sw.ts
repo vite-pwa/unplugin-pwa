@@ -1,8 +1,8 @@
 import type { VitePWAPluginContext } from '../vite-context'
 import { promises as fs } from 'node:fs'
 import { resolve } from 'node:path'
-import { FILE_SW_REGISTER } from '@vite-pwa/unplugin-pwa-core/constants'
-import { generateRegisterSW } from '@vite-pwa/unplugin-pwa-core/generate-register-sw'
+import { FILE_SW_REGISTER } from '@unplugin-pwa/core/constants'
+import { generateRegisterSW } from '@unplugin-pwa/core/generate-register-sw'
 import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
 
 export async function prepareRegisterSw(

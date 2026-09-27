@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { PluginWithDevTools } from '@vitejs/devtools-kit'
 import type { Plugin } from 'vite'
@@ -6,20 +6,18 @@ import type {
   ViteBundler,
   VitePWAPluginContext,
 } from '../vite-context'
-import { dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import {
   INSPECTOR_BASE_PATH,
   INSPECTOR_BASE_PATH_URL,
-} from '@vite-pwa/unplugin-pwa-core/constants'
+} from '@vite-pwa/unplugin-pwa/constants'
 import {
   preparePWAConfigurationData,
   prepareServiceWorkerData,
-} from '@vite-pwa/unplugin-pwa-core/inspector-utils'
-import { inspectorWithInjectManifestWarning } from '@vite-pwa/unplugin-pwa-core/logs'
+} from '@vite-pwa/unplugin-pwa/inspector-utils'
+import { inspectorWithInjectManifestWarning } from '@vite-pwa/unplugin-pwa/logs'
 import {
   resolveInspectorDist,
-} from '../resolve-inspector-dist'
+} from '@vite-pwa/unplugin-pwa/resolve-inspector-dist'
 
 export function DevtoolsPlugin<
   UserStrategy extends VitePWAStrategy,
@@ -62,7 +60,11 @@ export function DevtoolsPlugin<
           return
         }
 
-        const inspectorDist = resolveInspectorDist(dirname(fileURLToPath(import.meta.url)))
+        const inspectorDist = resolveInspectorDist()
+
+        if (!inspectorDist) {
+          return
+        }
 
         // since the SW is "static" there is no way to bypass the navigation fallback,
         // and so we need to disable it

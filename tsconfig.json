@@ -5,25 +5,58 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "paths": {
-      "@vite-pwa/unplugin-pwa-types": [
-        "./packages/types/types/index.d.ts"
+      "@unplugin-pwa/inspector/package.json": [
+        "./packages/inspector/package.json"
       ],
-      "@vite-pwa/unplugin-pwa-types/*": [
-        "./packages/types/*.ts"
+      "@unplugin-pwa/core": [
+        "./packages/core/types.ts"
       ],
-      "@vite-pwa/unplugin-pwa-core/*": [
+      "@unplugin-pwa/core/types": [
+        "./packages/core/types/index.d.ts"
+      ],
+      "@unplugin-pwa/core/client": [
+        "./packages/core/client.d.ts"
+      ],
+      "@unplugin-pwa/core/info": [
+        "./packages/core/info.d.ts"
+      ],
+      "@unplugin-pwa/core/preact": [
+        "./packages/core/preact.d.ts"
+      ],
+      "@unplugin-pwa/core/pwa-assets": [
+        "./packages/core/pwa-assets.d.ts"
+      ],
+      "@unplugin-pwa/core/react": [
+        "./packages/core/react.d.ts"
+      ],
+      "@unplugin-pwa/core/react-legacy": [
+        "./packages/core/react-legacy.d.ts"
+      ],
+      "@unplugin-pwa/core/solid": [
+        "./packages/core/solid.d.ts"
+      ],
+      "@unplugin-pwa/core/svelte": [
+        "./packages/core/svelte.d.ts"
+      ],
+      "@unplugin-pwa/core/vanillajs": [
+        "./packages/core/vanillajs.d.ts"
+      ],
+      "@unplugin-pwa/core/vue": [
+        "./packages/core/vue.d.ts"
+      ],
+      "@unplugin-pwa/core/*": [
         "./packages/core/*.ts"
       ],
-      "@vite-pwa/unplugin-pwa-vite": [
+      "@unplugin-pwa/vite": [
         "./packages/vite/src/index.ts"
       ],
-      "@vite-pwa/unplugin-pwa-vite/devtools": [
+      "@unplugin-pwa/vite/devtools": [
         "./packages/vite/devtools.d.ts"
       ],
-      "@vite-pwa/unplugin-pwa-vite/hmr-entry-point": [
+      "@unplugin-pwa/vite/hmr-entry-point": [
         "./packages/vite/hmr-entry-point.d.ts"
       ],
-      "@vite-pwa/unplugin-pwa-vite/*": [
+      "@unplugin-pwa/vite/*": [
         "./packages/vite/src/*.ts"
       ]
     },

@@ -1,12 +1,12 @@
-import type { CustomPwaAssetResolver } from '@vite-pwa/unplugin-pwa-core/context-types'
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
+import type { CustomPwaAssetResolver } from '@unplugin-pwa/core/context-types'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { ViteBundler, VitePWAPluginContext } from './vite-context'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildPwaAsset } from '@vite-pwa/unplugin-pwa-core/build-pwa-asset'
-import { DEV_PWA_DUAL_SW_SWITCHER_NAME, DEV_PWA_REGISTER_NAME } from '@vite-pwa/unplugin-pwa-core/constants'
+import { buildPwaAsset } from '@unplugin-pwa/core/build-pwa-asset'
+import { DEV_PWA_DUAL_SW_SWITCHER_NAME, DEV_PWA_REGISTER_NAME } from '@unplugin-pwa/core/constants'
 
 export function pwaAssetsResolver<
   UserStrategy extends VitePWAStrategy,

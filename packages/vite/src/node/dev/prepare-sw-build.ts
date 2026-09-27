@@ -1,5 +1,5 @@
-import type { BuildSWType } from '@vite-pwa/unplugin-pwa-core/context-types'
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
+import type { BuildSWType } from '@unplugin-pwa/core/context-types'
 import type { BuildGenerateSWOptions, BuildWithSourcesResult } from '@vite-pwa/workbox-build/build/types'
 import type { SelfDestroyingStrategyOptions } from '@vite-pwa/workbox-build/config/types'
 import type { BuildResult, InjectManifestOptions, SWType } from '@vite-pwa/workbox-build/types'

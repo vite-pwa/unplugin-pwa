@@ -1,6 +1,11 @@
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { ExtractStrategy } from './context-types'
-import type { ManifestOptions, ResolvedVitePWAOptions, VitePWAOptions, VitePWAStrategy } from './types'
+import type {
+  ManifestOptions,
+  ResolvedVitePWAOptions,
+  VitePWAOptions,
+  VitePWAStrategy,
+} from './types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
@@ -299,7 +304,9 @@ export async function resolvePwaConfiguration<
         ].join('\n'))
       }
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
-      const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(path.resolve(process.cwd(), swSrcName)))
+      const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
+        path.resolve(process.cwd(), swSrcName),
+      ))
       if (invalidStrategy) {
         const isWarning = resolverOptions.isDev && !(pwaOptions?.devOptions?.enabled === true)
         const warning = isWarning ? `, ${pc.yellow('running build command will fail')}` : ''

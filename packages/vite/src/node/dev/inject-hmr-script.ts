@@ -1,4 +1,4 @@
-import { DEV_SW_VIRTUAL } from '@vite-pwa/unplugin-pwa-core/constants'
+import { DEV_SW_VIRTUAL } from '@unplugin-pwa/core/constants'
 
 export function injectHmrScript(
   html: string,

@@ -5,10 +5,12 @@ import { getDevToolsRpcClient } from '@vitejs/devtools-kit/client'
 let rpcClient: DevframeRpcClient
 
 async function loadPWAConfiguration() {
+  // @ts-expect-error we don't have the types here
   return await rpcClient.call('unplugin-pwa:pwa-configuration')
 }
 
 async function loadSWInfo() {
+  // @ts-expect-error we don't have the types here
   return await rpcClient.call('unplugin-pwa:service-worker-info')
 }
 

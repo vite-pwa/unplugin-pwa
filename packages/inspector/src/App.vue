@@ -8,7 +8,11 @@ import PWAInfo from './components/PWAInfo.vue'
 import { ready } from './state'
 
 onMounted(async () => {
-  await import('./api').then(({ loadPWAConfiguration }) => loadPWAConfiguration())
+  await import('./api').then(({
+    loadPWAConfiguration,
+  }) => loadPWAConfiguration()).catch((e) => {
+    console.error('Failed to load PWA configuration:', e)
+  })
   ready.value = true
 })
 </script>

@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { VitePWA } from '@vite-pwa/unplugin-pwa-vite'
+import { VitePWA } from '@vite-pwa/vite'
 // import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { DevTools } from '@vitejs/devtools'
 import { defineConfig } from 'vite'

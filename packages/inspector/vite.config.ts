@@ -1,6 +1,6 @@
 import presetIcons from '@unocss/preset-icons'
 import presetUno from '@unocss/preset-wind3'
-import { INSPECTOR_BASE_PATH_URL } from '@vite-pwa/unplugin-pwa-core/constants'
+import { INSPECTOR_BASE_PATH_URL } from '@unplugin-pwa/core/constants'
 import { DevTools } from '@vitejs/devtools'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
@@ -17,23 +17,15 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
-    minify: false,
-    emptyOutDir: true,
-    outDir: '../dist/inspector',
-    rolldownOptions: {
-      devtools: {},
+    minify: true,
+    rollupOptions: {
+      external: ['@vitejs/devtools-kit/client', 'devframe/client'],
     },
   },
   plugins: [
-    DevTools(/* {
-      build: {
-        withApp: true,
-        outDir: '../dist/inspector',
-      },
-    } */),
+    DevTools(),
     VueRouter({
-      root: 'inspector',
-      routesFolder: 'src/pages',
+
     }),
     Vue({
       features: {

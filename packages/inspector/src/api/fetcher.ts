@@ -1,5 +1,5 @@
 import type { PWAConfiguration, SWInfo } from '../state'
-import { INSPECTOR_BASE_PATH_API } from '@vite-pwa/unplugin-pwa-core/constants'
+import { INSPECTOR_BASE_PATH_API } from '@unplugin-pwa/core/constants'
 
 export async function fetchMode(): Promise<'standalone' | 'vite-devtools'> {
   return await fetch(`${INSPECTOR_BASE_PATH_API}/mode`).then(res => res.json())

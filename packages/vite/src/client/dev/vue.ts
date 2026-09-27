@@ -1,4 +1,4 @@
-import type { RegisterSWOptions } from '@vite-pwa/unplugin-pwa-types/types'
+import type { RegisterSWOptions } from '@unplugin-pwa/core/types'
 import { shallowRef } from 'vue'
 
 export type { RegisterSWOptions }

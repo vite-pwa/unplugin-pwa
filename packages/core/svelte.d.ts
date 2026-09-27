@@ -1,5 +1,5 @@
 declare module 'virtual:pwa-register/svelte' {
-  import type { PWATrustedScriptURL, RegisterSWOptions } from '@vite-pwa/unplugin-pwa-types/types'
+  import type { PWATrustedScriptURL, RegisterSWOptions } from '@unplugin-pwa/core/types'
   // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore ignore when svelte is not installed
   import type { Writable } from 'svelte/store'

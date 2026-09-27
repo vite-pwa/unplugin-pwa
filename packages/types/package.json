@@ -1,18 +1,19 @@
 {
-  "name": "@vite-pwa/unplugin-pwa-types",
+  "name": "@unplugin-pwa/types",
   "type": "module",
   "version": "0.0.0",
-  "description": "TypeScript definitions for unplugin-pwa virtual modules",
+  "description": "TypeDoc JSON metadata for the unplugin-pwa packages, published for the Vite PWA docs site to render its API reference.",
   "author": "Vite PWA's Team",
   "maintainers": [
     "userquin <userquin@gmail.com>"
   ],
   "license": "MIT",
   "funding": "https://github.com/sponsors/antfu",
-  "homepage": "https://github.com/vite-pwa/unplugin-pwa/packages/types#readme",
+  "homepage": "https://github.com/vite-pwa/unplugin-pwa#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vite-pwa/unplugin-pwa.git"
+    "url": "git+https://github.com/vite-pwa/unplugin-pwa.git",
+    "directory": "packages/types"
   },
   "bugs": "https://github.com/vite-pwa/unplugin-pwa/issues",
   "keywords": [
@@ -25,61 +26,29 @@
     "solidjs"
   ],
   "sideEffects": false,
-  "types": "./types/index.d.ts",
   "exports": {
-    "./types": {
-      "types": "./types/index.d.ts"
-    },
-    "./preact": {
-      "types": "./preact.d.ts"
-    },
-    "./react": {
-      "types": "./react.d.ts"
-    },
-    "./react-legacy": {
-      "types": "./react-legacy.d.ts"
-    },
-    "./solid": {
-      "types": "./solid.d.ts"
-    },
-    "./svelte": {
-      "types": "./svelte.d.ts"
-    },
-    "./vanillajs": {
-      "types": "./vanillajs.d.ts"
-    },
-    "./vue": {
-      "types": "./vue.d.ts"
-    },
-    "./client": {
-      "types": "./client.d.ts"
-    },
-    "./info": {
-      "types": "./info.d.ts"
-    },
-    "./pwa-assets": {
-      "types": "./pwa-assets.d.ts"
-    },
+    "./unplugin-pwa/core": "./api/core.json",
+    "./unplugin-pwa/vite": "./api/vite.json",
     "./package.json": "./package.json"
   },
   "files": [
-    "*.d.ts",
-    "types"
+    "api"
   ],
-  "scripts": {
-    "test:typecheck": "tsc --noEmit"
+  "engines": {
+    "node": ">=22.14.0"
   },
-  "dependencies": {
-    "@types/trusted-types": "catalog:types"
+  "scripts": {
+    "prepare-names": "node prepare-names.mts",
+    "build": "node gen.mts",
+    "docs:api": "node gen.mts",
+    "xprepack": "pnpm run docs:api"
   },
   "devDependencies": {
-    "@types/react": "catalog:react",
-    "@vite-pwa/assets-generator": "catalog:pwa",
-    "preact": "catalog:preact",
-    "react": "catalog:react",
-    "solid-js": "catalog:solid-js",
-    "svelte": "catalog:svelte",
-    "vite": "catalog:vite",
-    "vue": "catalog:vue"
+    "@rolldown/pluginutils": "catalog:utils",
+    "@unplugin-pwa/core": "workspace:*",
+    "@unplugin-pwa/vite": "workspace:*",
+    "@vite-pwa/workbox-build": "catalog:pwa",
+    "tinyglobby": "catalog:utils",
+    "typedoc": "catalog:utils"
   }
 }

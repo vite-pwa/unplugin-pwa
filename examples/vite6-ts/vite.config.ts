@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { VitePWA } from '@vite-pwa/unplugin-pwa-vite'
+import { VitePWA } from '@vite-pwa/vite'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 

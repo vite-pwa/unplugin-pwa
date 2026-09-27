@@ -3,7 +3,7 @@ node_modules
 dist
 # intellij stuff
 .idea/
-packages/typedoc/api/
+packages/types/api/
 
 #examples
 examples/**/build/

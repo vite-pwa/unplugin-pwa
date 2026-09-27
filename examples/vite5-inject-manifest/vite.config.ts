@@ -1,5 +1,5 @@
 import type { PluginOption } from 'vite'
-import { ViteLegacyPWA } from '@vite-pwa/unplugin-pwa-vite/legacy'
+import { ViteLegacyPWA } from '@vite-pwa/vite/legacy'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 

@@ -10,8 +10,8 @@ declare module '@vitejs/devtools-kit' {
       swType: import('@vite-pwa/workbox-build/types').SWType
       swDevEnabled: boolean
       currentSWType: WorkerType
-      swNames: import('@vite-pwa/unplugin-pwa-core/context-types').DevSWNames
-      manifest: Partial<import('@vite-pwa/unplugin-pwa-core/types').ManifestOptions>
+      swNames: import('@unplugin-pwa/core/context-types').DevSWNames
+      manifest: Partial<import('@unplugin-pwa/core').ManifestOptions>
     }>
     'unplugin-pwa:service-worker-info': () => Promise<{
       swType?: WorkerType

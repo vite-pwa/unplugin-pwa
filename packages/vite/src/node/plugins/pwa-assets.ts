@@ -1,4 +1,4 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { Plugin, ViteDevServer } from 'vite'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
@@ -10,8 +10,8 @@ import {
   PWA_ASSETS_ICONS_VIRTUAL,
   RESOLVED_PWA_ASSETS_HEAD_VIRTUAL,
   RESOLVED_PWA_ASSETS_ICONS_VIRTUAL,
-} from '@vite-pwa/unplugin-pwa-core/constants'
-import { extractIcons } from '@vite-pwa/unplugin-pwa-core/pwa-assets/utils'
+} from '@unplugin-pwa/core/constants'
+import { extractIcons } from '@unplugin-pwa/core/pwa-assets/utils'
 
 /**
  * Vite plugin to generate virtual PWA assets modules.

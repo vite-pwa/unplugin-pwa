@@ -9,7 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@vite-pwa/unplugin-pwa-vite": "workspace:*",
+    "@unplugin-pwa/core": "workspace:*",
+    "@unplugin-pwa/vite": "workspace:*",
     "@vite-pwa/workbox-build": "catalog:pwa",
     "@sentry/vite-plugin": "catalog:utils",
     "@vitejs/devtools": "catalog:inspector",

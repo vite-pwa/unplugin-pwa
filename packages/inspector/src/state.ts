@@ -13,8 +13,8 @@ export interface PWAConfiguration {
   swType: import('@vite-pwa/workbox-build/types').SWType
   swDevEnabled: boolean
   currentSWType: WorkerType
-  swNames: import('@vite-pwa/unplugin-pwa-core/context-types').DevSWNames
-  manifest: Partial<import('@vite-pwa/unplugin-pwa-core/types').ManifestOptions>
+  swNames: import('@unplugin-pwa/core/context-types').DevSWNames
+  manifest: Partial<import('@unplugin-pwa/core').ManifestOptions>
 }
 
 export interface SWInfo {
@@ -98,9 +98,9 @@ export const version = computed(() => {
 
 function* mapIcons(
   base: string,
-  icons: import('@vite-pwa/unplugin-pwa-core/types').IconResource[],
+  icons: import('@unplugin-pwa/core').IconResource[],
 ): Generator<
-  import('@vite-pwa/unplugin-pwa-core/types').IconResource,
+  import('@unplugin-pwa/core').IconResource,
   void,
   undefined
 > {
@@ -125,9 +125,9 @@ export const icons = computed(() => {
 
 function* mapShortcuts(
   base: string,
-  shortcuts: import('@vite-pwa/unplugin-pwa-core/types').ManifestShortcut[],
+  shortcuts: import('@unplugin-pwa/core').ManifestShortcut[],
 ): Generator<
-  import('@vite-pwa/unplugin-pwa-core/types').ManifestShortcut,
+  import('@unplugin-pwa/core').ManifestShortcut,
   void,
   undefined
 > {
@@ -155,9 +155,9 @@ export const shortcuts = computed(() => {
 
 function* mapScreenshots(
   base: string,
-  screenshots: import('@vite-pwa/unplugin-pwa-core/types').ManifestScreenshot[],
+  screenshots: import('@unplugin-pwa/core').ManifestScreenshot[],
 ): Generator<
-  import('@vite-pwa/unplugin-pwa-core/types').ManifestScreenshot,
+  import('@unplugin-pwa/core').ManifestScreenshot,
   void,
   undefined
 > {

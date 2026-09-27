@@ -1,11 +1,11 @@
-import type { VitePWAStrategy } from '@vite-pwa/unplugin-pwa-core/types'
+import type { VitePWAStrategy } from '@unplugin-pwa/core'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildPwaAsset } from '@vite-pwa/unplugin-pwa-core/build-pwa-asset'
-import { DEV_PWA_DUAL_SW_SWITCHER_NAME } from '@vite-pwa/unplugin-pwa-core/constants'
+import { buildPwaAsset } from '@unplugin-pwa/core/build-pwa-asset'
+import { DEV_PWA_DUAL_SW_SWITCHER_NAME } from '@unplugin-pwa/core/constants'
 
 export async function createHmrScript<
   UserStrategy extends VitePWAStrategy,
