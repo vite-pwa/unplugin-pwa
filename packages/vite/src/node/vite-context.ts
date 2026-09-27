@@ -1,5 +1,6 @@
 import type { VitePWAOptions, VitePWAStrategy } from '@unplugin-pwa/core'
 import type { PWAPluginContext } from '@unplugin-pwa/core/context-types'
+import type { ConfigurePWAOptions } from '@unplugin-pwa/core/src/context-types'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { ResolvedConfig } from 'vite'
 import { createPWAContext } from '@unplugin-pwa/core/context'
@@ -14,6 +15,11 @@ export type ServiceWorkerAssetNormalizer = (
   id: string,
 ) => [normalizedId: string, assetName: string] // TODO: remove pair we only need an id (every impl. returning the same pair)
 
+export type ConfigurePWAOptionsFn = (
+  forClient: boolean,
+  config: ResolvedConfig,
+) => ConfigurePWAOptions | undefined | Promise<ConfigurePWAOptions | undefined>
+
 export type VitePWAPluginContext<
   B extends ViteBundler,
   UserStrategy extends VitePWAStrategy,
@@ -23,6 +29,10 @@ export type VitePWAPluginContext<
    * The resolved Vite configuration for the client build.
    */
   viteConfig: ResolvedConfig
+  /**
+   * This hook will be called when configuring the PWA options at Vite plugin.
+   */
+  configurePWAOptions?: ConfigurePWAOptionsFn
   /**
    * Should enable Vite Environment Api?.
    */

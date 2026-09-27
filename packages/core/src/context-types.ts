@@ -8,7 +8,6 @@ import type {
 } from '@vite-pwa/workbox-build/config/types'
 import type { BuildResult, SWType } from '@vite-pwa/workbox-build/types'
 import type { Hookable } from 'hookable'
-import type { ResolvedConfig } from 'vite'
 import type { PWAAssetsGenerator } from './pwa-assets/types'
 import type {
   RegisterSWData,
@@ -137,11 +136,6 @@ export interface ConfigurePWAOptions {
   immutableAssets: string
   cwd: string
 }
-// TODO: remove vite resolved config from the context
-export type ConfigurePWAOptionsFn = (
-  forClient: boolean,
-  config: ResolvedConfig,
-) => ConfigurePWAOptions | undefined | Promise<ConfigurePWAOptions | undefined>
 
 export type HookResult = void | Promise<void>
 export interface PWAHooks {
@@ -159,7 +153,6 @@ export interface PWAPluginContext<
   version: string
   strategy: ExtractStrategy<UserStrategy>
   consumerOptions: Partial<VitePWAOptions<UserStrategy, T>>
-  configurePWAOptions?: ConfigurePWAOptionsFn
   externalConfigurationLoader: boolean
   resolvedOptions: Partial<ResolvedVitePWAOptions<ExtractStrategy<UserStrategy>, T>>
   useImportRegister: boolean
