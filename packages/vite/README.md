@@ -5,10 +5,9 @@
     </picture>
 </p>
 
-<p align='center'>
-<img src='https://vite-pwa-org.netlify.app/banner_light.svg' alt="Zero-config PWA for Vite"><br>
-Zero-config PWA Framework-agnostic Plugin for Vite &nbsp;Ecosystem
-</p>
+<h1 align='center'>
+Zero-config PWA Vite Plugin and for the Vite Ecosystem
+</h1>
 
 <p align='center'>
 <a href='https://npmx.dev/package/@unplugin-pwa/vite' target="__blank">
