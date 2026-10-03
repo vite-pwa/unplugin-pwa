@@ -3,7 +3,7 @@ import {
   DEV_READY_NAME,
   DEV_REGISTER_SW_NAME,
   DEV_SWITCHER_NAME,
-} from '@vite-pwa/unplugin-pwa-core/constants'
+} from '@unplugin-pwa/core/constants'
 import { defineConfig } from 'tsdown'
 
 import { attw, pwaBanner as banner, publint } from '../../tsdown-helper'

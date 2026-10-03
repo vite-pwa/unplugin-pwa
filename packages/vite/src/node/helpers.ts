@@ -167,7 +167,7 @@ export async function preparePWAContextDefaults<
     return
   }
   await Promise.all([
-    import('@vite-pwa/unplugin-pwa/config').then(({
+    import('@unplugin-pwa/core/config').then(({
       resolvePwaConfiguration,
     }) => resolvePwaConfiguration<UserStrategy, T>(
       ctx.consumerOptions,

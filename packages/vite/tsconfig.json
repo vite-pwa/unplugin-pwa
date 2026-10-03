@@ -8,5 +8,5 @@
       "./devtools.d.ts"
     ]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*"]
 }

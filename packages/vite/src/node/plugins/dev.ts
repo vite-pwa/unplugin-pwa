@@ -15,10 +15,10 @@ import {
   RESOLVED_DEV_SW_VIRTUAL,
   VIRTUAL_MODULES,
   VIRTUAL_MODULES_RESOLVE_PREFIX,
-} from '@vite-pwa/unplugin-pwa/constants'
-import { prepareSwNamesAndGlobDirectory } from '@vite-pwa/unplugin-pwa/dev/prepare-sw-names-and-glob-directory'
-import { isDualServiceWorker } from '@vite-pwa/unplugin-pwa/dual-sw-utilities'
-import { injectWebManifestHtmlLink } from '@vite-pwa/unplugin-pwa/inject-web-manifest-html-link'
+} from '@unplugin-pwa/core/constants'
+import { prepareSwNamesAndGlobDirectory } from '@unplugin-pwa/core/dev/prepare-sw-names-and-glob-directory'
+import { isDualServiceWorker } from '@unplugin-pwa/core/dual-sw-utilities'
+import { injectWebManifestHtmlLink } from '@unplugin-pwa/core/inject-web-manifest-html-link'
 import { createHmrScript } from '../dev/create-hmr-script'
 import { injectHmrScript } from '../dev/inject-hmr-script'
 import { prepareRegisterSw } from '../dev/prepare-register-sw'
@@ -177,7 +177,7 @@ export function DevPlugin<
         }
 
         // TODO: remove pair we only need an id (every impl. returning the same pair)
-        const [normalizedAsset, assetId] = ctx.normalizeDevServiceWorkerId?.(
+        const [normalizedAsset, _assetId] = ctx.normalizeDevServiceWorkerId?.(
           'load',
           'sw-dep',
           id,

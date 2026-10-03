@@ -104,8 +104,8 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
     "*.d.ts",
+    "dist",
     "types"
   ],
   "engines": {
@@ -148,5 +148,9 @@
     "svelte": "catalog:svelte",
     "vite": "catalog:vite",
     "vue": "catalog:vue"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

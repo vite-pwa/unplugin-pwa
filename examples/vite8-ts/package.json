@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@sentry/vite-plugin": "catalog:utils",
     "@unplugin-pwa/core": "workspace:*",
     "@unplugin-pwa/vite": "workspace:*",
     "@vite-pwa/workbox-build": "catalog:pwa",
-    "@sentry/vite-plugin": "catalog:utils",
     "@vitejs/devtools": "catalog:inspector",
     "magic-string": "catalog:utils",
     "magicast": "catalog:utils",
