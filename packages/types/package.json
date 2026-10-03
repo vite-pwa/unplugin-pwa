@@ -50,5 +50,9 @@
     "@vite-pwa/workbox-build": "catalog:pwa",
     "tinyglobby": "catalog:utils",
     "typedoc": "catalog:utils"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

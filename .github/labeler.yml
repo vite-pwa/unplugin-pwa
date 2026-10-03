@@ -1,0 +1,40 @@
+# See https://github.com/actions/labeler
+
+'pkg: core':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'packages/core/**'
+
+'pkg: inspector':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'packages/inspector/**'
+
+'pkg: types':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'packages/types/**'
+
+'pkg: vite':
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'packages/vite/**'
+
+# Other categories
+🚨 action:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/**'
+      - '.github/actions/**'
+      - taze.config.ts
+
+📦 dependencies:
+  - changed-files:
+    - any-glob-to-any-file:
+      - pnpm-lock.yaml
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - README.md
+      - CONTRIBUTING.md

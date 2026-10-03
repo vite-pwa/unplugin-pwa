@@ -60,5 +60,9 @@
     "vue": "catalog:vue",
     "vue-router": "catalog:inspector",
     "vue-tsc": "catalog:vue"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

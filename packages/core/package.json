@@ -148,5 +148,9 @@
     "svelte": "catalog:svelte",
     "vite": "catalog:vite",
     "vue": "catalog:vue"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
