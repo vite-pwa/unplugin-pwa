@@ -150,7 +150,3 @@ sequenceDiagram
     deactivate Core
     deactivate Setup
 ```
-
-## 📄 License
-
-[MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)

@@ -49,6 +49,8 @@ The new architecture shifts the responsibility away from rigid configurations to
 - ⚙️ **Stale-while-revalidate**: automatic reload when new content is available
 - ✨ **Static assets handling**: configure static assets for offline support
 - 🐞 **Development Support**: debug your custom service worker logic as you develop your application
+- 🔍 **Inspector**: visually inspect your resolved configuration, web manifest and service worker during development, via middleware or [DevFrame](https://github.com/devframes/devframe)
+- 🧩 **Modular**: use the ready-to-use plugins or compose your own integration from the building blocks in `@unplugin-pwa/core` and `@unplugin-pwa/vite`
 - 📦 **Universal Bundlers**: native integration with Vite, Rolldown, Webpack (WIP), Rspack (WIP), and Rsbuild (WIP).
 - 🛠️ **Meta-Frameworks**: seamless integration with [îles](https://github.com/ElMassimo/iles), [SvelteKit](https://github.com/sveltejs/kit), [VitePress](https://github.com/vuejs/vitepress), [Astro](https://github.com/withastro/astro), [Nuxt 3/4/5](https://github.com/nuxt/nuxt), [React Router](https://github.com/remix-run/react-router/), [TanStack](https://github.com/TanStack) and [Next](https://github.com/vercel/next.js/) (WIP).
 - 💥 **PWA Assets Generator**: generate all the PWA assets from a single command and a single source image
