@@ -1,8 +1,13 @@
+<br/>
+
 <p align='center'>
-    <img src='https://github.com/vite-pwa/unplugin-pwa/blob/main/workbox.svg' alt="Vite PWA workbox">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://github.com/vite-pwa/unplugin-pwa/blob/main/hero-dark.svg" height="40" />
+        <img height="40" src="https://github.com/vite-pwa/unplugin-pwa/blob/main/hero.svg">
+    </picture>
 </p>
 
-<h1 align="center">Vite PWA Ecosystem<br/>unplugin-pwa</h1>
+<h1 align="center">PWA Ecosystem<br/>unplugin-pwa</h1>
 
 <p align='center'>
 <a href="https://github.com/vite-pwa/unplugin-pwa" target="__blank">
