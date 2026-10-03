@@ -1,12 +1,12 @@
 <p align='center'>
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-vite-hero-dark.svg" />
-        <img src="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-vite-hero.svg" alt="Zero-config PWA Framework-agnostic Plugin for Vite and ecosystem logo">
+        <img src="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-vite-hero.svg" alt="Zero-config PWA for Vite and its ecosystem logo">
     </picture>
 </p>
 
 <h1 align='center'>
-Zero-config PWA Vite Plugin and for the Vite Ecosystem
+Zero-config PWA for Vite and its ecosystem
 </h1>
 
 <p align='center'>
@@ -33,21 +33,23 @@ Zero-config PWA Vite Plugin and for the Vite Ecosystem
   </a>
 </p>
 
-## 🚀 Features
+## 🔌 What is `@unplugin-pwa/vite`?
 
-- 📖 [**Documentation & guides**](https://vite-pwa-org.netlify.app/)
-- 👌 **Zero-Config**: sensible built-in default configs for common use cases
-- 🔩 **Extensible**: expose the full ability to customize the behavior of the plugin
-- 🦾 **Type Strong**: written in [TypeScript](https://www.typescriptlang.org/)
-- 🔌 **Offline Support**: generate service worker with offline support (via Workbox)
-- ⚡ **Fully tree shakable**: auto-inject Web App Manifest
-- 💬 **Prompt for new content**: built-in support for Vanilla JavaScript, Vue 3, React, Svelte, SolidJS and Preact
-- ⚙️ **Stale-while-revalidate**: automatic reload when new content is available
-- ✨ **Static assets handling**: configure static assets for offline support
-- 🐞 **Development Support**: debug your custom service worker logic as you develop your application
-- 🛠️ **Versatile**: integration with Vite, Rspack, Rsbuild and meta frameworks: [îles](https://github.com/ElMassimo/iles), [SvelteKit](https://github.com/sveltejs/kit), [VitePress](https://github.com/vuejs/vitepress), [Astro](https://github.com/withastro/astro), [Nuxt 3/4/5](https://github.com/nuxt/nuxt), [React Router](https://github.com/remix-run/react-router/) and [TanStack](https://github.com/TanStack)
-- 💥 **PWA Assets Generator**: generate all the PWA assets from a single command and a single source image
-- 🚀 **PWA Assets Integration**: serving, generating and injecting PWA Assets on the fly in your application
+The Vite integration of `unplugin-pwa`. It ships two things:
+
+1. **Ready-to-use Vite plugins**: the main plugin for Vite 8+, and a legacy plugin for earlier versions.
+2. **Building blocks for Vite-based tooling**: a set of utilities, equivalent to `@unplugin-pwa/core` but specific to Vite, that you can use to create your own integration.
+
+The plugin itself is built on top of these utilities, and so are the integrations for meta-frameworks (VitePress, Astro, SvelteKit, Nuxt, React Router and TanStack Start). They don't wrap the Vite plugin: they compose the exported pieces directly, so each one can adapt PWA support to its own build pipeline.
+
+## 🧩 Which one do I use?
+
+| You are… | Use |
+| --- | --- |
+| Building a plain Vite app | The Vite plugin |
+| Using Vite < 8 | The legacy plugin |
+| Using a supported meta-framework | Its dedicated integration (it depends on this package) |
+| Creating your own integration | The exported utilities |
 
 ## Requirements
 
