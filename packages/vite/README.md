@@ -1,6 +1,13 @@
 <p align='center'>
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-vite-hero-dark.svg" />
+        <img src="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-vite-hero.svg" alt="Zero-config PWA Framework-agnostic Plugin for Vite and ecosystem logo">
+    </picture>
+</p>
+
+<p align='center'>
 <img src='https://vite-pwa-org.netlify.app/banner_light.svg' alt="Zero-config PWA for Vite"><br>
-Zero-config PWA Framework-agnostic Plugin for Vite
+Zero-config PWA Framework-agnostic Plugin for Vite &nbsp;Ecosystem
 </p>
 
 <p align='center'>
@@ -23,7 +30,7 @@ Zero-config PWA Framework-agnostic Plugin for Vite
 
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+    <img src="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg" alt="Anthony Fu SVG sponsors image"/>
   </a>
 </p>
 

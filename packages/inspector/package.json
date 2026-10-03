@@ -2,7 +2,7 @@
   "name": "@unplugin-pwa/inspector",
   "type": "module",
   "version": "0.0.0",
-  "description": "Zero-config PWA for Vite",
+  "description": "Inspector UI for unplugin-pwa. Inspect and debug your PWA during development, served by the integrations via middleware or DevFrame.",
   "author": "antfu <anthonyfu117@hotmail.com>",
   "maintainers": [
     "userquin <userquin@gmail.com>"
@@ -20,6 +20,12 @@
     "pwa",
     "pwa-inspector",
     "inspector",
+    "devtools",
+    "service-worker",
+    "workbox",
+    "unplugin",
+    "vite",
+    "devframe",
     "debugger"
   ],
   "sideEffects": false,

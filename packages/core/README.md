@@ -1,7 +1,11 @@
 <p align='center'>
-<img src='https://vite-pwa-org.netlify.app/banner_light.svg' alt="vite-plugin-pwa - Zero-config PWA for Vite"><br>
-Bundler-agnostic core logic and utilities for PWA
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-core-hero-dark.svg" />
+        <img src="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-core-hero.svg" alt="Bundler-agnostic core logic and utilities for PWA logo">
+    </picture>
 </p>
+
+<h1 align="center">Bundler-agnostic core logic and utilities for PWA</h1>
 
 <p align='center'>
 <a href='https://npmx.dev/package/@unplugin-pwa/core' target="__blank">
@@ -23,7 +27,7 @@ Bundler-agnostic core logic and utilities for PWA
 
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+    <img src="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg" alt="Anthony Fu SVG sponsors image" />
   </a>
 </p>
 
@@ -57,4 +61,4 @@ pnpm add @vite-pwa/unplugin-pwa-core -D
 
 ## 📄 License
 
-[MIT](./LICENSE) License &copy; 2020-PRESENT [Anthony Fu](https://github.com/antfu)
+[MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)

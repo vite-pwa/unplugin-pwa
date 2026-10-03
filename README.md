@@ -1,5 +1,3 @@
-<br/>
-
 <p align='center'>
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-hero-dark.svg" />
@@ -8,7 +6,6 @@
 </p>
 
 <h1 align="center">PWA Ecosystem</h1>
-
 
 <p align='center'>
 <a href="https://vite-pwa-org.netlify.app/" target="__blank">
@@ -24,10 +21,9 @@
 
 <p align="center">
   <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
-    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+    <img src="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg" alt="Anthony Fu SVG sponsors image"/>
   </a>
 </p>
-
 
 ## 🧩 Why a Modular Ecosystem?
 
