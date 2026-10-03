@@ -51,7 +51,7 @@ The plugin itself is built on top of these utilities, and so are the integration
 | Using a supported meta-framework | Its dedicated integration (it depends on this package) |
 | Creating your own integration | The exported utilities |
 
-## Requirements
+## 📋 Requirements
 
 `@unplugin-pwa/vite` requires **Node 22.14.0 or above**.
 
