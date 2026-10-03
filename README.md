@@ -7,7 +7,7 @@
     </picture>
 </p>
 
-<h1 align="center">PWA Ecosystem<br/>unplugin-pwa</h1>
+<h1 align="center">PWA Ecosystem</h1>
 
 <p align='center'>
 <a href="https://github.com/vite-pwa/unplugin-pwa" target="__blank">
