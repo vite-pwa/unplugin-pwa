@@ -2,8 +2,8 @@
 
 <p align='center'>
     <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/unplugin-pwa/main/hero-dark.svg" />
-        <img src="https://raw.githubusercontent.com/vite-pwa/unplugin-pwa/main/hero.svg" alt="unplugin-pwa - PWA Ecosystem">
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-hero-dark.svg" />
+        <img src="https://raw.githubusercontent.com/vite-pwa/.github/main/unplugin-pwa-hero.svg" alt="unplugin-pwa - PWA Ecosystem">
     </picture>
 </p>
 
