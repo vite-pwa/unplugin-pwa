@@ -10,17 +10,17 @@ Zero-config PWA for Vite and its ecosystem
 </h1>
 
 <p align='center'>
-<a href='https://npmx.dev/package/@unplugin-pwa/vite' target="__blank">
+<a href='https://npmx.dev/package/@unplugin-pwa/vite' target="_blank" rel="noopener noreferrer">
 <img src='https://img.shields.io/npm/v/@unplugin-pwa/vite?color=33A6B8&label=' alt="NPM version">
 </a>
-<a href="https://npmx.dev/package/@unplugin-pwa/vite" target="__blank">
+<a href="https://npmx.dev/package/@unplugin-pwa/vite" target="_blank" rel="noopener noreferrer">
     <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@unplugin-pwa/vite?color=476582&label=">
 </a>
-<a href="https://vite-pwa-org.netlify.app/" target="__blank">
+<a href="https://vite-pwa-org.netlify.app/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/static/v1?label=&message=docs%20%26%20guides&color=2e859c" alt="Docs & Guides">
 </a>
 <br>
-<a href="https://github.com/vite-pwa/unplugin-pwa" target="__blank">
+<a href="https://github.com/vite-pwa/unplugin-pwa" target="_blank" rel="noopener noreferrer">
 <img alt="GitHub stars" src="https://img.shields.io/github/stars/vite-pwa/unplugin-pwa?style=social">
 </a>
 </p>
@@ -89,11 +89,9 @@ export default {
 Read the [📖 documentation](https://vite-pwa-org.netlify.app/guide/) for a complete guide on how to configure and use
 this plugin.
 
-Check out the client type declarations [client.d.ts](./client.d.ts) for built-in frameworks support.
-
 ## 👀 Full config
 
-Check out the type declaration [src/types.ts](./src/types.ts) and the following links for more details.
+Check out the following links for further details:
 
 - [Web app manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest)
 - [Workbox](https://developers.google.com/web/tools/workbox)
