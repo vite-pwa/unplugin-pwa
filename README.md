@@ -15,6 +15,15 @@
 </a>
 </p>
 
+<br>
+
+<p align="center">
+  <a href="https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg">
+    <img src='https://cdn.jsdelivr.net/gh/antfu/static/sponsors.svg'/>
+  </a>
+</p>
+
+
 ## 🧩 Why a Modular Ecosystem?
 
 The new architecture shifts the responsibility away from rigid configurations toward an extensible, programmatic pipeline where integrations and meta-frameworks *know exactly what to do*.
