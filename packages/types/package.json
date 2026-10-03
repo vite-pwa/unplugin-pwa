@@ -41,7 +41,7 @@
     "prepare-names": "node prepare-names.mts",
     "build": "node gen.mts",
     "docs:api": "node gen.mts",
-    "xprepack": "pnpm run docs:api"
+    "prepack": "pnpm run docs:api"
   },
   "devDependencies": {
     "@rolldown/pluginutils": "catalog:utils",
