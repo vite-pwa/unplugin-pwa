@@ -11,7 +11,7 @@
 
 ## 🛠️ Welcome to unplugin-pwa/types
 
-The modern toolkit for seamless documentation. `@unplugin-pwa/types` provides the essential TypeScript definitions you need to extract and generate lightweight, VitePress-ready API documentation for the Vite PWA ecosystem.
+The modern toolkit for seamless documentation. `@unplugin-pwa/types` provides the essential TypeScript definitions you need to extract and generate lightweight, VitePress-ready API documentation for the PWA ecosystem.
 
 ## 📄 License
 
