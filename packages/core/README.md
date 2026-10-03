@@ -99,18 +99,6 @@ yarn add @unplugin-pwa/core
 pnpm add @unplugin-pwa/core
 ```
 
-## 📦 Install
-
-```bash
-npm i @vite-pwa/unplugin-pwa-core -D
-
-# yarn
-yarn add @vite-pwa/unplugin-pwa-core -D
-
-# pnpm
-pnpm add @vite-pwa/unplugin-pwa-core -D
-```
-
 ## 📄 License
 
 [MIT](./LICENSE) License &copy; 2026-PRESENT [Anthony Fu](https://github.com/antfu)
