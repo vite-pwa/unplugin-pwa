@@ -117,9 +117,6 @@ catalogs:
     magicast:
       specifier: ^0.5.5
       version: 0.5.5
-    picocolors:
-      specifier: ^1.1.1
-      version: 1.1.1
     publint:
       specifier: ^0.3.18
       version: 0.3.24
@@ -211,9 +208,6 @@ importers:
       eslint-plugin-antfu:
         specifier: catalog:eslint
         version: 3.2.3(eslint@10.11.0)
-      picocolors:
-        specifier: catalog:utils
-        version: 1.1.1
       publint:
         specifier: catalog:utils
         version: 0.3.24
@@ -340,9 +334,6 @@ importers:
       hookable:
         specifier: catalog:utils
         version: 6.1.2
-      picocolors:
-        specifier: catalog:utils
-        version: 1.1.1
     devDependencies:
       '@types/react':
         specifier: catalog:react
@@ -469,9 +460,6 @@ importers:
       magicast:
         specifier: ^0.5.0
         version: 0.5.5
-      picocolors:
-        specifier: catalog:utils
-        version: 1.1.1
     devDependencies:
       '@types/react':
         specifier: catalog:react

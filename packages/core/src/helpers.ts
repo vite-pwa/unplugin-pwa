@@ -14,7 +14,7 @@ import type {
   VitePWAStrategy,
 } from './types'
 import path from 'node:path'
-import pc from 'picocolors'
+import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
 import { additionalManifestEntriesFactory } from './additional-manifest-entries'
 import { prepareManifest } from './config'
 
@@ -110,11 +110,11 @@ export function preparePWAAssetsGenerator<
     ctx.pwaAssetsGenerator = import('./pwa-assets/generator').then(({ loadInstructions }) => loadInstructions(ctx)).catch((e) => {
       console.error([
         '',
-        pc.cyan(`PWA v${ctx.version}`),
-        pc.yellow('WARNING: you must install the following dev dependencies to use the PWA assets generator:'),
-        pc.yellow('- "@vite-pwa/assets-generator"'),
-        pc.yellow('- "sharp" (should be installed when installing @vite-pwa/assets-generator)'),
-        pc.yellow('- "sharp-ico" (should be installed when installing @vite-pwa/assets-generator)'),
+        errStyle('cyan', `PWA v${ctx.version}`),
+        errStyle('yellow', 'WARNING: you must install the following dev dependencies to use the PWA assets generator:'),
+        errStyle('yellow', '- "@vite-pwa/assets-generator"'),
+        errStyle('yellow', '- "sharp" (should be installed when installing @vite-pwa/assets-generator)'),
+        errStyle('yellow', '- "sharp-ico" (should be installed when installing @vite-pwa/assets-generator)'),
       ].join('\n'), e)
       return Promise.resolve(undefined)
     })

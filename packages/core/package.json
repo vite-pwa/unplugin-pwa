@@ -136,8 +136,7 @@
   },
   "dependencies": {
     "@vite-pwa/workbox-build": "catalog:pwa",
-    "hookable": "catalog:utils",
-    "picocolors": "catalog:utils"
+    "hookable": "catalog:utils"
   },
   "devDependencies": {
     "@types/react": "catalog:react",

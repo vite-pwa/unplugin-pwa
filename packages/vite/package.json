@@ -104,8 +104,7 @@
     "@unplugin-pwa/inspector": "workspace:*",
     "@vite-pwa/workbox-build": "catalog:pwa",
     "@vite-pwa/workbox-swkit": "catalog:pwa",
-    "@vite-pwa/workbox-window": "catalog:pwa",
-    "picocolors": "catalog:utils"
+    "@vite-pwa/workbox-window": "catalog:pwa"
   },
   "devDependencies": {
     "@types/react": "catalog:react",

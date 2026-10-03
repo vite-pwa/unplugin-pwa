@@ -7,7 +7,7 @@ import { access, readFile } from 'node:fs/promises'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { instructions } from '@vite-pwa/assets-generator/api/instructions'
 import { loadConfig } from '@vite-pwa/assets-generator/config'
-import pc from 'picocolors'
+import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
 import { normalizePath } from '../helpers'
 
 // todo: change logs and error here
@@ -20,8 +20,8 @@ export async function loadAssetsGeneratorContext(
   if (!config.preset) {
     console.error([
       '',
-      pc.cyan(`PWA v${ctx.version}`),
-      pc.red('ERROR: No preset for assets generator found'),
+      errStyle('cyan', `PWA v${ctx.version}`),
+      errStyle('red', 'ERROR: No preset for assets generator found'),
     ].join('\n'))
     return undefined
   }
@@ -35,8 +35,8 @@ export async function loadAssetsGeneratorContext(
   if (!images) {
     console.error([
       '',
-      pc.cyan(`PWA v${ctx.version}`),
-      pc.red('ERROR: No image provided for assets generator'),
+      errStyle('cyan', `PWA v${ctx.version}`),
+      errStyle('red', 'ERROR: No image provided for assets generator'),
     ].join('\n'))
     return
   }
@@ -45,16 +45,16 @@ export async function loadAssetsGeneratorContext(
     if (!images.length) {
       console.error([
         '',
-        pc.cyan(`PWA v${ctx.version}`),
-        pc.red('ERROR: No image provided for assets generator'),
+        errStyle('cyan', `PWA v${ctx.version}`),
+        errStyle('red', 'ERROR: No image provided for assets generator'),
       ].join('\n'))
       return
     }
     if (images.length > 1) {
       console.error([
         '',
-        pc.cyan(`PWA v${ctx.version}`),
-        pc.red('ERROR: Only one image is supported for assets generator'),
+        errStyle('cyan', `PWA v${ctx.version}`),
+        errStyle('red', 'ERROR: Only one image is supported for assets generator'),
       ].join('\n'))
       return
     }
