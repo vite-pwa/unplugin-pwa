@@ -29,6 +29,7 @@
     "rolldown",
     "plugin",
     "ecosystem",
+    "pwa ecosystem",
     "build"
   ],
   "scripts": {
@@ -51,7 +52,6 @@
     "@vitest/ui": "catalog:test",
     "eslint": "catalog:eslint",
     "eslint-plugin-antfu": "catalog:eslint",
-    "picocolors": "catalog:utils",
     "publint": "catalog:utils",
     "taze": "catalog:utils",
     "tsdown": "catalog:build",

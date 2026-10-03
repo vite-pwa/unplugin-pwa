@@ -6,8 +6,8 @@ import { promises as fs } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { generateWebManifest } from '@unplugin-pwa/core/generate-web-manifest'
+import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
 import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
-import pc from 'picocolors'
 import { prepareSwBuild } from '../dev/prepare-sw-build'
 
 export function DevMiddlewarePlugin<
@@ -35,8 +35,8 @@ export function DevMiddlewarePlugin<
           if (ctx.resolvedOptions.manifest && !ctx.resolvedOptions.manifest.theme_color) {
             console.warn([
               '',
-              `${pc.cyan(`PWA v${ctx.version}`)}`,
-              `${pc.yellow('WARNING: "theme_color" is missing from the web manifest, your application will not be able to be installed')}`,
+              `${errStyle('cyan', `PWA v${ctx.version}`)}`,
+              `${errStyle('yellow', 'WARNING: "theme_color" is missing from the web manifest, your application will not be able to be installed')}`,
             ].join('\n'))
           }
           res.statusCode = 200

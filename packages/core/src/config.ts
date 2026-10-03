@@ -10,8 +10,8 @@ import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { pathToFileURL } from 'node:url'
+import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
 import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
-import pc from 'picocolors'
 import { resolvePWAAssetsOptions } from './pwa-assets/options'
 
 function deepMergeObject(magicast: any, object: any) {
@@ -130,14 +130,14 @@ function checkInjectRegister<
   strategy: UserStrategy,
   injectRegister: import('./types').VitePWAOptions<UserStrategy, T>['injectRegister'],
   swType: T,
-  color: typeof pc.yellow | typeof pc.red,
+  color: 'yellow' | 'red',
   buildWarning: string,
 ): string | undefined {
   return swType === 'classic-and-module' && injectRegister === 'inline'
     ? [
-        `\n${color(pc.bold('[Vite PWA]'))} ${color('WRONG CONFIGURATION')}:`,
-        `You are using ${pc.cyan('inline')} for inject register with dual service worker registration.`,
-        `Specify other value at ${pc.cyan('injectRegister')} option${buildWarning}.\n`,
+        `\n${errStyle([color, 'bold'], '[Vite PWA]')} ${errStyle(color, 'WRONG CONFIGURATION')}:`,
+        `You are using ${errStyle('cyan', 'inline')} for inject register with dual service worker registration.`,
+        `Specify other value at ${errStyle('cyan', 'injectRegister')} option${buildWarning}.\n`,
       ].join('\n')
     : undefined
 }
@@ -152,8 +152,8 @@ function checkOptions<
 ): ResolvedVitePWAOptions<ExtractStrategy<UserStrategy>, T> {
   const isDevEnabled = consumerOptions.devOptions?.enabled === true
   const isWarning = isDev && !isDevEnabled
-  const color = isWarning ? pc.yellow : pc.red
-  const warning = isWarning ? `, ${pc.yellow('running build command will fail')}` : ''
+  const color = isWarning ? 'yellow' : 'red'
+  const warning = isWarning ? `, ${errStyle('yellow', 'running build command will fail')}` : ''
   let message: string | undefined
 
   switch (resolvedOptions.strategy) {
@@ -161,9 +161,9 @@ function checkOptions<
       const { swType } = resolvedOptions.injectManifest!
       if (swType === 'classic-and-module') {
         message = [
-          `\n${color(pc.bold('[Vite PWA]'))} ${color('WRONG CONFIGURATION')}:`,
-          `You are using ${pc.cyan(consumerOptions.strategies)} with ${pc.cyan(swType)} service worker type.`,
-          `Specify ${pc.green('classic')} or ${pc.green('module')} at ${pc.cyan('swType')} option${warning}.\n`,
+          `\n${errStyle([color, 'bold'], '[Vite PWA]')} ${errStyle(color, 'WRONG CONFIGURATION')}:`,
+          `You are using ${errStyle('cyan', String(consumerOptions.strategies))} with ${errStyle('cyan', swType)} service worker type.`,
+          `Specify ${errStyle('green', 'classic')} or ${errStyle('green', 'module')} at ${errStyle('cyan', 'swType')} option${warning}.\n`,
         ].join('\n')
       }
       break
@@ -256,10 +256,10 @@ export async function resolvePwaConfiguration<
       const { workbox, generateSW, ...strategyOptions } = rest
       if (workbox && !generateSW) {
         console.warn([
-          `\n${pc.yellow(pc.bold('[Vite PWA]'))} ${pc.yellow('DEPRECATION WARNING')}:`,
-          `You are using ${pc.cyan('workbox')} option, which is now deprecated.`,
-          `Please replace ${pc.cyan('workbox')} with ${pc.green('generateSW')} option.`,
-          `${pc.cyan('workbox')} option will be removed in the next major version.\n`,
+          `\n${errStyle(['yellow', 'bold'], '[Vite PWA]')} ${errStyle('yellow', 'DEPRECATION WARNING')}:`,
+          `You are using ${errStyle('cyan', 'workbox')} option, which is now deprecated.`,
+          `Please replace ${errStyle('cyan', 'workbox')} with ${errStyle('green', 'generateSW')} option.`,
+          `${errStyle('cyan', 'workbox')} option will be removed in the next major version.\n`,
         ].join('\n'))
       }
       return checkOptions(
@@ -299,8 +299,8 @@ export async function resolvePwaConfiguration<
       const swSrcName = pwaOptions.injectManifest?.swSrc
       if (!swSrcName) {
         throw new Error([
-          `\n${pc.red(pc.bold('[Vite PWA]'))} ${pc.red('WRONG CONFIGURATION')}:`,
-          `You are using ${pc.cyan(strategies)} option without ${pc.cyan('swSrc')} option.\n`,
+          `\n${errStyle(['red', 'bold'], '[Vite PWA]')} ${errStyle('red', 'WRONG CONFIGURATION')}:`,
+          `You are using ${errStyle('cyan', strategies)} option without ${errStyle('cyan', 'swSrc')} option.\n`,
         ].join('\n'))
       }
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
@@ -309,13 +309,13 @@ export async function resolvePwaConfiguration<
       ))
       if (invalidStrategy) {
         const isWarning = resolverOptions.isDev && !(pwaOptions?.devOptions?.enabled === true)
-        const warning = isWarning ? `, ${pc.yellow('running build command will fail')}` : ''
-        const color = isWarning ? pc.yellow : pc.red
+        const warning = isWarning ? `, ${errStyle('yellow', 'running build command will fail')}` : ''
+        const color = isWarning ? 'yellow' : 'red'
         const message = [
-          `\n${color(pc.bold('[Vite PWA]'))} ${color('WRONG CONFIGURATION')}:`,
-          `You are using ${pc.cyan(strategies)} option with a service worker ${isTS ? 'as static asset' : 'using TypeScript'}.`,
-          `Please migrate to ${pc.green('buildSW')} option${warning}.`,
-          `${pc.cyan(strategies)} option should be only used when you need to inject a manifest into an existing service worker.\n`,
+          `\n${errStyle([color, 'bold'], '[Vite PWA]')} ${errStyle(color, 'WRONG CONFIGURATION')}:`,
+          `You are using ${errStyle('cyan', strategies)} option with a service worker ${isTS ? 'using TypeScript' : 'as static asset'}.`,
+          `Please migrate to ${errStyle('green', 'buildSW')} option${warning}.`,
+          `${errStyle('cyan', strategies)} option should be only used when you need to inject a manifest into an existing service worker.\n`,
         ].join('\n')
         if (isWarning) {
           console.warn(message)
