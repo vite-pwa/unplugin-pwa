@@ -104,8 +104,8 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
     "*.d.ts",
+    "dist",
     "types"
   ],
   "engines": {

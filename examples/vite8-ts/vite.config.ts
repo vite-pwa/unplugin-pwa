@@ -1,12 +1,12 @@
 import type { Plugin } from 'vite'
-import { VitePWA } from '@vite-pwa/vite'
+import { VitePWA } from '@unplugin-pwa/vite'
 // import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { DevTools } from '@vitejs/devtools'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 
 const swSrc = 'src/sw.ts'
-const swDest = 'sw.js'
+const _swDest = 'sw.js'
 
 function virtualMessagePlugin(): Plugin {
   const virtual = 'virtual:message'

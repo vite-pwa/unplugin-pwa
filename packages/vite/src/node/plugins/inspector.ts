@@ -8,15 +8,15 @@ import type {
 import {
   INSPECTOR_BASE_PATH_API,
   INSPECTOR_BASE_PATH_URL,
-} from '@vite-pwa/unplugin-pwa/constants'
+} from '@unplugin-pwa/core/constants'
 import {
   preparePWAConfigurationData,
   prepareServiceWorkerData,
-} from '@vite-pwa/unplugin-pwa/inspector-utils'
-import { inspectorWithInjectManifestWarning } from '@vite-pwa/unplugin-pwa/logs'
+} from '@unplugin-pwa/core/inspector-utils'
+import { inspectorWithInjectManifestWarning } from '@unplugin-pwa/core/logs'
 import {
   resolveInspectorDist,
-} from '@vite-pwa/unplugin-pwa/resolve-inspector-dist'
+} from '@unplugin-pwa/core/resolve-inspector-dist'
 
 export function InspectorPlugin<
   UserStrategy extends VitePWAStrategy,

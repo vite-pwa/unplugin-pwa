@@ -6,7 +6,7 @@ import { exactRegex } from '@rolldown/pluginutils'
 import {
   PWA_INFO_VIRTUAL,
   RESOLVED_PWA_INFO_VIRTUAL,
-} from '@vite-pwa/unplugin-pwa/constants'
+} from '@unplugin-pwa/core/constants'
 
 export function InfoPlugin<
   UserStrategy extends VitePWAStrategy,
