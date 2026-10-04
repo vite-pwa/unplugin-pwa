@@ -39,4 +39,4 @@ documentation:
       - '**/README.md'
       - CONTRIBUTING.md
       - ARCHITECTURE.md
-      - 'packages/vite/BREAKING-CHANGES.md'
+      - packages/vite/BREAKING-CHANGES.md
