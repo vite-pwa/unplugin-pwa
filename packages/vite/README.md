@@ -46,11 +46,10 @@ The plugin itself is built on top of these utilities, and so are the integration
 
 > 🔄 **Replaces `vite-plugin-pwa`.** `@unplugin-pwa/vite` is the successor of [`vite-plugin-pwa`](https://npmx.dev/package/vite-plugin-pwa). Upgrading requires a few changes, see the [breaking changes guide](https://github.com/vite-pwa/unplugin-pwa/blob/main/packages/vite/BREAKING-CHANGES.md).
 
-
 | You are… | Use |
 | --- | --- |
-| Building a plain Vite app | The Vite plugin |
-| Using Vite < 8 | The legacy plugin |
+| Building a plain Vite app | The Vite plugin: `import { VitePWA } from '@unplugin-pwa/vite'` |
+| Using Vite < 6 | The legacy plugin: `import { ViteLegacyPWA } from '@unplugin-pwa/vite/legacy'` |
 | Using a supported meta-framework | Its dedicated integration (it depends on this package) |
 | Creating your own integration | The exported utilities |
 
