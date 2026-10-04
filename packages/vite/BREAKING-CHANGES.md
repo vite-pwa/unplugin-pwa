@@ -33,29 +33,48 @@ Clients that already have your old service worker installed cannot be updated cl
 ```js
 // public/sw.js: same name as your current service worker
 self.addEventListener('install', (e) => {
-  self.skipWaiting()
-})
+  self.skipWaiting();
+});
 self.addEventListener('activate', (e) => {
-  self.registration.unregister()
-    .then(() => self.clients.matchAll())
-    .then((clients) => {
-      clients.forEach((client) => {
-        if (client instanceof WindowClient)
-          client.navigate(client.url)
-      })
-      return Promise.resolve()
-    })
-    .then(() => {
-      self.caches.keys().then((cacheNames) => {
-        Promise.all(
-          cacheNames.map((cacheName) => {
-            return self.caches.delete(cacheName)
-          })
-        )
-      })
-    })
-})
+  e.waitUntil((async () => {
+	await self.registration.unregister();
+	const cacheNames = await self.caches.keys();
+	await Promise.all(cacheNames.map(name => self.caches.delete(name)));
+	const clients = await self.clients.matchAll({ type: 'window' });
+	await Promise.all(clients.map(client => client.navigate(client.url).catch(() => {})));
+  })());
+});
 ```
+
+> ⚠️ This deletes **all** caches of the origin. If several apps share the same origin (for example, under different paths), filter by cache name instead (filter `self.caches` before deleting).
+
+<details>
+<summary>Variant: delete only your app's caches</summary>
+
+Filter the cache names before deleting. Workbox names its caches `workbox-precache-v2-<scope>` and `workbox-runtime-<scope>` by default, so adapt the filter if you set a custom `cacheId` or your own cache names:
+
+```js
+// public/sw.js: same name as your current service worker
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (e) => {
+  e.waitUntil((async () => {
+    await self.registration.unregister();
+    const cacheNames = await self.caches.keys();
+    await Promise.all(
+      cacheNames
+        .filter(name => name.startsWith('workbox-'))
+        .map(name => self.caches.delete(name))
+    );
+    const clients = await self.clients.matchAll({ type: 'window' });
+    await Promise.all(clients.map(client => client.navigate(client.url).catch(() => {})));
+  })());
+});
+```
+
+</details>
 
 **2. Give the new service worker a different file name**, because Vite copies `public` assets after the build and would overwrite a generated file with the same name:
 
