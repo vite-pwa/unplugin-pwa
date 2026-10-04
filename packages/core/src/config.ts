@@ -231,7 +231,7 @@ export async function resolvePwaConfiguration<
     pwaAssets,
     filename = 'sw.js',
     strategies = 'generateSW',
-    swType,
+    swType = 'classic',
     includeManifest = true,
     includeManifestIcons = true,
     includeManifestShortcutIcons = true,
@@ -263,6 +263,7 @@ export async function resolvePwaConfiguration<
           `${errStyle('cyan', 'workbox')} option will be removed in the next major version.\n`,
         ].join('\n'))
       }
+      const { inlineWorkboxRuntime = true, ...generateSWOptions } = generateSW ?? workbox ?? {}
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -283,7 +284,8 @@ export async function resolvePwaConfiguration<
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
-          generateSW: Object.assign(generateSW ?? workbox ?? {}, {
+          generateSW: Object.assign(generateSWOptions, {
+            inlineWorkboxRuntime,
             swDest: filename,
             swType,
             minify,
@@ -390,6 +392,7 @@ export async function resolvePwaConfiguration<
     }
     case 'build-sw':
     case 'buildSW': {
+      const { inlineWorkboxRuntime = true, ...buildSWOptions } = rest.buildSW ?? {}
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -410,7 +413,8 @@ export async function resolvePwaConfiguration<
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
-          buildSW: Object.assign(rest.buildSW ?? {}, {
+          buildSW: Object.assign(buildSWOptions, {
+            inlineWorkboxRuntime,
             swDest: filename,
             swType,
             minify,
