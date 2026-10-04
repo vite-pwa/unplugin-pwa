@@ -428,7 +428,16 @@ export async function resolvePwaConfiguration<
     }
     case 'self-destroy-sw':
     case 'selfDestroySW': {
-      return Object.assign({}, rest, { strategy: 'self-destroy-sw' }) as ResolvedVitePWAOptions<ExtractStrategy<UserStrategy>, T>
+      throw new Error([
+        `\n${errStyle(['red', 'bold'], '[Vite PWA] self-destroying')} ${errStyle('red', 'strategy is no longer supported directly in the build process.')}`,
+        '  It has been replaced by an interactive Self Destroying SW CLI. This tool will safely generate',
+        '  the necessary auto-destroying Service Workers for your specific setup (including dual classic/ESM builds)',
+        '  and update your config automatically.',
+        '  The Self Destroying SW CLI is not yet available, in the meantime check:',
+        '  https://github.com/vite-pwa/unplugin-pwa/blob/main/packages/vite/BREAKING-CHANGES.md#1-do-i-need-to-change-my-service-worker-setup-read-this-first',
+        '\n',
+      ].join('\n'))
+      // return Object.assign({}, rest, { strategy: 'self-destroy-sw' }) as ResolvedVitePWAOptions<ExtractStrategy<UserStrategy>, T>
     }
   }
 

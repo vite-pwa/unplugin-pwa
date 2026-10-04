@@ -27,8 +27,7 @@ Clients that already have your old service worker installed cannot be updated cl
 
 > ⚠️ Users lose their cached assets once, and register the new service worker afterward.
 
-> 💡 A codemod to generate the self-destroying service worker is planned (see [Self-destroying strategy removed](#14-self-destroying-strategy-removed)).
-> In the meantime you can use the following code (see [Unregister Service Worker](https://vite-pwa-org.netlify.app/guide/unregister-service-worker.html#unregister-service-worker)):
+> 💡 An interactive **Self Destroying SW CLI** to automatically generate the self-destroying service worker(s) and update your config is planned (see [Self-destroying strategy removed](#14-self-destroying-strategy-removed)).
 
 ```js
 // public/sw.js: same name as your current service worker
@@ -291,7 +290,7 @@ The extra entries the integrations used to add are gone. `buildSW` exposes entri
 
 ## 14. Self-destroying strategy removed
 
-The `self-destroy-sw` strategy is no longer supported by the plugin. A codemod is planned to generate the self-destroying service worker in your `public` folder. See [section 1](#1-do-i-need-to-change-my-service-worker-setup-read-this-first) for when you need it.
+The `self-destroy-sw` strategy is no longer supported directly in the build process. An interactive **Self Destroying SW CLI** is planned to safely generate the necessary auto-destroying Service Workers in your `public` folder and update your configuration automatically. See [section 1](#1-do-i-need-to-change-my-service-worker-setup-read-this-first) for manual instructions in the meantime.
 
 ## 15. Dependencies
 

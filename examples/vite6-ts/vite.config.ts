@@ -30,7 +30,7 @@ export default defineConfig({
     // virtualMessagePlugin(),
     VitePWA({
       swType: 'classic-and-module',
-      strategies: 'build-sw',
+      strategies: 'self-destroy-sw',
       includeAssets: ['favicon.ico', 'favicon.svg'],
       // includeManifestIcons: true,
       minify: false,
