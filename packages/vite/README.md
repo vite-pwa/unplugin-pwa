@@ -44,6 +44,9 @@ The plugin itself is built on top of these utilities, and so are the integration
 
 ## 🧩 Which one do I use?
 
+> 🔄 **Replaces `vite-plugin-pwa`.** `@unplugin-pwa/vite` is the successor of [`vite-plugin-pwa`](https://npmx.dev/package/vite-plugin-pwa). Upgrading requires a few changes, see the [breaking changes guide](https://github.com/vite-pwa/unplugin-pwa/blob/main/packages/vite/BREAKING-CHANGES.md).
+
+
 | You are… | Use |
 | --- | --- |
 | Building a plain Vite app | The Vite plugin |

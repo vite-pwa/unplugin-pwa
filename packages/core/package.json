@@ -115,8 +115,8 @@
     "build": "tsdown --config-loader unrun",
     "test:typecheck": "tsc --noEmit",
     "prepack": "pnpm run build",
-    "test:ci": "vitest run",
-    "test": "vitest"
+    "xtest:ci": "vitest run",
+    "xtest": "vitest"
   },
   "peerDependencies": {
     "@vite-pwa/assets-generator": "^1.0.0 || ^2.0.0",
