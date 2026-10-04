@@ -2,9 +2,11 @@
 
 `@unplugin-pwa/vite` replaces `vite-plugin-pwa`. This guide lists what you need to change when migrating.
 
+> ⚠️ Everyone must also update the plugin import, see [section 2](#2-plugin-import-and-vite-version).
+
 ## 1. Do I need to change my service worker setup? (read this first)
 
-Upgrading does **not** change your service worker by default: the defaults behave like `vite-plugin-pwa` (classic service worker, Workbox runtime inline, no code splitting). What you need to do depends on what you want to end up with:
+Upgrading does **not** change your service worker by default: the defaults behave like `vite-plugin-pwa` (classic service worker, inlined Workbox runtime, no code splitting). What you need to do depends on what you want to end up with:
 
 | Your goal | Action required |
 | --- | --- |
@@ -25,11 +27,41 @@ Clients that already have your old service worker installed cannot be updated cl
 
 > ⚠️ Users lose their cached assets once, and register the new service worker afterward.
 
+> 💡 A codemod to generate the self-destroying service worker is planned (see [Self-destroying strategy removed](#14-self-destroying-strategy-removed)).
+> In the meantime you can use the following code (see [Unregister Service Worker](https://vite-pwa-org.netlify.app/guide/unregister-service-worker.html#unregister-service-worker)):
+
+```js
+// public/sw.js: same name as your current service worker
+self.addEventListener('install', (e) => {
+  self.skipWaiting()
+})
+self.addEventListener('activate', (e) => {
+  self.registration.unregister()
+    .then(() => self.clients.matchAll())
+    .then((clients) => {
+      clients.forEach((client) => {
+        if (client instanceof WindowClient)
+          client.navigate(client.url)
+      })
+      return Promise.resolve()
+    })
+    .then(() => {
+      self.caches.keys().then((cacheNames) => {
+        Promise.all(
+          cacheNames.map((cacheName) => {
+            return self.caches.delete(cacheName)
+          })
+        )
+      })
+    })
+})
+```
+
 **2. Give the new service worker a different file name**, because Vite copies `public` assets after the build and would overwrite a generated file with the same name:
 
 ```diff
 VitePWA({
-+  filename: 'sw-app.js',
++  filename: 'new-sw.js',
 })
 ```
 
@@ -45,12 +77,37 @@ VitePWA({
 })
 ```
 
-Code splitting applies to both `generateSW` and `buildSW`. `injectRegister: 'inline'` cannot be used with `classic-and-module` (see section 12).
+Code splitting applies to both `generateSW` and `buildSW`. `injectRegister: 'inline'` cannot be used with `classic-and-module` (see [`injectRegister: 'inline'` and dual service worker](#13-injectregister-inline-and-dual-service-worker)).
 
-> 💡 A codemod to generate the self-destroying service worker is planned (see section 13).
- 
+## 2. Plugin import and Vite version
 
-## 2. Client types (`tsconfig.json`)
+The plugin is now exported by `@unplugin-pwa/vite`. Which export you use depends on your Vite version:
+
+| Your Vite version | Import |
+| --- | --- |
+| Vite 6 or above | `import { VitePWA } from '@unplugin-pwa/vite'` |
+| Vite < 6 | `import { ViteLegacyPWA } from '@unplugin-pwa/vite/legacy'` |
+
+```diff
+- import { VitePWA } from 'vite-plugin-pwa'
++ import { VitePWA } from '@unplugin-pwa/vite'
+```
+
+For Vite < 6:
+
+```diff
+- import { VitePWA } from 'vite-plugin-pwa'
++ import { ViteLegacyPWA } from '@unplugin-pwa/vite/legacy'
+
+export default {
+  plugins: [
+-   VitePWA({ /* ... */ }),
++   ViteLegacyPWA({ /* ... */ }),
+  ],
+}
+```
+
+## 3. Client types (`tsconfig.json`)
 
 The virtual module type declarations are no longer shipped by the Vite plugin: they live in `@unplugin-pwa/core`, shared by all integrations.
 
@@ -73,13 +130,13 @@ Replace the `vite-plugin-pwa/<framework>` entries in your `tsconfig.json` with `
 | `vite-plugin-pwa/vanillajs` | `@unplugin-pwa/core/vanillajs` |
 | `vite-plugin-pwa/vue` | `@unplugin-pwa/core/vue` |
 | `vite-plugin-pwa/preact` | `@unplugin-pwa/core/preact` |
-| `vite-plugin-pwa/react` | `@unplugin-pwa/core/react` (or `@unplugin-pwa/core/react-legacy`, see section 2) |
+| `vite-plugin-pwa/react` | `@unplugin-pwa/core/react` (or `@unplugin-pwa/core/react-legacy`, see the [React section](#4-react-useregistersw-now-registers-in-an-effect)) |
 | `vite-plugin-pwa/solid` | `@unplugin-pwa/core/solid` |
 | `vite-plugin-pwa/svelte` | `@unplugin-pwa/core/svelte` |
 | `vite-plugin-pwa/info` | `@unplugin-pwa/core/info` |
 | `vite-plugin-pwa/pwa-assets` | `@unplugin-pwa/core/pwa-assets` |
 
-> 💡 **Note:** your code does not change. The virtual module names are the same (`virtual:pwa-register`, `virtual:pwa-register/vue`, `virtual:pwa-info`...), and so are the `declare module 'virtual:...'` augmentations you may have in your project. The only exception is the React legacy implementation, see section 2.
+> 💡 **Note:** your code does not change. The virtual module names are the same (`virtual:pwa-register`, `virtual:pwa-register/vue`, `virtual:pwa-info`...), and so are the `declare module 'virtual:...'` augmentations you may have in your project. The only exception is the React legacy implementation, see the [React section](#4-react-useregistersw-now-registers-in-an-effect).
 
 If you also reference the types with a triple-slash directive, update it the same way:
 
@@ -88,7 +145,7 @@ If you also reference the types with a triple-slash directive, update it the sam
 + /// <reference types="@unplugin-pwa/core/client" />
 ```
 
-## 3. React: `useRegisterSW` now registers in an effect
+## 4. React: `useRegisterSW` now registers in an effect
 
 The `virtual:pwa-register/react` module keeps the same name and the same `declare module` types, but the generated implementation changed. The previous implementation is still available as `virtual:pwa-register/react-legacy`.
 
@@ -127,20 +184,22 @@ If you need the previous behavior while you migrate, use the legacy implementati
 }
 ```
 
-> ⚠️ The legacy implementation is **deprecated** and will be removed in a future major version. It registers during render, which is not safe with React Strict Mode or concurrent rendering.
+> 💡 **Note:** `@unplugin-pwa/core/client` does **not** include the legacy declarations. If you use `client`, add `@unplugin-pwa/core/react-legacy` next to it.
 
-## 4. Requirements
+> ⚠️ The legacy implementation is **deprecated** and will be removed in the next major version. It registers during render, which is a side effect React discourages.
+
+## 5. Requirements
 
 - **Node.js 22.14.0 or above.**
-- **Vite 5 or above.** Vite 3 and 4 may or may not work.
+- **Vite 6 or above** for `VitePWA`. For Vite < 6 use `ViteLegacyPWA` (`@unplugin-pwa/vite/legacy`).
 - **`buildSW` strategy:** requires Vite 8 or Rolldown 1.
 - **`generateSW` strategy:** requires `magicast` ^0.5.0.
 
-## 5. Service worker templates removed
+## 6. Service worker templates removed
 
 The built-in service worker templates are gone. If you relied on them, write your own service worker and use `buildSW` or `injectManifest`.
 
-## 6. `workbox` option deprecated
+## 7. `workbox` option deprecated
 
 Use `generateSW` instead. `workbox` will be removed in the next major version.
 
@@ -151,7 +210,7 @@ VitePWA({
 })
 ```
 
-## 6. `srcDir` removed
+## 8. `srcDir` removed
 
 `srcDir` pointed to `public` in the original types, which made no sense: Vite copies `public` assets after the build and would override the generated service worker. The service worker must live in your sources, and `swSrc` must be the path **relative to the cwd**:
 
@@ -164,18 +223,33 @@ VitePWA({
 })
 ```
 
-## 7. `injectManifest` with a TypeScript or `public` service worker
+## 9. `injectManifest` is only for static service workers in `public`
 
-If `swSrc` ends in `.ts`/`.mts`, or the service worker is in `public`, `injectManifest` cannot work: it does not build the service worker. Migrate to `buildSW`.
+`vite-plugin-pwa` used `public` as the default source directory for the service worker. `injectManifest` no longer builds the service worker, it only injects the precache manifest (`self.__WB_MANIFEST`). That means it only works with a **plain JavaScript service worker located in `public`**, together with any assets it imports (they must be in `public` too, because Vite copies them as they are).
 
-- With the dev service worker **disabled**, the dev server starts and logs a warning.
+If your service worker is written in TypeScript (`.ts`/`.mts`) or lives outside `public`, move it to your sources and migrate to `buildSW`, with `swSrc` relative to the cwd (see section 8):
+
+```diff
+VitePWA({
+-  strategies: 'injectManifest',
+-  injectManifest: { swSrc: 'src/sw.ts' },
++  strategies: 'buildSW',
++  buildSW: { swSrc: 'src/sw.ts' },
+})
+```
+
+A service worker in `public` cannot use `buildSW`: Vite copies `public` assets after the build and would overwrite the generated file.
+
+What happens if you don't migrate:
+
+- With the dev service worker **disabled** (`devOptions.enabled` not `true`), the dev server starts and logs a warning, because the production build will fail.
 - Otherwise, or in a production build, it fails with an error.
 
-## 8. `buildSW` does not expose the service worker to Vite
+## 10. `buildSW` does not expose the service worker to Vite
 
 `vite-plugin-pwa` relied on Vite to transpile the service worker in development. `@unplugin-pwa/vite` always builds it, so any Vite plugins the service worker needs must go **only** in the `buildSW` options.
 
-## 9. Options moved to the root
+## 11. Options moved to the root
 
 To avoid duplication, these options moved from the strategy options to the root of the plugin options:
 
@@ -192,46 +266,88 @@ VitePWA({
 })
 ```
 
-## 10. Integration entries removed
+## 12. Integration entries removed
 
 The extra entries the integrations used to add are gone. `buildSW` exposes entries so you can add custom ones.
 
-## 11. `injectRegister: 'inline'` and dual service worker
+## 13. `injectRegister: 'inline'` and dual service worker
 
 `injectRegister: 'inline'` cannot be combined with a dual (classic and module) service worker. Use another value or a virtual module.
 
-## 12. Self-destroying strategy removed
+## 14. Self-destroying strategy removed
 
-The `self-destroy-sw` strategy is no longer supported by the plugin. A codemod will be provided to generate the self-destroying service worker in your `public` folder. See the next section for when you need to generate a new service worker.
+The `self-destroy-sw` strategy is no longer supported by the plugin. A codemod is planned to generate the self-destroying service worker in your `public` folder. See [section 1](#1-do-i-need-to-change-my-service-worker-setup-read-this-first) for when you need it.
 
-## 13. Migrating to a dual service worker (opt-in)
+## 15. Dependencies
 
-This is **not required** to upgrade: the defaults behave like `vite-plugin-pwa` (classic service worker, Workbox runtime inline, no code splitting).
+### Replace the Workbox packages
 
-Enable the dual build only if you want to serve a classic and a module service worker at the same time. Clients that already have the old service worker installed must drop it first, so the migration has two steps.
+If your project depends on any of the following packages, replace them:
 
-### Step 1: replace the old service worker
+| Before | After |
+| --- | --- |
+| `vite-plugin-pwa` | `@unplugin-pwa/vite` |
+| `workbox-build` | `@vite-pwa/workbox-build` |
+| `workbox-window` | `@vite-pwa/workbox-window` |
+| `workbox-precaching`, `workbox-routing`, `workbox-core`, `workbox-strategies`, `workbox-expiration`... (any service worker module) | `@vite-pwa/workbox-swkit` |
 
-Add a self-destroying service worker to `public/`, using **the same file name as your current service worker** (`sw.js` by default). Clients that load it will unregister the old installation, clear its caches and reload.
+`@vite-pwa/workbox-swkit` contains all the service worker modules as subpath exports (`/core`, `/precaching`, `/routing`...).
 
-> ⚠️ Keep this file in `public/` permanently. You can't know when a client with the old service worker will visit again, and removing it would leave those clients stuck.
+```diff
+{
+  "devDependencies": {
+-   "vite-plugin-pwa": "...",
+-   "workbox-build": "...",
+-   "workbox-window": "...",
+-   "workbox-precaching": "...",
+-   "workbox-routing": "...",
++   "@unplugin-pwa/vite": "...",
++   "@vite-pwa/workbox-build": "...",
++   "@vite-pwa/workbox-window": "...",
++   "@vite-pwa/workbox-swkit": "..."
+  }
+}
+```
 
-> ⚠️ Users lose their cached assets once, and register the new service worker afterward.
+> 💡 `@vite-pwa/workbox-swkit` also exports a default barrel with all the modules. `@vite-pwa/workbox-build` takes care of tree-shaking, including the classic build, so importing from the barrel does not bloat your service worker.
 
-> ⚠️ Vite copies `public` assets after the build, so the dual build must not emit a file with that same name, or the copy will overwrite it. Check the generated file names.
+### Using `workbox-swkit` in your service worker
 
-### Step 2: change the configuration
+Import the modules from `@vite-pwa/workbox-swkit/<module>` instead of `workbox-*`. This is an example of a service worker built with the `buildSW` strategy:
+
+```ts
+// src/sw.ts
+import { clientsClaim } from '@vite-pwa/workbox-swkit/core'
+import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from '@vite-pwa/workbox-swkit/precaching'
+import { NavigationRoute, registerRoute } from '@vite-pwa/workbox-swkit/routing'
+
+declare let self: ServiceWorkerGlobalScope
+
+// self.__WB_MANIFEST is the default injection point
+precacheAndRoute(self.__WB_MANIFEST)
+
+// clean old assets
+cleanupOutdatedCaches()
+
+let allowlist: undefined | RegExp[]
+if (import.meta.env.DEV)
+  allowlist = [/^\/$/]
+
+// to allow work offline
+registerRoute(new NavigationRoute(
+  createHandlerBoundToURL('index.html'),
+  { allowlist },
+))
+
+self.skipWaiting()
+clientsClaim()
+```
 
 ```diff
 VitePWA({
-+  swType: 'classic-and-module',
-   // optional: split the Workbox runtime into separate chunks
-+  // inlineWorkboxRuntime: false,
-   // optional: split your own modules (for example, push notifications)
-+  // customChunks: id => id.includes('push') ? 'push' : undefined,
+  strategies: 'buildSW',
+  buildSW: { swSrc: 'src/sw.ts' },
 })
 ```
 
-`injectRegister: 'inline'` cannot be used with `classic-and-module` (see section 11). Code splitting applies to both `generateSW` and `buildSW`.
-
-
+Because `buildSW` builds the service worker with Vite or Rolldown, your service worker can also import your own modules and virtual modules, like any other source file.
