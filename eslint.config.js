@@ -19,6 +19,11 @@ export default antfu({
     'no-restricted-globals': 'off',
   },
 }, {
+  files: ['**/*.md/**'],
+  rules: {
+    'no-restricted-globals': 'off',
+  },
+}, {
   // it detects nested arrays wrongly
   files: ['.github/labeler.yml'],
   rules: {

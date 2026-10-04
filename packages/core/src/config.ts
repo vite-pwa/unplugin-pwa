@@ -213,9 +213,10 @@ export async function resolvePwaConfiguration<
      */
     isDev: boolean
     /**
-     * When using `inject-manifest` this must resolve if the strategy is wrong, the default implementation should be:
-     * - if the service worker `.ts` or `.mts` then it is `build-sw` strategy (must return false) or
-     * - if the service worker inside public dir then it is `build-sw` strategy (must return false)
+     * When using `inject-manifest`, this callback must resolve if the strategy is wrong, the implementation should be:
+     * - if the service worker with `.ts` or `.mts` extension, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+     * - if the service worker outside public dir, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+     * - otherwise must return false
      */
     isWrongInjectManifest: (swSrc: string) => boolean | Promise<boolean>
   },

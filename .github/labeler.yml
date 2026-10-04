@@ -36,5 +36,7 @@
 documentation:
   - changed-files:
     - any-glob-to-any-file:
-      - README.md
+      - '**/README.md'
       - CONTRIBUTING.md
+      - ARCHITECTURE.md
+      - packages/vite/BREAKING-CHANGES.md
