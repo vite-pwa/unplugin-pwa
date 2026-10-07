@@ -49,6 +49,7 @@
     "@arethetypeswrong/core": "catalog:utils",
     "@types/node": "catalog:types",
     "@types/trusted-types": "catalog:types",
+    "@vitest/coverage-v8": "catalog:test",
     "@vitest/ui": "catalog:test",
     "eslint": "catalog:eslint",
     "eslint-plugin-antfu": "catalog:eslint",

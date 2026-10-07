@@ -24,3 +24,6 @@ examples/workbox-cli/custom-build/*.map
 # temp-fixtures
 !packages/workbox/build/test/temp-fixtures/DO_NOT_REMOVE.txt
 packages/workbox/build/test/temp-fixtures/
+
+# vitest v8
+**/coverage/
