@@ -37,6 +37,7 @@ overrides:
   sharp: ^0.35.4
   semver: ^7.8.4
   vue: 3.5.40
+  why-is-node-running: 'catalog:utils'
 
 allowBuilds:
   '@parcel/watcher': false
@@ -105,24 +106,25 @@ catalogs:
     typedoc: ^0.28.20
     unrun: ^0.3.1
     verkit: ^0.5.0
+    why-is-node-running: 3.2.1
 
   vite:
     vite: 8.3.1
   vite5:
-    vite: 5.3.6
+    vite: npm:vite@5.3.6
   vite6:
-    vite: 6.4.3
+    vite: npm:vite@6.4.3
   vite7:
-    vite: 7.3.6
+    vite: npm:vite@7.3.6
   # vite 8
   vite-plugin-inspect:
     '@vitejs/devtools': 0.3.3
     vite-plugin-inspect: 12.0.2
   # vite 6/7
   vite-plugin-inspect-legacy:
-    vite-plugin-inspect: 11.4.1
+    vite-plugin-inspect: npm:vite-plugin-inspect@11.4.1
   vite-plugin-inspect-ancient:
-    vite-plugin-inspect: 0.7.42
+    vite-plugin-inspect: npm:vite-plugin-inspect@0.7.42
   vue:
     '@vitejs/plugin-vue': ^6.0.9
     vue: 3.5.40
