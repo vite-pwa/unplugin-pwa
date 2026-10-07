@@ -54,7 +54,9 @@ describe('additionalManifestEntriesFactory', () => {
   })
 
   it('without manifest only the consumer generator is used', async () => {
-    const consumerGenerator = async function* () { yield 'extra.html' }
+    const consumerGenerator = async function* () {
+      yield 'extra.html'
+    }
     const ctx = createCtx(
       { includeManifest: true, includeAssets: ['a.svg'] },
       { additionalManifestEntriesGenerator: consumerGenerator },
@@ -104,7 +106,9 @@ describe('additionalManifestEntriesFactory', () => {
   })
 
   it('keeps a stable order: manifest, icons, shortcuts, screenshots, assets, consumer', async () => {
-    const consumerGenerator = async function* () { yield 'consumer.js' }
+    const consumerGenerator = async function* () {
+      yield 'consumer.js'
+    }
     const ctx = createCtx(
       {
         includeManifest: true,
