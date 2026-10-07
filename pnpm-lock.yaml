@@ -140,7 +140,7 @@ catalogs:
       version: 0.5.0
   vite:
     vite:
-      specifier: 8.3.1
+      specifier: ^8.3.1
       version: 8.3.1
   vite-plugin-inspect:
     vite-plugin-inspect:

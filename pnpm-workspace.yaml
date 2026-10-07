@@ -110,7 +110,7 @@ catalogs:
     why-is-node-running: 3.2.1
 
   vite:
-    vite: 8.3.1
+    vite: ^8.3.1
   vite5:
     vite: npm:vite@5.3.6
   vite6:
