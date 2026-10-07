@@ -50,6 +50,7 @@
     "@types/node": "catalog:types",
     "@types/trusted-types": "catalog:types",
     "@vitest/ui": "catalog:test",
+    "@vitest/coverage-v8": "",
     "eslint": "catalog:eslint",
     "eslint-plugin-antfu": "catalog:eslint",
     "publint": "catalog:utils",

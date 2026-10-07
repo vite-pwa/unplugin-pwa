@@ -56,6 +56,7 @@ catalogs:
     eslint: ^10.10.0
     eslint-plugin-antfu: ^3.2.3
   test:
+    '@vitest/coverage-v8': ^5.0.0
     '@vitest/ui': ^5.0.0
     vitest: ^5.0.0
 
