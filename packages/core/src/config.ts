@@ -263,7 +263,11 @@ export async function resolvePwaConfiguration<
           `${errStyle('cyan', 'workbox')} option will be removed in the next major version.\n`,
         ].join('\n'))
       }
-      const { inlineWorkboxRuntime = true, ...generateSWOptions } = generateSW ?? workbox ?? {}
+      const {
+        inlineWorkboxRuntime = true,
+        workboxRuntimeCompatible = true,
+        ...generateSWOptions
+      } = generateSW ?? workbox ?? {}
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -286,6 +290,7 @@ export async function resolvePwaConfiguration<
         }, {
           generateSW: Object.assign(generateSWOptions, {
             inlineWorkboxRuntime,
+            workboxRuntimeCompatible,
             swDest: filename,
             swType,
             minify,
@@ -392,7 +397,11 @@ export async function resolvePwaConfiguration<
     }
     case 'build-sw':
     case 'buildSW': {
-      const { inlineWorkboxRuntime = true, ...buildSWOptions } = rest.buildSW ?? {}
+      const {
+        inlineWorkboxRuntime = true,
+        workboxRuntimeCompatible = true,
+        ...buildSWOptions
+      } = rest.buildSW ?? {}
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -415,6 +424,7 @@ export async function resolvePwaConfiguration<
         }, {
           buildSW: Object.assign(buildSWOptions, {
             inlineWorkboxRuntime,
+            workboxRuntimeCompatible,
             swDest: filename,
             swType,
             minify,

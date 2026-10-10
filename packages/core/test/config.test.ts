@@ -171,6 +171,7 @@ describe('resolvePwaConfiguration', () => {
       })
       expect(result.generateSW).toMatchObject({
         inlineWorkboxRuntime: true,
+        workboxRuntimeCompatible: true,
         swDest: 'sw.js',
         swType: 'classic',
       })
@@ -254,10 +255,15 @@ describe('resolvePwaConfiguration', () => {
   })
 
   describe('buildSW', () => {
-    it('resolves build-sw with inlineWorkboxRuntime enabled by default', async () => {
+    it('resolves build-sw with inlineWorkboxRuntime and workboxRuntimeCompatible enabled by default', async () => {
       const result = await resolve({ strategies: 'buildSW', buildSW: { swSrc: 'src/sw.ts' } })
       expect(result.strategy).toBe('build-sw')
-      expect(result.buildSW).toMatchObject({ swSrc: 'src/sw.ts', swDest: 'sw.js', inlineWorkboxRuntime: true })
+      expect(result.buildSW).toMatchObject({
+        swSrc: 'src/sw.ts',
+        swDest: 'sw.js',
+        inlineWorkboxRuntime: true,
+        workboxRuntimeCompatible: true,
+      })
     })
   })
 
