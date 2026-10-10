@@ -41,18 +41,22 @@
     "build": "pnpm -r --filter=\"./packages/**/\" run build",
     "update:deps": "taze -I",
     "update:workflows": "pnpm dlx actions-up -y",
-    "update:workflows:dry": "pnpm dlx actions-up --dry-run"
+    "update:workflows:dry": "pnpm dlx actions-up --dry-run",
+    "test:typescript": "pnpm -C examples/vanilla-ts-no-ip run test",
+    "test:vite-ecosystem-ci": "nr test:typescript"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:eslint",
     "@antfu/ni": "catalog:utils",
     "@arethetypeswrong/core": "catalog:utils",
+    "@playwright/test": "catalog:utils",
     "@types/node": "catalog:types",
     "@types/trusted-types": "catalog:types",
     "@vitest/coverage-v8": "catalog:test",
     "@vitest/ui": "catalog:test",
     "eslint": "catalog:eslint",
     "eslint-plugin-antfu": "catalog:eslint",
+    "playwright-core": "catalog:utils",
     "publint": "catalog:utils",
     "taze": "catalog:utils",
     "tsdown": "catalog:build",
