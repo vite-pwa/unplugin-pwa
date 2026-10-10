@@ -2,7 +2,7 @@ autoInstallPeers: true
 
 catalogMode: prefer
 
-# change this once added
+# change this once added missing deps
 cleanupUnusedCatalogs: false
 
 dedupePeers: true
@@ -53,18 +53,20 @@ catalogs:
     tsdown: ^0.23.0
   eslint:
     '@antfu/eslint-config': ^9.5.1
-    eslint: ^10.11.0
+    eslint: ^10.12.0
     eslint-plugin-antfu: ^3.2.3
   test:
+    '@types/lodash-es': ^4.17.12
     '@vitest/coverage-v8': ^5.0.3
     '@vitest/ui': ^5.0.3
+    lodash-es: ^4.18.1
     vitest: ^5.0.3
 
   pwa:
     '@vite-pwa/assets-generator': ^2.0.0
-    '@vite-pwa/workbox-build': ^8.0.8
-    '@vite-pwa/workbox-window': ^8.0.8
-    '@vite-pwa/workbox-swkit': ^8.0.8
+    '@vite-pwa/workbox-build': ^8.0.9
+    '@vite-pwa/workbox-window': ^8.0.9
+    '@vite-pwa/workbox-swkit': ^8.0.9
 
   inspector:
     '@iconify-json/mdi': ^1.2.3
@@ -74,7 +76,7 @@ catalogs:
     '@vitejs/devtools': ^0.7.6
     '@vitejs/devtools-kit': ^0.7.6
     '@vueuse/core': ^14.4.0
-    devframe: ^1.1.0
+    devframe: ^1.2.0
     unocss: ^66.10.5
     vue-router: ^5.3.1
 
@@ -88,19 +90,21 @@ catalogs:
   svelte:
     svelte: ^5.57.1
   types:
-    '@types/node': 24.19.0
+    '@types/node': 24.19.1
     '@types/trusted-types': ^2.0.7
   typescript:
     typescript: ~6.0.3
   utils:
     '@antfu/ni': ^25.0.0
     '@arethetypeswrong/core': ^0.18.5
+    '@playwright/test': 1.63.0
     '@rolldown/pluginutils': ^1.0.1
     '@sentry/vite-plugin': ^5.4.0
     hookable: ^6.1.2
     magic-string: ^1.4.2
     magicast: ^0.5.5
-    publint: ^0.3.24
+    playwright-core: 1.63.0
+    publint: ^0.3.25
     rolldown: ^1.2.12
     taze: 21.1.0
     tinyglobby: ^0.2.17
@@ -110,7 +114,7 @@ catalogs:
     why-is-node-running: 3.2.1
 
   vite:
-    vite: ^8.3.1
+    vite: ^8.3.2
   vite5:
     vite: npm:vite@5.3.6
   vite6:
@@ -129,14 +133,14 @@ catalogs:
   vue:
     '@vitejs/plugin-vue': ^6.0.9
     vue: 3.5.43
-    vue-tsc: ^3.3.11
+    vue-tsc: ^3.3.12
 
 minimumReleaseAgeExclude:
-  - vite@8.3.1
+  - vite@8.3.2
   - svelte@5.56.9
-  - '@vite-pwa/workbox-build@8.0.8'
-  - '@vite-pwa/workbox-swkit@8.0.8'
-  - '@vite-pwa/workbox-window@8.0.8'
+  - '@vite-pwa/workbox-build@8.0.9'
+  - '@vite-pwa/workbox-swkit@8.0.9'
+  - '@vite-pwa/workbox-window@8.0.9'
 
 supportedArchitectures:
   os:

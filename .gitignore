@@ -27,3 +27,7 @@ packages/workbox/build/test/temp-fixtures/
 
 # vitest v8
 **/coverage/
+
+# temp folders
+dev-dist/
+dist-examples-root/

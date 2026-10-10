@@ -72,5 +72,5 @@ jobs:
       - name: Typecheck
         run: pnpm run test:typecheck
 
-#      - name: Test
-#        run: pnpm run test:ci
+      - name: Test
+        run: pnpm run test:ci
