@@ -28,6 +28,7 @@ packages/workbox/build/test/temp-fixtures/
 # vitest v8
 **/coverage/
 
-# temp folders
+# temp folders for Vitest and Playwright tests
 dev-dist/
 dist-examples-root/
+test-results/
