@@ -25,6 +25,25 @@ import {
   resolveSWSrc,
 } from '@unplugin-pwa/core/helpers'
 import { prepareSwNames } from '@unplugin-pwa/core/prepare-sw-names'
+import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
+
+export function resolveAndValidateBaseUrl(
+  consumerBaseUrl: string | undefined,
+  resolvedBase: string,
+  strategyName: 'generate-sw' | 'build-sw',
+  disabled: boolean,
+): string {
+  if (!disabled && consumerBaseUrl && consumerBaseUrl !== resolvedBase) {
+    throw new Error([
+      `\n${errStyle(['red', 'bold'], '[@unplugin-pwa/vite]')} ${errStyle('red', 'WRONG CONFIGURATION:')}`,
+      `The ${errStyle('cyan', 'baseUrl')} option in ${errStyle('cyan', strategyName)} (${errStyle('yellow', `'${consumerBaseUrl}'`)}) does not match the resolved base path (${errStyle('yellow', `'${resolvedBase}'`)}).`,
+      `To fix this, you can:`,
+      `  - remove ${errStyle('cyan', 'baseUrl')} from your PWA configuration to let Vite handle it automatically, or`,
+      `  - ensure both values are identical.\n`,
+    ].join('\n'))
+  }
+  return resolvedBase
+}
 
 /**
  * Configures the PWA strategy at the resolved PWA options.
@@ -47,6 +66,12 @@ export async function preparePWAStrategy<
   switch (ctx.strategy) {
     case 'generate-sw':
       ctx.resolvedOptions.generateSW ??= {} as ResolvedGenerateSW<ExtractStrategy<UserStrategy>, T>
+      ctx.resolvedOptions.generateSW!.baseUrl = resolveAndValidateBaseUrl(
+        ctx.resolvedOptions.generateSW!.baseUrl,
+        ctx.resolvedOptions.base!,
+        'generate-sw',
+        ctx.resolvedOptions.disable || (ctx.devEnvironment && ctx.consumerOptions.devOptions?.enabled !== true),
+      )
       options = ctx.resolvedOptions.generateSW
       break
     case 'inject-manifest':
@@ -55,6 +80,12 @@ export async function preparePWAStrategy<
       break
     case 'build-sw':
       ctx.resolvedOptions.buildSW ??= {} as ResolvedBuildSW<ExtractStrategy<UserStrategy>, T>
+      ctx.resolvedOptions.buildSW!.baseUrl = resolveAndValidateBaseUrl(
+        ctx.resolvedOptions.buildSW!.baseUrl,
+        ctx.resolvedOptions.base!,
+        'build-sw',
+        ctx.resolvedOptions.disable || (ctx.devEnvironment && ctx.consumerOptions.devOptions?.enabled !== true),
+      )
       options = ctx.resolvedOptions.buildSW
       // todo: finish alias, ask sapphi-red
       // add vite/rolldown aliases
