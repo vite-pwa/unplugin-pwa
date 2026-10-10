@@ -255,7 +255,7 @@ describe('resolvePwaConfiguration', () => {
   })
 
   describe('buildSW', () => {
-    it('resolves build-sw with inlineWorkboxRuntime, workboxRuntimeCompatible and baseUrl enabled by default', async () => {
+    it('resolves build-sw with inlineWorkboxRuntime and workboxRuntimeCompatible enabled by default', async () => {
       const result = await resolve({ strategies: 'buildSW', buildSW: { swSrc: 'src/sw.ts' } })
       expect(result.strategy).toBe('build-sw')
       expect(result.buildSW).toMatchObject({
