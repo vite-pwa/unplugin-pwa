@@ -172,7 +172,6 @@ describe('resolvePwaConfiguration', () => {
       expect(result.generateSW).toMatchObject({
         inlineWorkboxRuntime: true,
         workboxRuntimeCompatible: true,
-        baseUrl: '/',
         swDest: 'sw.js',
         swType: 'classic',
       })
@@ -264,7 +263,6 @@ describe('resolvePwaConfiguration', () => {
         swDest: 'sw.js',
         inlineWorkboxRuntime: true,
         workboxRuntimeCompatible: true,
-        baseUrl: '/',
       })
     })
   })

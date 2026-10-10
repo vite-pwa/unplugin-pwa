@@ -266,7 +266,6 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = true,
         workboxRuntimeCompatible = true,
-        baseUrl = '/',
         ...generateSWOptions
       } = generateSW ?? workbox ?? {}
       return checkOptions(
@@ -292,7 +291,6 @@ export async function resolvePwaConfiguration<
           generateSW: Object.assign(generateSWOptions, {
             inlineWorkboxRuntime,
             workboxRuntimeCompatible,
-            baseUrl,
             swDest: filename,
             swType,
             minify,
@@ -402,7 +400,6 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = true,
         workboxRuntimeCompatible = true,
-        baseUrl = '/',
         ...buildSWOptions
       } = rest.buildSW ?? {}
       return checkOptions(
@@ -428,7 +425,6 @@ export async function resolvePwaConfiguration<
           buildSW: Object.assign(buildSWOptions, {
             inlineWorkboxRuntime,
             workboxRuntimeCompatible,
-            baseUrl,
             swDest: filename,
             swType,
             minify,
