@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test'
 import process from 'node:process'
 import { expect, test } from '@playwright/test'
+import { PW_SW_RACE_TIMEOUT, PW_TEST_PAGE_LOAD_TIMEOUT } from '../constants'
 
 const customSW = process.env.SW === 'true'
 
@@ -17,17 +18,25 @@ async function findCache(page: Page) {
   })
 }
 
-test('TypeScript (no injection point): The service worker is registered', async ({ page }) => {
-  await page.goto('/')
-
-  const swURL = await page.evaluate(async () => {
+async function awaitSWRegistration(page: Page, timeoutMs: number): Promise<string> {
+  return await page.evaluate(async (timeout) => {
     const registration = await Promise.race([
       navigator.serviceWorker.ready,
-      new Promise((_resolve, reject) => setTimeout(() => reject(new Error('Service worker registration failed: time out')), 10_000)),
+      new Promise((_resolve, reject) => {
+        setTimeout(() => reject(new Error(
+          'Service worker registration failed: time out',
+        )), timeout)
+      }),
     ])
     // @ts-expect-error registration is of type unknown
     return registration.active?.scriptURL
-  })
+  }, timeoutMs)
+}
+
+test('TypeScript (no injection point): The service worker is registered', async ({ page }) => {
+  await page.goto('/')
+
+  const swURL = await awaitSWRegistration(page, PW_SW_RACE_TIMEOUT)
   expect(swURL).toBe(`http://localhost:4173/${swName}`)
 
   let cacheContents = await findCache(page)
@@ -35,14 +44,9 @@ test('TypeScript (no injection point): The service worker is registered', async 
   if (customSW) {
     expect(Object.keys(cacheContents).length).toEqual(0)
 
-    await page.reload({ timeout: 2000 })
+    await page.reload({ timeout: PW_TEST_PAGE_LOAD_TIMEOUT })
 
-    await page.evaluate(async () => {
-      await Promise.race([
-        navigator.serviceWorker.ready,
-        new Promise((_resolve, reject) => setTimeout(() => reject(new Error('Service worker registration failed: time out')), 10_000)),
-      ])
-    })
+    await awaitSWRegistration(page, PW_SW_RACE_TIMEOUT)
 
     cacheContents = await findCache(page)
 

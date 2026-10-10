@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 import { isCI } from 'std-env'
+import { PW_EXPECT_TIMEOUT, PW_TIMEOUT } from './constants'
 
 const url = 'http://localhost:4173'
 
@@ -16,13 +17,13 @@ export default defineConfig({
   testDir: './client-test',
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: 'test-results/',
-  timeout: 5 * 1000,
+  timeout: PW_TIMEOUT,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 1000,
+    timeout: PW_EXPECT_TIMEOUT,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
