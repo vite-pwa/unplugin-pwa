@@ -27,6 +27,7 @@ flowchart LR
     %% Internal Relations
         Builders -. "Injects Context" .-> Core
         Core == "Dynamic Import" === WB
+        Client -. "Virtual Modules resolved by the adapter/builder" .-> Vite
     end
 
 %% External Connections
