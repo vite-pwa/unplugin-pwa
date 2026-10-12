@@ -124,7 +124,7 @@ catalogs:
       specifier: ^6.1.2
       version: 6.1.2
     magic-string:
-      specifier: ^1.4.2
+      specifier: ^1.4.3
       version: 1.4.3
     magicast:
       specifier: ^0.5.5
