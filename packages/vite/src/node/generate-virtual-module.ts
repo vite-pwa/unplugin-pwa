@@ -1,4 +1,4 @@
-import type { PWAPluginContext } from '@unplugin-pwa/core/src/context-types'
+import type { PWAPluginContext } from '@unplugin-pwa/core/context-types'
 import { promises as fs } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
