@@ -13,7 +13,7 @@ Upgrading does **not** change your service worker by default, the defaults behav
 What you need to do depends on what you want to end up with:
 
 | Strategy | Your goal | Action required |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | `generateSW` | Keep **classic**, same as today | None | None |
 | `generateSW` |  Keep **classic** and disable code splitting | None | None |
 | `generateSW` |  Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
