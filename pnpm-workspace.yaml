@@ -101,7 +101,7 @@ catalogs:
     '@rolldown/pluginutils': ^1.0.1
     '@sentry/vite-plugin': ^5.4.0
     hookable: ^6.1.2
-    magic-string: ^1.4.2
+    magic-string: ^1.4.3
     magicast: ^0.5.5
     playwright-core: 1.63.0
     publint: ^0.3.25
