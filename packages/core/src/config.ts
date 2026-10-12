@@ -264,7 +264,7 @@ export async function resolvePwaConfiguration<
         ].join('\n'))
       }
       const {
-        inlineWorkboxRuntime = true,
+        inlineWorkboxRuntime = false,
         workboxRuntimeCompatible = true,
         ...generateSWOptions
       } = generateSW ?? workbox ?? {}

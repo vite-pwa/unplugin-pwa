@@ -170,7 +170,7 @@ describe('resolvePwaConfiguration', () => {
         pwaAssets: 'resolved-pwa-assets',
       })
       expect(result.generateSW).toMatchObject({
-        inlineWorkboxRuntime: true,
+        inlineWorkboxRuntime: false,
         workboxRuntimeCompatible: true,
         swDest: 'sw.js',
         swType: 'classic',
