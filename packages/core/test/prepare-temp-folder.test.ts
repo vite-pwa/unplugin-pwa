@@ -13,11 +13,9 @@ vi.mock('node:fs', () => ({
 }))
 
 describe('prepareTempFolder', () => {
-  let cwdSpy: any
-
   beforeEach(() => {
     // We anchor the working directory so the traversal is predictable
-    cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue('/mock/project/src')
+    vi.spyOn(process, 'cwd').mockReturnValue('/mock/project/src')
     // By default, we simulate that no folders are found
     vi.mocked(fs.statSync).mockReturnValue(undefined)
   })
