@@ -10,7 +10,7 @@ import {
   RESOLVED_DEV_SW_VIRTUAL_VIRTUAL,
   VIRTUAL_MODULES,
   VIRTUAL_MODULES_MAP,
-  VIRTUAL_MODULES_RESOLVE_PREFIX,
+  VIRTUAL_MODULES_RESOLVED_PREFIX,
 } from '@unplugin-pwa/core/constants'
 import { generateVirtualModule } from '../generate-virtual-module'
 
@@ -35,11 +35,11 @@ export function VirtualModulesPlugin<
         }
 
         // condition is kept for backward compatibility for below Vite v6.3
-        return VIRTUAL_MODULES.includes(id) ? VIRTUAL_MODULES_RESOLVE_PREFIX + id : undefined
+        return VIRTUAL_MODULES.includes(id) ? VIRTUAL_MODULES_RESOLVED_PREFIX + id : undefined
       },
     },
     load: {
-      filter: { id: [prefixRegex(VIRTUAL_MODULES_RESOLVE_PREFIX), exactRegex(RESOLVED_DEV_SW_VIRTUAL_VIRTUAL)] },
+      filter: { id: [prefixRegex(VIRTUAL_MODULES_RESOLVED_PREFIX), exactRegex(RESOLVED_DEV_SW_VIRTUAL_VIRTUAL)] },
       async handler(id) {
         /* if (!ctx.envApi && ctx.bundler === 'vite-legacy' && ctx.viteConfig.build.ssr) {
           return
@@ -51,8 +51,8 @@ export function VirtualModulesPlugin<
         }
 
         // condition is kept for backward compatibility for below Vite v6.3
-        if (id.startsWith(VIRTUAL_MODULES_RESOLVE_PREFIX)) {
-          id = id.slice(VIRTUAL_MODULES_RESOLVE_PREFIX.length)
+        if (id.startsWith(VIRTUAL_MODULES_RESOLVED_PREFIX)) {
+          id = id.slice(VIRTUAL_MODULES_RESOLVED_PREFIX.length)
         }
         else {
           return
