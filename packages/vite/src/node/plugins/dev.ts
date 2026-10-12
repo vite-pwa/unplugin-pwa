@@ -14,7 +14,7 @@ import {
   FILE_SW_REGISTER,
   RESOLVED_DEV_SW_VIRTUAL,
   VIRTUAL_MODULES,
-  VIRTUAL_MODULES_RESOLVE_PREFIX,
+  VIRTUAL_MODULES_RESOLVED_PREFIX,
 } from '@unplugin-pwa/core/constants'
 import { prepareSwNamesAndGlobDirectory } from '@unplugin-pwa/core/dev/prepare-sw-names-and-glob-directory'
 import { isDualServiceWorker } from '@unplugin-pwa/core/dual-sw-utilities'
@@ -211,7 +211,7 @@ export function DevPlugin<
           for (const m of internalDevOptions.swAssetsPaths.keys()) {
             // we need to invalidate resolved virtual modules
             const mod = VIRTUAL_MODULES.includes(m)
-              ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVE_PREFIX + m)
+              ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
               : m === DEV_SW_VIRTUAL
                 ? moduleGraph.getModuleById(RESOLVED_DEV_SW_VIRTUAL)
                 : moduleGraph.getModuleById(m)
@@ -229,7 +229,7 @@ export function DevPlugin<
           for (const m of internalDevOptions.swAssetsPaths.keys()) {
             // we need to invalidate resolved virtual modules
             const mod = VIRTUAL_MODULES.includes(m)
-              ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVE_PREFIX + m)
+              ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
               : m === DEV_SW_VIRTUAL
                 ? moduleGraph.getModuleById(RESOLVED_DEV_SW_VIRTUAL)
                 : moduleGraph.getModuleById(m)
@@ -333,7 +333,7 @@ function createSwitchServiceWorkerResponseHandler(
       for (const m of internalDevOptions.swAssetsPaths.keys()) {
         // we need to invalidate resolved virtual modules
         const mod = VIRTUAL_MODULES.includes(m)
-          ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVE_PREFIX + m)
+          ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
           : m === DEV_SW_VIRTUAL
             ? moduleGraph.getModuleById(RESOLVED_DEV_SW_VIRTUAL)
             : moduleGraph.getModuleById(m)
@@ -351,7 +351,7 @@ function createSwitchServiceWorkerResponseHandler(
       for (const m of internalDevOptions.swAssetsPaths.keys()) {
         // we need to invalidate resolved virtual modules
         const mod = VIRTUAL_MODULES.includes(m)
-          ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVE_PREFIX + m)
+          ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
           : m === DEV_SW_VIRTUAL
             ? moduleGraph.getModuleById(RESOLVED_DEV_SW_VIRTUAL)
             : moduleGraph.getModuleById(m)

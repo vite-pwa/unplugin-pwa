@@ -44,7 +44,6 @@
     "./create-web-manifest-html-link": "./dist/create-web-manifest-html-link.mjs",
     "./dual-sw-utilities": "./dist/dual-sw-utilities.mjs",
     "./generate-register-sw": "./dist/generate-register-sw.mjs",
-    "./generate-virtual-module": "./dist/generate-virtual-module.mjs",
     "./generate-web-manifest": "./dist/generate-web-manifest.mjs",
     "./html": "./dist/html.mjs",
     "./helpers": "./dist/helpers.mjs",
