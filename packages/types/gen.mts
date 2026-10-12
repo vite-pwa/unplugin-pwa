@@ -1,8 +1,29 @@
 /* eslint-disable no-console */
-import { mkdirSync, rmSync } from 'node:fs'
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import core from '@unplugin-pwa/core/package.json' with { type: 'json' }
+import vite from '@unplugin-pwa/vite/package.json' with { type: 'json' }
 import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
 import { Application, OptionDefaults } from 'typedoc'
+
+function writeSubpackageExports(apiDir: string) {
+  const entries = [
+    ['@unplugin-pwa/core', core.exports ?? {}],
+    ['@unplugin-pwa/vite', vite.exports ?? {}],
+  ] as const
+
+  const pkgExports: Record<string, string[]> = {}
+  const regex = /^\.\//
+  for (const [pkg, exports] of entries) {
+    console.log(pkg, pkgExports)
+    pkgExports[pkg] = Object.keys(exports).filter(key => key !== '.' && key !== './package.json').reduce((acc, key) => {
+      acc.push(key.replace(regex, ''))
+      return acc
+    }, [] as string[])
+  }
+
+  writeFileSync(`${apiDir}/subpackage-exports.json`, JSON.stringify(pkgExports, null, 2))
+}
 
 async function init() {
   const here = new URL('.', import.meta.url)
@@ -115,6 +136,8 @@ async function init() {
 
     await app.generateJson(project, abs(`./api/${output}`))
   }
+
+  writeSubpackageExports(apiDir)
 
   console.log('\n[gen] done — per-package JSON written to api/')
 }

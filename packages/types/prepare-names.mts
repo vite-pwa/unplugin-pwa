@@ -8,8 +8,12 @@ async function prepareNames() {
     expandDirectories: false,
   })
   for (const file of files.sort()) {
+    const name = file.replace(/\\/g, '/')
+    if (name.startsWith('../vite/src/client/') || name.endsWith('.d.ts')) {
+      continue
+    }
     // eslint-disable-next-line no-console
-    console.log(`        '${file.replace(/\\/g, '/')}',`)
+    console.log(`        '${name}',`)
   }
 }
 

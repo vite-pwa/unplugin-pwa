@@ -29,6 +29,7 @@
   "exports": {
     "./unplugin-pwa/core": "./api/core.json",
     "./unplugin-pwa/vite": "./api/vite.json",
+    "./subpackages-exports": "./api/subpackage-exports.json",
     "./package.json": "./package.json"
   },
   "files": [
