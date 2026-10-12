@@ -10,7 +10,9 @@ export function resolveInspectorDist(): string | undefined {
   try {
     inspectorJSON = findPackageJSON(
       '@vite-pwa/inspector',
-      typeof __dirname !== 'undefined' ? __dirname : import.meta.url,
+      typeof __dirname !== 'undefined'
+        ? __dirname
+        : /* v8 ignore next */ import.meta.url,
     )
   }
   catch {
