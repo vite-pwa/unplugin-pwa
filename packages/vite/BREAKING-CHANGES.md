@@ -6,14 +6,22 @@
 
 ## 1. Do I need to change my service worker setup? (read this first)
 
-Upgrading does **not** change your service worker by default: the defaults behave like `vite-plugin-pwa` (classic service worker, inlined Workbox runtime, no code splitting). What you need to do depends on what you want to end up with:
+Upgrading does **not** change your service worker by default, the defaults behave like `vite-plugin-pwa`:
+- `generateSW` strategy (`generateSW` also at `vite-plugin-pwa` ): classic service worker with external Workbox runtime (code splitting). 
+- `buildSW` strategy (`injectManifest` at `vite-plugin-pwa` ): classic service worker with inlined Workbox runtime (no code splitting).
 
-| Your goal | Action required |
-| --- | --- |
-| Keep **classic**, same as today | None |
-| Keep **classic** and enable code splitting | None |
-| Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
-| Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
+What you need to do depends on what you want to end up with:
+
+| Strategy | Your goal | Action required |
+| --- | --- | --- | --- |
+| `generateSW` | Keep **classic**, same as today | None | None |
+| `generateSW` |  Keep **classic** and disable code splitting | None | None |
+| `generateSW` |  Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
+| `generateSW` |  Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
+| `injectManifest` | Keep **classic**, same as today | None | None |
+| `injectManifest` |  Keep **classic** and enable code splitting | None | None |
+| `injectManifest` | Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
+| `injectManifest` | Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
 
 ### Why the old service worker must be replaced
 
@@ -81,13 +89,28 @@ VitePWA({
 
 **3. Change the configuration:**
 
+For `buildSW` strategy:
 ```diff
 VitePWA({
 +  swType: 'module', // or 'classic-and-module'
-   // optional: split the Workbox runtime into separate chunks
-+  // inlineWorkboxRuntime: false,
-   // optional: split your own modules (for example, push notifications)
-+  // customChunks: id => id.includes('push') ? 'push' : undefined,
+   buildSW: {
+     // optional: split the Workbox runtime into separated chunks (code splitting)
++    // inlineWorkboxRuntime: true,
+     // optional: split your own modules (for example, push notifications)
++    // customChunks: id => id.includes('push.ts') ? 'push' : undefined,
+   },
+})
+```
+
+For `generateSW` strategy:
+
+```diff
+VitePWA({
++  swType: 'module', // or 'classic-and-module'
+   generateSW: {
+     // optional: inline Workbox runtime into the service worker (no code splitting)
++    // inlineWorkboxRuntime: false,
+   },
 })
 ```
 
@@ -206,8 +229,8 @@ If you need the previous behavior while you migrate, use the legacy implementati
 
 - **Node.js 22.14.0 or above.**
 - **Vite 6 or above** for `VitePWA`. For Vite < 6 use `ViteLegacyPWA` (`@unplugin-pwa/vite/legacy`).
-- **`buildSW` strategy:** requires Vite 8 or Rolldown 1.
-- **`generateSW` strategy:** requires `magicast` ^0.5.0.
+- **`buildSW/generateSW` strategy:** requires Vite 8 or Rolldown 1.
+- **`generateSW` strategy:** requires also `magicast` ^0.5.0.
 
 ## 6. Service worker templates removed
 
@@ -215,7 +238,7 @@ The built-in service worker templates are gone. If you relied on them, write you
 
 ## 7. `workbox` option deprecated
 
-Use `generateSW` instead. `workbox` will be removed in the next major version.
+Use `generateSW` instead. `workbox` option will be removed in the next major version.
 
 ```diff
 VitePWA({
