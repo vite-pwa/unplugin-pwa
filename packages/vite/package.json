@@ -33,6 +33,7 @@
     ".": "./dist/node/index.mjs",
     "./legacy": "./dist/node/legacy.mjs",
     "./inject-manifest-hook": "./dist/node/inject-manifest-hook.mjs",
+    "./generate-virtual-module": "./dist/node/generate-virtual-module.mjs",
     "./helpers": "./dist/node/helpers.mjs",
     "./pwa-assets-resolver": "./dist/node/pwa-assets-resolver.mjs",
     "./vite-context": "./dist/node/vite-context.mjs",

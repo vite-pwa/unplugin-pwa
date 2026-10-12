@@ -12,7 +12,7 @@ import {
   VIRTUAL_MODULES_MAP,
   VIRTUAL_MODULES_RESOLVE_PREFIX,
 } from '@unplugin-pwa/core/constants'
-import { generateVirtualModule } from '@unplugin-pwa/core/generate-virtual-module'
+import { generateVirtualModule } from '../generate-virtual-module'
 
 export function VirtualModulesPlugin<
   UserStrategy extends VitePWAStrategy,
