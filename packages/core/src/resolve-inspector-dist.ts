@@ -2,18 +2,13 @@ import { createRequire, findPackageJSON } from 'node:module'
 import { dirname, resolve } from 'node:path'
 
 /**
- * Locate the built-in inspector SPA.
+ * Locate the built-in inspector folder.
  */
 export function resolveInspectorDist(): string | undefined {
   let inspectorJSON: string | undefined
 
   try {
-    inspectorJSON = findPackageJSON(
-      '@vite-pwa/inspector',
-      typeof __dirname !== 'undefined'
-        ? __dirname
-        : /* v8 ignore next */ import.meta.url,
-    )
+    inspectorJSON = findPackageJSON('@vite-pwa/inspector', import.meta.url)
   }
   catch {
     try {
