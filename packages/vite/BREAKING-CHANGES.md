@@ -95,7 +95,7 @@ VitePWA({
 +  swType: 'module', // or 'classic-and-module'
    buildSW: {
      // optional: split the Workbox runtime into separated chunks (code splitting)
-+    // inlineWorkboxRuntime: true,
++    // inlineWorkboxRuntime: false,
      // optional: split your own modules (for example, push notifications)
 +    // customChunks: id => id.includes('push.ts') ? 'push' : undefined,
    },
