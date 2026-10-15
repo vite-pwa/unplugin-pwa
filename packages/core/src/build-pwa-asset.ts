@@ -1,4 +1,5 @@
 import type { SWType } from '@vite-pwa/workbox-build/types'
+import type { OutputOptions, RolldownBuild, RolldownOutput } from 'rolldown'
 import type { Bundler, PWAPluginContext } from './context-types'
 import type { VitePWAStrategy } from './types'
 import { resolveSWNames } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
@@ -84,6 +85,18 @@ export async function buildPwaAsset<
   )
 }
 
+async function writeAsset(
+  instance: RolldownBuild,
+  options: OutputOptions,
+): Promise<RolldownOutput> {
+  try {
+    return await instance.generate(options)
+  }
+  finally {
+    await instance.close()
+  }
+}
+
 async function buildPwaAssetWithRolldown(
   code: string,
   define: Record<string, any>,
@@ -125,18 +138,21 @@ async function buildPwaAssetWithRolldown(
   })
 
   // in memory build
-  const result = await bundle.generate({
-    format: 'esm',
-    topLevelVar: true,
-    cleanDir: false,
-    comments: {
-      legal: !isDev && !minify,
-      jsdoc: false,
-      annotation: false,
+  const result = await writeAsset(
+    bundle,
+    {
+      format: 'esm',
+      topLevelVar: true,
+      cleanDir: false,
+      comments: {
+        legal: !isDev && !minify,
+        jsdoc: false,
+        annotation: false,
+      },
+      minify: isDev ? false : minify,
+      codeSplitting: false,
     },
-    minify: isDev ? false : minify,
-    codeSplitting: false,
-  })
+  )
 
   const chunk = result.output.find(e => e.fileName === input && e.type === 'chunk') as import('rolldown').OutputChunk
 
