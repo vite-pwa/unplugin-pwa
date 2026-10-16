@@ -64,9 +64,9 @@ catalogs:
 
   pwa:
     '@vite-pwa/assets-generator': ^2.0.0
-    '@vite-pwa/workbox-build': ^8.0.11
-    '@vite-pwa/workbox-window': ^8.0.11
-    '@vite-pwa/workbox-swkit': ^8.0.11
+    '@vite-pwa/workbox-build': ^8.0.12
+    '@vite-pwa/workbox-window': ^8.0.12
+    '@vite-pwa/workbox-swkit': ^8.0.12
 
   inspector:
     '@iconify-json/mdi': ^1.2.3
@@ -138,9 +138,9 @@ catalogs:
 minimumReleaseAgeExclude:
   - vite@8.3.2
   - svelte@5.56.9
-  - '@vite-pwa/workbox-build@8.0.11'
-  - '@vite-pwa/workbox-swkit@8.0.11'
-  - '@vite-pwa/workbox-window@8.0.11'
+  - '@vite-pwa/workbox-build'
+  - '@vite-pwa/workbox-swkit'
+  - '@vite-pwa/workbox-window'
 
 supportedArchitectures:
   os:
