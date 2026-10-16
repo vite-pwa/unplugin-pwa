@@ -12,16 +12,16 @@ Upgrading does **not** change your service worker by default, the defaults behav
 
 What you need to do depends on what you want to end up with:
 
-| Strategy | Your goal | Action required |
-| --- | --- | --- | --- |
-| `generateSW` | Keep **classic**, same as today | None | None |
-| `generateSW` |  Keep **classic** and disable code splitting | None | None |
-| `generateSW` |  Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
-| `generateSW` |  Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
-| `injectManifest` | Keep **classic**, same as today | None | None |
-| `injectManifest` |  Keep **classic** and enable code splitting | None | None |
-| `injectManifest` | Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
-| `injectManifest` | Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) | Self-destroying service worker for the old one + rename the new one (see below) |
+| Strategy | Your goal | Action required | 
+| --- | --- | --- | 
+| `generateSW` | Keep **classic**, same as today | None | 
+| `generateSW` |  Keep **classic** and disable code splitting | None | 
+| `generateSW` |  Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
+| `generateSW` |  Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
+| `injectManifest` | Keep **classic**, same as today | None |
+| `injectManifest` |  Keep **classic** and enable code splitting | None |
+| `injectManifest` | Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
+| `injectManifest` | Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
 
 ### Why the old service worker must be replaced
 
@@ -35,7 +35,7 @@ Clients that already have your old service worker installed cannot be updated cl
 
 > ⚠️ Users lose their cached assets once, and register the new service worker afterward.
 
-> 💡 An interactive **Self Destroying SW CLI** to automatically generate the self-destroying service worker(s) and update your config is planned (see [Self-destroying strategy removed](#14-self-destroying-strategy-removed)).
+> 💡 An interactive **Self Destroying SW CLI** to automatically generate the self-destroying service worker(s) and update your config is planned (see [Self-destroying strategy removed](#13-self-destroying-strategy-removed)).
 
 ```js
 // public/sw.js: same name as your current service worker
@@ -114,7 +114,7 @@ VitePWA({
 })
 ```
 
-Code splitting applies to both `generateSW` and `buildSW`. `injectRegister: 'inline'` cannot be used with `classic-and-module` (see [`injectRegister: 'inline'` and dual service worker](#13-injectregister-inline-and-dual-service-worker)).
+Code splitting applies to both `generateSW` and `buildSW`. `injectRegister: 'inline'` cannot be used with `classic-and-module` (see [`injectRegister: 'inline'` and dual service worker](#12-injectregister-inline-and-dual-service-worker)).
 
 ## 2. Plugin import and Vite version
 
@@ -282,11 +282,7 @@ What happens if you don't migrate:
 - With the dev service worker **disabled** (`devOptions.enabled` not `true`), the dev server starts and logs a warning, because the production build will fail.
 - Otherwise, or in a production build, it fails with an error.
 
-## 10. `buildSW` does not expose the service worker to Vite
-
-`vite-plugin-pwa` relied on Vite to transpile the service worker in development. `@unplugin-pwa/vite` always builds it, so any Vite plugins the service worker needs must go **only** in the `buildSW` options.
-
-## 11. Options moved to the root
+## 10. Options moved to the root
 
 To avoid duplication, these options moved from the strategy options to the root of the plugin options:
 
@@ -303,19 +299,19 @@ VitePWA({
 })
 ```
 
-## 12. Integration entries removed
+## 11. Integration entries removed
 
 The extra entries the integrations used to add are gone. `buildSW` exposes entries so you can add custom ones.
 
-## 13. `injectRegister: 'inline'` and dual service worker
+## 12. `injectRegister: 'inline'` and dual service worker
 
 `injectRegister: 'inline'` cannot be combined with a dual (classic and module) service worker. Use another value or a virtual module.
 
-## 14. Self-destroying strategy removed
+## 13. Self-destroying strategy removed
 
 The `self-destroy-sw` strategy is no longer supported directly in the build process. An interactive **Self Destroying SW CLI** is planned to safely generate the necessary auto-destroying Service Workers in your `public` folder and update your configuration automatically. See [section 1](#1-do-i-need-to-change-my-service-worker-setup-read-this-first) for manual instructions in the meantime.
 
-## 15. Dependencies
+## 14. Dependencies
 
 ### Replace the Workbox packages
 
@@ -388,3 +384,80 @@ VitePWA({
 ```
 
 Because `buildSW` builds the service worker with Vite or Rolldown, your service worker can also import your own modules and virtual modules, like any other source file.
+
+## 15. `buildSW` does not expose the service worker to Vite
+
+While `vite-plugin-pwa` relied on Vite to transpile the service worker in development, `@unplugin-pwa/vite` always builds it using an isolated pipeline. Consequently, any Vite plugins required by the service worker must be configured **exclusively** within the `buildSW` options.
+
+A notable side effect of this architectural change is that the service worker can no longer be inspected via `vite-plugin-inspect` (since it runs outside the main Vite dev server). To restore this developer experience, we are actively working on bringing dedicated service worker inspection capabilities natively to `@unplugin-pwa/inspector`.
+
+Certain `buildSW` options are passed directly to the internal Vite or Rolldown instance during the service worker build. The `buildSW` options extend from [EnvironmentData](https://github.com/vite-pwa/workbox/blob/main/packages/build/src/build/types.ts), where you can configure specific environment variables for the Vite or Rolldown build pipeline:
+- [Vite BuildServiceWorkerOptions](https://github.com/vite-pwa/workbox/blob/main/packages/build/src/build/vite/types.ts)
+- [Vite LegacyBuildServiceWorkerOptions](https://github.com/vite-pwa/workbox/blob/main/packages/build/src/build/vite/legacy-types.ts)
+- [Rolldown BuildServiceWorkerOptions](https://github.com/vite-pwa/workbox/blob/main/packages/build/src/build/rolldown/types.ts) for legacy Vite < 8
+
+Some of the options have been moved to the root of the plugin options, see [section 10](#10-options-moved-to-the-root).
+
+### `enableWorkboxModulesLogs` is now `enableSWKitLogs`
+
+If your `vite-plugin-pwa` configuration is using `enableWorkboxModulesLogs`, replace it with the new `enableSWKitLogs` option in the `buildSW` configuration:
+
+```diff
+VitePWA({
+-  strategies: 'injectManifest',
+-  injectManifest: { enableWorkboxModulesLogs: true },
++  strategies: 'build-sw',
++  buildSW: { enableSWKitLogs: true },
+})
+```
+
+> [!WARNING]
+> `enableSWKitLogs` is meant for debugging only. It also enables the SWKit assertions and increases the size of the service worker bundle, so don't ship it to production. A simple way to keep it off by default is to read it from an environment variable:
+>
+> ```ts
+> buildSW: {
+>   enableSWKitLogs: process.env.ENABLE_SWKIT_LOGS === 'true'
+> }
+> ```
+
+### Enabling SWKit logs in your service worker
+
+`@vite-pwa/workbox-swkit` gates its logger behind `process.env.NODE_ENV !== 'production'`, so in a production build the logger is removed from the output and setting `self.__WB_DISABLE_DEV_LOGS` has no effect. When `buildSW.enableSWKitLogs` is enabled, the build keeps the logger **only inside the `@vite-pwa/workbox-swkit`**: `import.meta.env.PROD`, `import.meta.env.DEV` and `import.meta.env.MODE` are not modified, so your service worker keeps running its production logic. This allows debugging a Vite or Rolldown build, for example using `vite preview` after building your application and your service worker.
+
+The build also exposes `import.meta.env.ENABLE_SWKIT_LOGS`, which is always defined (`true` or `false`), so the code below is removed from the bundle when the option is disabled or omitted.
+
+Add this entry at the top level of your service worker (after the static imports is fine):
+
+```ts
+if (import.meta.env.ENABLE_SWKIT_LOGS) {
+  self.__WB_DISABLE_DEV_LOGS = false
+}
+```
+
+The same output is used for the `classic` and `module` service workers, so the logs work in both.
+
+#### TypeScript
+
+Your service worker needs the `webworker` lib (`/// <reference lib="webworker" />` at the top, or `"lib": ["ESNext", "WebWorker"]` in its tsconfig). Then add this global declaration at the end of your service worker:
+
+```ts
+declare global {
+  interface WorkerGlobalScope {
+    __WB_DISABLE_DEV_LOGS: boolean
+  }
+}
+```
+
+Finally, declare `ENABLE_SWKIT_LOGS` in your `src/vite-env.d.ts` to avoid TypeScript errors (`vite/client` already declares `ImportMeta`, you only need to extend `ImportMetaEnv`):
+
+```ts
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly ENABLE_SWKIT_LOGS: boolean
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+```
