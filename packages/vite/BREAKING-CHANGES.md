@@ -18,8 +18,8 @@ What you need to do depends on what you want to end up with:
 | `generateSW` |  Keep **classic** and disable code splitting | None | 
 | `generateSW` |  Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
 | `generateSW` |  Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
-| `injectManifest` | Keep **classic**, same as today | None | None |
-| `injectManifest` |  Keep **classic** and enable code splitting | None | None |
+| `injectManifest` | Keep **classic**, same as today | None |
+| `injectManifest` |  Keep **classic** and enable code splitting | None |
 | `injectManifest` | Move to **module (ESM) only**, with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
 | `injectManifest` | Move to **dual** (classic and module), with or without code splitting | Self-destroying service worker for the old one + rename the new one (see below) |
 
@@ -415,7 +415,9 @@ VitePWA({
 > `enableSWKitLogs` is meant for debugging only. It also enables the SWKit assertions and increases the size of the service worker bundle, so don't ship it to production. A simple way to keep it off by default is to read it from an environment variable:
 >
 > ```ts
-> buildSW: { enableSWKitLogs: process.env.ENABLE_SWKIT_LOGS === 'true' }
+> buildSW: {
+>   enableSWKitLogs: process.env.ENABLE_SWKIT_LOGS === 'true'
+> }
 > ```
 
 ### Enabling SWKit logs in your service worker
