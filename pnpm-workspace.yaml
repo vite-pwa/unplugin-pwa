@@ -64,9 +64,9 @@ catalogs:
 
   pwa:
     '@vite-pwa/assets-generator': ^2.0.0
-    '@vite-pwa/workbox-build': ^8.0.12
-    '@vite-pwa/workbox-window': ^8.0.12
-    '@vite-pwa/workbox-swkit': ^8.0.12
+    '@vite-pwa/workbox-build': ^8.0.13
+    '@vite-pwa/workbox-window': ^8.0.13
+    '@vite-pwa/workbox-swkit': ^8.0.13
 
   inspector:
     '@iconify-json/mdi': ^1.2.3

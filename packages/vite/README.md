@@ -16,7 +16,7 @@ Zero-config PWA for Vite and its ecosystem
 <a href="https://npmx.dev/package/@unplugin-pwa/vite" target="_blank" rel="noopener noreferrer">
     <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@unplugin-pwa/vite?color=476582&label=">
 </a>
-<a href="https://vite-pwa-org.netlify.app/" target="_blank" rel="noopener noreferrer">
+<a href="https://unplugin-pwa.netlify.app/unplugin-pwa/vite.html" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/static/v1?label=&message=docs%20%26%20guides&color=2e859c" alt="Docs & Guides">
 </a>
 <br>
@@ -88,15 +88,14 @@ export default {
 }
 ```
 
-Read the [📖 documentation](https://vite-pwa-org.netlify.app/guide/) for a complete guide on how to configure and use
-this plugin.
+Read the [📖 documentation](https://unplugin-pwa.netlify.app/unplugin-pwa/vite/) for a complete guide on how to configure and use this plugin.
 
 ## 👀 Full config
 
 Check out the following links for further details:
 
 - [Web app manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest)
-- [Workbox](https://developers.google.com/web/tools/workbox)
+- [Vite PWA Workbox](https://unplugin-pwa.netlify.app/vite-pwa-workbox/)
 
 ## 📄 License
 

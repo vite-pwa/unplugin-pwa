@@ -72,6 +72,8 @@ async function init() {
     },
     vite: {
       entryPoints: [
+        '../vite/src/node/config/index.ts',
+        '../vite/src/node/config/types.ts',
         '../vite/src/node/dev/create-hmr-script.ts',
         '../vite/src/node/dev/default-service-worker-assets-normalizer.ts',
         '../vite/src/node/dev/inject-hmr-script.ts',
