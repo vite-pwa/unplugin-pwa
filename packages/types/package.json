@@ -1,7 +1,7 @@
 {
   "name": "@unplugin-pwa/types",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "TypeDoc JSON metadata for the unplugin-pwa packages, published for the Vite PWA docs site to render its API reference.",
   "author": "Vite PWA's Team",
   "maintainers": [
