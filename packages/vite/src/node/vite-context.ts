@@ -1,6 +1,5 @@
 import type { VitePWAOptions, VitePWAStrategy } from '@unplugin-pwa/core'
-import type { PWAPluginContext } from '@unplugin-pwa/core/context-types'
-import type { ConfigurePWAOptions } from '@unplugin-pwa/core/src/context-types'
+import type { ConfigurePWAOptions, PWAPluginContext } from '@unplugin-pwa/core/context-types'
 import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { ResolvedConfig } from 'vite'
 import { createPWAContext } from '@unplugin-pwa/core/context'
