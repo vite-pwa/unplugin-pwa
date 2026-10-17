@@ -52,6 +52,17 @@ export type LoaderType<
   T extends SWType,
 > = VitePWAOptions<S, T> | (() => VitePWAOptions<S, T>) | (() => Promise<VitePWAOptions<S, T>>)
 
+/**
+ * Loads the PWA configuration from a specified path.
+ *
+ * If the `path` options is not provided, it will return the provided options as is.
+ *
+ * Otherwise, it will attempt to load the configuration from the specified path
+ * and merge it with the provided options if `mergeOptions` is set to true.
+ *
+ * @param options The partial PWA options to load.
+ * @returns The resolved PWA options, merged with the provided options if `mergeOptions` is set to true.
+ */
 export async function loadConfiguration<
   S extends VitePWAStrategy,
   T extends SWType,
@@ -85,6 +96,18 @@ export async function loadConfiguration<
   return external
 }
 
+/**
+ * Loads the first existing default configuration file from the current working directory.
+ *
+ * The default configuration files are searched in the following order:
+ * - `pwa.config.js`
+ * - `pwa.config.ts`
+ * - `pwa.config.mjs`
+ * - `pwa.config.mts`
+ *
+ * @param cwd The current working directory to search for the default configuration files. Defaults to `process.cwd()`.
+ * @returns The path to the first existing default configuration file, or `undefined` if none are found.
+ */
 export function resolveDefaultConfig(cwd: string = process.cwd()): string | undefined {
   for (const name of DEFAULT_CONFIG_FILES) {
     const candidate = path.resolve(cwd, name)
@@ -202,6 +225,16 @@ function checkOptions<
   return resolvedOptions
 }
 
+/**
+ * Resolves the PWA configuration based on the provided options and resolver options.
+ *
+ * This function will search for the PWA configuration file if the `path` option is not provided,
+ * and will merge the loaded configuration with the provided options.
+ *
+ * @param pwaOptions The PWA options to resolve.
+ * @param resolverOptions The resolver options containing environment information and callbacks.
+ * @returns The resolved PWA options.
+ */
 export async function resolvePwaConfiguration<
   UserStrategy extends VitePWAStrategy,
   T extends SWType,

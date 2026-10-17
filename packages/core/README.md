@@ -14,7 +14,7 @@
 <a href="https://npmx.dev/package/@unplugin-pwa/core" target="_blank" rel="noopener noreferrer">
     <img alt="NPM Downloads" src="https://img.shields.io/npm/dm/@unplugin-pwa/core?color=476582&label=">
 </a>
-<a href="https://vite-pwa-org.netlify.app/" target="_blank" rel="noopener noreferrer">
+<a href="https://unplugin-pwa.netlify.app/unplugin-pwa/core.html" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/static/v1?label=&message=docs%20%26%20guides&color=2e859c" alt="Docs & Guides">
 </a>
 <br>
@@ -90,13 +90,13 @@ The following peer dependencies are all optional; install them only if your inte
 ## 📦 Install
 
 ```bash
-npm i @unplugin-pwa/core
+npm i -D @unplugin-pwa/core
 
 # yarn
-yarn add @unplugin-pwa/core
+yarn add -D @unplugin-pwa/core
 
 # pnpm
-pnpm add @unplugin-pwa/core
+pnpm add -D @unplugin-pwa/core
 ```
 
 ## 📄 License
