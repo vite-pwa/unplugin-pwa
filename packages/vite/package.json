@@ -37,6 +37,10 @@
     "./helpers": "./dist/node/helpers.mjs",
     "./pwa-assets-resolver": "./dist/node/pwa-assets-resolver.mjs",
     "./vite-context": "./dist/node/vite-context.mjs",
+    "./config": "./dist/node/config/index.mjs",
+    "./config/types": {
+      "types": "./dist/node/config/types.d.mts"
+    },
     "./dev/create-hmr-script": "./dist/node/dev/create-hmr-script.mjs",
     "./dev/default-service-worker-assets-normalizer": "./dist/node/dev/default-service-worker-assets-normalizer.mjs",
     "./dev/inject-hmr-script": "./dist/node/dev/inject-hmr-script.mjs",

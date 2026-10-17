@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import {
   DEV_PWA_ASSETS_NAME,
   DEV_READY_NAME,
@@ -5,13 +6,20 @@ import {
   DEV_SWITCHER_NAME,
 } from '@unplugin-pwa/core/constants'
 import { defineConfig } from 'tsdown'
+import {
+  attw,
+  pwaBanner as banner,
+  cleanupJSTypes,
+  publint,
+} from '../../tsdown-helper'
 
-import { attw, pwaBanner as banner, publint } from '../../tsdown-helper'
+const cwd = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig([{
   entry: [
     {
       'node/*': ['./src/node/*.ts'],
+      'node/config/*': ['./src/node/config/*.ts'],
       'node/dev/*': ['./src/node/dev/*.ts'],
       'node/plugins/*': ['./src/node/plugins/*.ts'],
     },
@@ -28,8 +36,6 @@ export default defineConfig([{
       '@vitejs/devtools-kit',
       'devframe',
       'vite',
-      'webpack',
-      'rspack',
       'rolldown',
       '@rolldown/pluginutils',
       '@unplugin-pwa/core',
@@ -37,6 +43,11 @@ export default defineConfig([{
       '@vite-pwa/workbox-window',
       'sirv',
     ],
+  },
+  hooks: {
+    'build:done': async () => {
+      await cleanupJSTypes(cwd)
+    },
   },
 }, {
   entry: {

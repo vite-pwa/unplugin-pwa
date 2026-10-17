@@ -291,9 +291,9 @@ export interface VitePWAOptions<
    */
   selfDestroying?: SelfDestroyingOptions
   /**
-   * Override Vite's base options only for PWA
+   * The base for your app.
    *
-   * @default "base" options from Vite
+   * @default "base" options from Vite or the corresponding bundler or framework integration.
    */
   base?: string
   /**
