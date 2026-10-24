@@ -226,10 +226,32 @@ function checkOptions<
 }
 
 /**
+ * The resolver options containing environment information and callbacks for `resolvePwaConfiguration`.
+ */
+export interface ResolverOptions {
+  /**
+   * Whether the current environment is a development environment.
+   */
+  isDev: boolean
+  /**
+   * When using `inject-manifest`, this callback must resolve if the strategy is wrong, the implementation should be:
+   * - if the service worker with `.ts` or `.mts` extension, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+   * - if the service worker outside public dir, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+   * - otherwise must return false
+   */
+  isWrongInjectManifest: (swSrc: string) => boolean | Promise<boolean>
+}
+
+/**
  * Resolves the PWA configuration based on the provided options and resolver options.
  *
  * This function will search for the PWA configuration file if the `path` option is not provided,
  * and will merge the loaded configuration with the provided options.
+ *
+ * When using `inject-manifest`, the `resolverOptions.isWrongInjectManifest` callback must resolve if the strategy is wrong, the implementation should be:
+ * - if the service worker with `.ts` or `.mts` extension, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+ * - if the service worker outside public dir, then, it is `build-sw` and not `inject-manifest` strategy: must return true
+ * - otherwise must return false
  *
  * @param pwaOptions The PWA options to resolve.
  * @param resolverOptions The resolver options containing environment information and callbacks.
@@ -240,19 +262,7 @@ export async function resolvePwaConfiguration<
   T extends SWType,
 >(
   pwaOptions: Partial<VitePWAOptions<UserStrategy, T>>,
-  resolverOptions: {
-    /**
-     * Whether the current environment is a development environment.
-     */
-    isDev: boolean
-    /**
-     * When using `inject-manifest`, this callback must resolve if the strategy is wrong, the implementation should be:
-     * - if the service worker with `.ts` or `.mts` extension, then, it is `build-sw` and not `inject-manifest` strategy: must return true
-     * - if the service worker outside public dir, then, it is `build-sw` and not `inject-manifest` strategy: must return true
-     * - otherwise must return false
-     */
-    isWrongInjectManifest: (swSrc: string) => boolean | Promise<boolean>
-  },
+  resolverOptions: ResolverOptions,
 ): Promise<ResolvedVitePWAOptions<ExtractStrategy<UserStrategy>, T>> {
   const resolvedPath = pwaOptions.path ?? resolveDefaultConfig(pwaOptions.cwd)
   const config = await loadConfiguration(Object.assign(
