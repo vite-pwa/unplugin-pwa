@@ -10,7 +10,7 @@ const { resolvedHeaders } = defineProps<{
 const container = useTemplateRef('container')
 const marker = useTemplateRef('marker')
 
-const spyKey = 'vite-pwa-inspector:manifest:spy-pinned'
+const spyKey = 'unplugin-pwa-inspector:manifest:spy-pinned'
 
 const isPinned = shallowRef(localStorage.getItem(spyKey) === 'true')
 watch(isPinned, (val) => {
@@ -34,12 +34,12 @@ const { goTo } = useActiveAnchor(resolvedHeaders, container, marker)
   <nav
     ref="container"
     aria-labelledby="manifest-on-this-page"
-    class="manifest-spy absolute top-[0.5rem] z-10"
+    class="manifest-spy absolute top-0 z-10"
     :class="!isPinned ? 'group' : ''"
     style="right: var(--scrollbar, 17px); width: calc(210px - var(--scrollbar, 17px))"
   >
     <div
-      class="relative pr-2 pl-3 pb-2 bg-white dark:bg-[#080808] border-l border-main"
+      class="relative pr-2 pl-3 pb-0 bg-white dark:bg-[#080808] border-l border-main"
     >
       <div
         class="absolute left-[-1px] top-[36px] w-[2px] bg-white dark:bg-[#080808] transition-[height] duration-200 ease-in-out z-1"

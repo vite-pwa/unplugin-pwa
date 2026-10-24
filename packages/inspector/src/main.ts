@@ -7,4 +7,4 @@ import 'uno:icons.css'
 import './styles/main.css'
 import 'uno.css'
 
-createApp(App).use(router).mount('#vite-pwa-inspector')
+createApp(App).use(router).mount('#unplugin-pwa-inspector')

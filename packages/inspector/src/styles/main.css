@@ -1,12 +1,17 @@
 html,
 body,
-#vite-pwa-inspector {
+#unplugin-pwa-inspector {
     height: 100%;
     overflow: hidden;
 }
 
+html:not(.dark) {
+    color-scheme: light;
+}
 html.dark {
     color-scheme: dark;
+}
+
+.dark {
     background: #080808;
-    color: white;
 }
