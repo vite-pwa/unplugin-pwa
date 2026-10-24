@@ -10,7 +10,6 @@ async function loadPWAConfiguration() {
 }
 
 async function loadSWInfo() {
-  console.log('devtoools: loadSWInfo')
   // @ts-expect-error we don't have the types here
   return await rpcClient.call('unplugin-pwa:service-worker-info')
 }
