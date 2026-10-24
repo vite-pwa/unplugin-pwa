@@ -78,7 +78,7 @@ export function DevtoolsPlugin<
         // Register the dock entry
         context.docks.register({
           id: 'unplugin-pwa:inspector',
-          title: 'Vite PWA Inspector',
+          title: 'Unplugin PWA Inspector',
           icon: {
             light: `${INSPECTOR_BASE_PATH}/icon_light.svg`,
             dark: `${INSPECTOR_BASE_PATH}/icon_dark.svg`,

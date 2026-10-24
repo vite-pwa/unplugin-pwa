@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite PWA Inspector</title>
+    <title>Unplugin PWA Inspector</title>
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/icon_light.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,8 +15,8 @@
     <script>
       (function () {
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-        // check nuxt devtools color scheme switcher
-        const setting = localStorage.getItem('nuxt-devtools-color-mode') || 'auto'
+        // check devframes color scheme switcher
+        const setting = localStorage.getItem('devframes-color-scheme') || 'auto'
         if (setting === 'dark' || (prefersDark && setting !== 'light')) {
           document.documentElement.classList.toggle('dark', true)
         }
@@ -29,7 +29,7 @@
     </script>
 </head>
 <body class="bg-main text-main font-sans">
-<div id="vite-pwa-inspector"></div>
+<div id="unplugin-pwa-inspector"></div>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

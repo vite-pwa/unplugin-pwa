@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { useLocalStorage, useMediaQuery } from '@vueuse/core'
+import { useColorMode, useMediaQuery } from '@vueuse/core'
 import { computed } from 'vue'
 
 const base = import.meta.env.BASE_URL
 const light = `${base}icon_light.svg`
 const dark = `${base}icon_dark.svg`
 
-const nuxtDevtoolsSetting = useLocalStorage('nuxt-devtools-color-mode', 'auto', {
+const devFramesColorSchema = useColorMode({
+  storageKey: 'devframes-color-scheme',
   shallow: true,
   initOnMounted: false,
   listenToStorageChanges: true,
@@ -16,37 +17,37 @@ const nuxtDevtoolsSetting = useLocalStorage('nuxt-devtools-color-mode', 'auto', 
 const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
 
 const heroClass = computed(() => {
-  const setting = nuxtDevtoolsSetting.value
+  const setting = devFramesColorSchema.value
   const pd = prefersDark.value
 
-  return setting === 'dark' || (pd && setting !== 'light') ? 'dark' : 'light'
+  return setting === 'dark' || (pd && setting !== 'light') ? 'dark-logo' : 'light-logo'
 })
 </script>
 
 <template>
   <header
-    class="px-4 py-2 border-b border-main flex children:my-auto"
+    class="px-[1rem] py-0 h-[50px] border-b border-main flex items-center"
   >
-    <div class="flex flex-auto children:my-auto ws-nowrap">
+    <div class="flex flex-auto items-center ws-nowrap">
       <div class="w-8 h-8">
         <img
           :src="light"
           class="w-full h-full m-auto dark-hidden"
-          alt="Vite PWA Inspector logo"
+          alt="Unplugin PWA Inspector logo"
           draggable="false"
           :class="heroClass"
         >
         <img
           :src="dark"
           class="w-full h-full m-auto light-hidden"
-          alt="Vite PWA Inspector logo"
+          alt="Unplugin PWA Inspector logo"
           draggable="false"
           :class="heroClass"
         >
       </div>
-      <div class="of-hidden pl-2 mt-[3px]">
-        Vite PWA Inspector
-        <sup class="text-teal-700 bg-teal-700/10 dark:bg-teal-900/30 dark:text-teal-400 px-1.5 py-0.5 rounded italic">beta</sup>
+      <div class="of-hidden pl-2 h-[50px] content-center">
+        Unplugin PWA Inspector
+        <sup class="align-super text-teal-700 bg-teal-700/10 dark:bg-teal-900/30 dark:text-teal-400 px-1.5 rounded italic">beta</sup>
       </div>
     </div>
   </header>
@@ -64,16 +65,16 @@ const heroClass = computed(() => {
   }
 }
 
-.dark.light-hidden {
+.dark-logo.light-hidden {
   display: unset;
 }
-.dark.dark-hidden {
+.dark-logo.dark-hidden {
   display: none;
 }
-.light.dark-hidden {
+.light-logo.dark-hidden {
   display: unset;
 }
-.light.light-hidden {
+.light-logo.light-hidden {
   display: none;
 }
 </style>
