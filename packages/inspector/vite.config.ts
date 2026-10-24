@@ -18,9 +18,6 @@ export default defineConfig({
   build: {
     target: 'esnext',
     minify: true,
-    rollupOptions: {
-      external: ['@vitejs/devtools-kit/client', 'devframe/client'],
-    },
   },
   plugins: [
     DevTools(),

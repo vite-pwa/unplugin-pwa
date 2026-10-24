@@ -1,8 +1,8 @@
-import type { DevframeRpcClient } from 'devframe/client'
+import type { DevToolsRpcClient } from '@vitejs/devtools-kit/client'
 import type { PWAConfiguration, SWInfo } from '../state'
 import { getDevToolsRpcClient } from '@vitejs/devtools-kit/client'
 
-let rpcClient: DevframeRpcClient
+let rpcClient: DevToolsRpcClient
 
 async function loadPWAConfiguration() {
   // @ts-expect-error we don't have the types here

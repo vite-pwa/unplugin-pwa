@@ -8,11 +8,11 @@ export function resolveInspectorDist(): string | undefined {
   let inspectorJSON: string | undefined
 
   try {
-    inspectorJSON = findPackageJSON('@vite-pwa/inspector', import.meta.url)
+    inspectorJSON = findPackageJSON('@unplugin-pwa/inspector', import.meta.url)
   }
   catch {
     try {
-      inspectorJSON = createRequire(import.meta.url).resolve('@vite-pwa/inspector/package.json')
+      inspectorJSON = createRequire(import.meta.url).resolve('@unplugin-pwa/inspector/package.json')
     }
     catch {}
   }
