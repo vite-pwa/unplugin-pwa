@@ -36,7 +36,7 @@ overrides:
   devframe: 'catalog:inspector'
   sharp: ^0.35.5
   semver: ^7.8.5
-  vue: 3.5.43
+  vue: 'catalog:vue'
   why-is-node-running: 'catalog:utils'
 
 allowBuilds:
@@ -132,12 +132,12 @@ catalogs:
     vite-plugin-inspect: npm:vite-plugin-inspect@0.7.42
   vue:
     '@vitejs/plugin-vue': ^6.0.9
-    vue: 3.5.43
+    vue: ^3.5.43
     vue-tsc: ^3.3.12
 
 minimumReleaseAgeExclude:
-  - vite@8.3.2
-  - svelte@5.56.9
+  - vite
+  - svelte
   - '@vite-pwa/workbox-build'
   - '@vite-pwa/workbox-swkit'
   - '@vite-pwa/workbox-window'
