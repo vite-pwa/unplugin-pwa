@@ -19,7 +19,7 @@ describe('resolveInspectorDist', () => {
   })
 
   it('resolves correctly using findPackageJSON', () => {
-    const mockPackagePath = '/mocked/path/@vite-pwa/inspector/package.json'
+    const mockPackagePath = '/mocked/path/@unplugin-pwa/inspector/package.json'
 
     // Force the first attempt to succeed
     vi.mocked(nodeModule.findPackageJSON).mockReturnValue(mockPackagePath)
@@ -28,14 +28,14 @@ describe('resolveInspectorDist', () => {
 
     expect(result).toBe(resolve(dirname(mockPackagePath), 'dist'))
     expect(nodeModule.findPackageJSON).toHaveBeenCalledWith(
-      '@vite-pwa/inspector',
+      '@unplugin-pwa/inspector',
       expect.anything(),
     )
     expect(nodeModule.createRequire).not.toHaveBeenCalled()
   })
 
   it('falls back to createRequire if findPackageJSON throws an error', () => {
-    const mockPackagePath = '/mocked/fallback/@vite-pwa/inspector/package.json'
+    const mockPackagePath = '/mocked/fallback/@unplugin-pwa/inspector/package.json'
     const mockResolve = vi.fn().mockReturnValue(mockPackagePath)
 
     // Force the first attempt to fail
@@ -52,7 +52,7 @@ describe('resolveInspectorDist', () => {
 
     expect(result).toBe(resolve(dirname(mockPackagePath), 'dist'))
     expect(nodeModule.createRequire).toHaveBeenCalled()
-    expect(mockResolve).toHaveBeenCalledWith('@vite-pwa/inspector/package.json')
+    expect(mockResolve).toHaveBeenCalledWith('@unplugin-pwa/inspector/package.json')
   })
 
   it('returns undefined if both methods fail', () => {
