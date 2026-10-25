@@ -38,7 +38,7 @@ The new architecture shifts the responsibility away from rigid configurations to
 
 ## 🚀 Features
 
-- 📖 [**Documentation & guides**](https://vite-pwa-org.netlify.app/)
+- 📖 [**Documentation & guides**](https://unplugin-pwa.netlify.app/)
 - 👌 **Zero-Config**: sensible built-in default configs for common use cases
 - 🔩 **Extensible**: expose the full ability to customize the behavior of the plugin
 - 🦾 **Type Strong**: written in [TypeScript](https://www.typescriptlang.org/)
