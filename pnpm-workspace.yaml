@@ -7,8 +7,6 @@ cleanupUnusedCatalogs: false
 
 dedupePeers: true
 
-ignoreScripts: true
-
 ignoreWorkspaceRootCheck: true
 
 linkWorkspacePackages: true
