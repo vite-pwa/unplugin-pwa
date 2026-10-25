@@ -1,7 +1,7 @@
 {
   "name": "@unplugin-pwa/core",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "PWA bundler-agnostic core logic and utilities",
   "author": "Vite PWA's Team",
   "maintainers": [
