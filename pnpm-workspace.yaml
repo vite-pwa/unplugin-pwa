@@ -48,7 +48,7 @@ allowBuilds:
 
 catalogs:
   build:
-    tsdown: ^0.23.0
+    tsdown: ^0.23.1
   eslint:
     '@antfu/eslint-config': ^9.5.1
     eslint: ^10.13.0
@@ -74,7 +74,7 @@ catalogs:
     '@vitejs/devtools': ^0.7.6
     '@vitejs/devtools-kit': ^0.7.6
     '@vueuse/core': ^14.4.0
-    devframe: ^1.2.5
+    devframe: ^1.2.6
     unocss: ^66.11.0
     vue-router: ^5.4.0
 
