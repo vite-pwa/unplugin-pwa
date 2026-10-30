@@ -45,6 +45,10 @@ export function pwaAssetsResolver<
         code += `
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
   import('@vitejs/devtools/client/inject').then(({ init }) => init());
+  const script = document.createElement('script')
+  script.type = 'module'
+  script.src = \`${new URL(import.meta.url).origin}/__devtools/embedded.js\`
+  document.body.appendChild(script)
 }
 `
       }
