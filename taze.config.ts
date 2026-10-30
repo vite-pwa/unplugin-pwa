@@ -17,6 +17,9 @@ export default defineConfig({
     'vite@7',
     'vite-plugin-inspect@11',
   ],
+  githubActions: {
+    style: 'sha',
+  },
   depFields: {
     packageManager: false,
   },
