@@ -44,16 +44,10 @@ export function pwaAssetsResolver<
       if (ctx.bundler === 'vite' && ctx.inspectorRequiresViteDevtools && ctx.resolvedOptions.devOptions?.inspector === 'vite-devtools') {
         code += `
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
-  import('@vitejs/devtools/client/inject').catch(() => {
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = \`\${new URL(import.meta.url).origin}/__devtools/embedded.js\`;
-    return Promise.resolve({
-      init: () => {
-        document.body.appendChild(script);
-      }
-    });
-  }).then(({ init }) => init());
+  const script = document.createElement('script');
+  script.type = 'module';
+  script.src = \`\${new URL(import.meta.url).origin}/__devtools/embedded.js\`;
+  document.body.appendChild(script);
 }
 `
       }
