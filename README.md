@@ -58,13 +58,13 @@ The new architecture shifts the responsibility away from rigid configurations to
 
 > [!WARNING]
 > **Work In Progress (WIP)**
-> While the Vite ecosystem and its associated meta-frameworks are fully operational, adapters for **Webpack, Rspack, Rsbuild**, and the **Next.js** integration are currently under active development. They are provided as previews and are not yet ready for production use.
+> While the Vite ecosystem and its associated meta-frameworks are fully operational, adapters for **Webpack**, **Rspack**, **Rsbuild**, and the **Next.js** integration are currently under active development. They are provided as previews and are not yet ready for production use.
 
 ## 🏗️ Architecture & Integrations
 
 `unplugin-pwa` has evolved from a monolithic Vite plugin into a modular, framework-agnostic ecosystem.
 
-If you are a framework maintainer, module author, or just curious about how the inner pieces fit together (Core, Builders, Client types, and Workbox), check out our comprehensive [Architecture & Lifecycle Guide](./ARCHITECTURE.md).
+If you are a framework maintainer, module author, or just curious about how the inner pieces fit together (Core, Builders, Client types, and Workbox), check out our comprehensive [Architecture & Lifecycle Guide](https://github.com/vite-pwa/unplugin-pwa/blob/main/ARCHITECTURE.md).
 
 ## 📄 License
 
