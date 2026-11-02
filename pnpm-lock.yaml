@@ -18,8 +18,8 @@ catalogs:
       specifier: ^10.13.0
       version: 10.13.0
     eslint-plugin-antfu:
-      specifier: ^3.2.3
-      version: 3.2.3
+      specifier: ^3.3.1
+      version: 3.3.1
   inspector:
     '@iconify-json/mdi':
       specifier: ^1.2.3
@@ -78,8 +78,8 @@ catalogs:
       version: 1.9.17
   svelte:
     svelte:
-      specifier: ^5.57.2
-      version: 5.57.2
+      specifier: ^5.57.3
+      version: 5.57.3
   test:
     '@types/lodash-es':
       specifier: ^4.17.12
@@ -124,8 +124,8 @@ catalogs:
       specifier: ^6.1.2
       version: 6.1.2
     magic-string:
-      specifier: ^1.4.3
-      version: 1.4.3
+      specifier: ^1.4.4
+      version: 1.4.5
     magicast:
       specifier: ^0.5.5
       version: 0.5.5
@@ -189,7 +189,7 @@ catalogs:
 overrides:
   '@types/node': 24.19.2
   chokidar: ^5.0.0
-  rolldown: ^1.2.14
+  rolldown: ^1.2.15
   devframe: ^1.2.6
   sharp: ^0.35.5
   semver: ^7.8.5
@@ -229,7 +229,7 @@ importers:
         version: 10.13.0(jiti@2.7.0)
       eslint-plugin-antfu:
         specifier: catalog:eslint
-        version: 3.2.3(eslint@10.13.0)
+        version: 3.3.1(eslint@10.13.0)
       playwright-core:
         specifier: catalog:utils
         version: 1.64.1
@@ -286,12 +286,12 @@ importers:
         version: link:../../packages/vite
       magic-string:
         specifier: catalog:utils
-        version: 1.4.3
+        version: 1.4.5
       magicast:
         specifier: catalog:utils
         version: 0.5.5
       rolldown:
-        specifier: ^1.2.14
+        specifier: ^1.2.15
         version: 1.2.15
       vite:
         specifier: catalog:vite5
@@ -310,12 +310,12 @@ importers:
         version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@6.4.3)
       magic-string:
         specifier: catalog:utils
-        version: 1.4.3
+        version: 1.4.5
       magicast:
         specifier: catalog:utils
         version: 0.5.5
       rolldown:
-        specifier: ^1.2.14
+        specifier: ^1.2.15
         version: 1.2.15
       vite:
         specifier: catalog:vite6
@@ -331,12 +331,12 @@ importers:
         version: link:../../packages/vite
       magic-string:
         specifier: catalog:utils
-        version: 1.4.3
+        version: 1.4.5
       magicast:
         specifier: catalog:utils
         version: 0.5.5
       rolldown:
-        specifier: ^1.2.14
+        specifier: ^1.2.15
         version: 1.2.15
       vite:
         specifier: catalog:vite7
@@ -364,7 +364,7 @@ importers:
         version: 0.7.6(@devframes/json-render@1.0.0)(crossws@0.4.12)(srvx@1.0.5)(vite@8.3.5)
       magic-string:
         specifier: catalog:utils
-        version: 1.4.3
+        version: 1.4.5
       magicast:
         specifier: catalog:utils
         version: 0.5.5
@@ -397,14 +397,14 @@ importers:
         specifier: catalog:react
         version: 19.3.1
       rolldown:
-        specifier: ^1.2.14
+        specifier: ^1.2.15
         version: 1.2.15
       solid-js:
         specifier: catalog:solid-js
         version: 1.9.17
       svelte:
         specifier: catalog:svelte
-        version: 5.57.2(@typescript-eslint/types@8.70.0)
+        version: 5.57.3(@typescript-eslint/types@8.70.0)
       vite:
         specifier: catalog:vite
         version: 8.3.5(@types/node@24.19.2)(@vitejs/devtools@0.7.6)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
@@ -535,14 +535,14 @@ importers:
         specifier: catalog:react
         version: 19.3.1
       rolldown:
-        specifier: ^1.2.14
+        specifier: ^1.2.15
         version: 1.2.15
       solid-js:
         specifier: catalog:solid-js
         version: 1.9.17
       svelte:
         specifier: catalog:svelte
-        version: 5.57.2(@typescript-eslint/types@8.70.0)
+        version: 5.57.3(@typescript-eslint/types@8.70.0)
       vite:
         specifier: catalog:vite
         version: 8.3.5(@types/node@24.19.2)(@vitejs/devtools@0.7.6)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
@@ -2319,7 +2319,7 @@ packages:
   '@unocss/rollup@66.11.0':
     resolution: {integrity: sha512-8/EkVkJUHTH27f6oNtMT22FPSl+edNpFGTYYgpF9N+CCUcMKCGTuifF0Svb72ILOpTCKhq+PP3/HPMfb5faI3A==}
     peerDependencies:
-      rolldown: ^1.2.14
+      rolldown: ^1.2.15
       rollup: ^4.0.0
     peerDependenciesMeta:
       rolldown:
@@ -2358,7 +2358,7 @@ packages:
     peerDependencies:
       '@rspack/core': ^1.0.0 || ^2.0.0
       magicast: ^0.5.0
-      rolldown: ^1.2.14
+      rolldown: ^1.2.15
       vite: ^3.1.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
       webpack: ^5.91.0
     peerDependenciesMeta:
@@ -3022,8 +3022,8 @@ packages:
     peerDependencies:
       eslint: '*'
 
-  eslint-plugin-antfu@3.2.3:
-    resolution: {integrity: sha512-U2fnz/H0gFPxpuC7QpaHa0Jv2AgCZ5hunp36SOP/yWo8yFzgvMh8X4pZ4uN4IKoqtBhk7G3HuVa93Urf51+sZg==}
+  eslint-plugin-antfu@3.3.1:
+    resolution: {integrity: sha512-SP1Wmq8EPgXOMWE3SNGS6T7sCcKYOId5vLU8hUO0VFMJ7PwaMYEqFNdp0jlL6vnsT1h1LCKuRmoed1ktRjWHjA==}
     peerDependencies:
       eslint: '*'
 
@@ -3647,6 +3647,9 @@ packages:
   magic-string@1.4.3:
     resolution: {integrity: sha512-z12OxmaPGE0F4xlpGdjuAUckipLpQlTAuAmyGhNoD7ODpYUzvDfvtxUbjM/jwznyP178oju/KDdyi220wNJ0RQ==}
 
+  magic-string@1.4.5:
+    resolution: {integrity: sha512-oLLC2+YvQUfAa+vxoufE/yc1icb87M9iXIRqAoR/2EhE/8cb3SF/+Gi0c2By1B+5Vz2e2vQtUvHiu1+63Znh+w==}
+
   magicast@0.5.5:
     resolution: {integrity: sha512-UicdXN8zQ3JHlxVq+28afMXPr1z7WNY6+7EJnzTdQWkTAlMLF5fNCCKxJHBQwGaNGR11581EiQmQzx73+MvszA==}
 
@@ -3939,7 +3942,7 @@ packages:
     peerDependencies:
       '@oxc-project/types': '>=0.98.0'
       oxc-parser: '>=0.98.0'
-      rolldown: ^1.2.14
+      rolldown: ^1.2.15
     peerDependenciesMeta:
       '@oxc-project/types':
         optional: true
@@ -4153,7 +4156,7 @@ packages:
       '@typescript/native-preview': '*'
       '@volar/typescript': ~2.4.0
       '@vue/language-core': ~3.2.0 || ~3.3.0
-      rolldown: ^1.2.14
+      rolldown: ^1.2.15
       typescript: ^5.0.0 || ^6.0.0 || ~7.0.0
       vue-tsc: ~3.2.0 || ~3.3.0
     peerDependenciesMeta:
@@ -4302,8 +4305,8 @@ packages:
     resolution: {integrity: sha512-WHkws2ZflZe41zj6AolvvmaTrWds/VuyeYr9iPVv/oQeaIoVxMKaushfFWpOGDT+GuBrM/sVqF8KUCYQlSSTdQ==}
     engines: {node: '>=18'}
 
-  svelte@5.57.2:
-    resolution: {integrity: sha512-1YiPCAXT0Ct6g1vOMmSLa0Nsc3QRMvtDF32ihgglGVrugIuIK38RyDiFNXVDhtQ81TJjSO57NdMw6DyYLqSGDQ==}
+  svelte@5.57.3:
+    resolution: {integrity: sha512-5mAftM3SoDV9X0zdF386F9p2pv8iKOwi/KfBS1XnBAkVCKFzVOLHUoa8iGWAt4buoicLmyWVRpuuD5wplXOQsg==}
     engines: {node: '>=18'}
 
   synckit@0.11.13:
@@ -4492,7 +4495,7 @@ packages:
       '@rspack/core': '*'
       bun-types-no-globals: '*'
       esbuild: '*'
-      rolldown: ^1.2.14
+      rolldown: ^1.2.15
       rollup: '*'
       unloader: '*'
       vite: '*'
@@ -4958,7 +4961,7 @@ snapshots:
       eslint-config-flat-gitignore: 2.4.0(eslint@10.13.0)
       eslint-flat-config-utils: 3.2.0
       eslint-merge-processors: 2.0.0(eslint@10.13.0)
-      eslint-plugin-antfu: 3.2.3(eslint@10.13.0)
+      eslint-plugin-antfu: 3.3.1(eslint@10.13.0)
       eslint-plugin-command: 4.0.0(@typescript-eslint/typescript-estree@8.70.0)(@typescript-eslint/utils@8.70.0)(eslint@10.13.0)
       eslint-plugin-import-lite: 0.6.0(eslint@10.13.0)
       eslint-plugin-jsdoc: 64.5.4(eslint@10.13.0)(typescript@6.0.3)
@@ -7155,7 +7158,7 @@ snapshots:
     dependencies:
       eslint: 10.13.0(jiti@2.7.0)
 
-  eslint-plugin-antfu@3.2.3(eslint@10.13.0):
+  eslint-plugin-antfu@3.3.1(eslint@10.13.0):
     dependencies:
       eslint: 10.13.0(jiti@2.7.0)
 
@@ -7781,6 +7784,10 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.6.0
 
   magic-string@1.4.3:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.6.0
+
+  magic-string@1.4.5:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
 
@@ -8645,7 +8652,7 @@ snapshots:
       make-asynchronous: 1.1.0
       time-span: 5.1.0
 
-  svelte@5.57.2(@typescript-eslint/types@8.70.0):
+  svelte@5.57.3(@typescript-eslint/types@8.70.0):
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@jridgewell/sourcemap-codec': 1.6.0
