@@ -116,8 +116,8 @@ export async function preparePWAStrategy<
     })
     Object.assign(options, {
       globDirectory: options.globDirectory
-        ? normalizePath(path.relative(cwd, resolveFrom(cwd, options.globDirectory)))
-        : normalizePath(path.relative(cwd, resolveFrom(cwd, outputPath))),
+        ? resolveFrom(cwd, options.globDirectory)
+        : resolveFrom(cwd, outputPath),
     })
     if (!('dontCacheBustURLsMatching' in options)) {
       let assetsOutputDir = normalizePath(path.relative(outputPath, path.resolve(outputPath, immutableAssets)))
