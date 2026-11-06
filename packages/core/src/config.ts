@@ -309,8 +309,13 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = false,
         workboxRuntimeCompatible = true,
+        sourcemap,
+        mode,
         ...generateSWOptions
       } = generateSW ?? workbox ?? {}
+
+      const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -327,7 +332,7 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
@@ -336,7 +341,9 @@ export async function resolvePwaConfiguration<
             workboxRuntimeCompatible,
             swDest: filename,
             swType,
-            minify,
+            minify: resolvedMinify,
+            mode,
+            sourcemap,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,
@@ -443,8 +450,13 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = true,
         workboxRuntimeCompatible = true,
+        sourcemap,
+        mode,
         ...buildSWOptions
       } = rest.buildSW ?? {}
+
+      const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -461,7 +473,7 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
@@ -470,7 +482,9 @@ export async function resolvePwaConfiguration<
             workboxRuntimeCompatible,
             swDest: filename,
             swType,
-            minify,
+            minify: resolvedMinify,
+            mode,
+            sourcemap,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,
