@@ -57,14 +57,14 @@ catalogs:
       specifier: ^2.0.0
       version: 2.0.0
     '@vite-pwa/workbox-build':
-      specifier: ^8.0.13
-      version: 8.0.13
+      specifier: ^8.0.14
+      version: 8.0.14
     '@vite-pwa/workbox-swkit':
-      specifier: ^8.0.13
-      version: 8.0.13
+      specifier: ^8.0.14
+      version: 8.0.14
     '@vite-pwa/workbox-window':
-      specifier: ^8.0.13
-      version: 8.0.13
+      specifier: ^8.0.14
+      version: 8.0.14
   react:
     '@types/react':
       specifier: ^19.3.0
@@ -271,7 +271,7 @@ importers:
         version: link:../../packages/vite
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
       lodash-es:
         specifier: catalog:test
         version: 4.18.1
@@ -307,7 +307,7 @@ importers:
         version: link:../../packages/vite
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@6.4.3)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@6.4.3)
       magic-string:
         specifier: catalog:utils
         version: 1.4.5
@@ -358,7 +358,7 @@ importers:
         version: link:../../packages/vite
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
       '@vitejs/devtools':
         specifier: catalog:inspector
         version: 0.7.6(@devframes/json-render@1.0.0)(crossws@0.4.12)(srvx@1.0.5)(vite@8.3.5)
@@ -379,7 +379,7 @@ importers:
     dependencies:
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
       hookable:
         specifier: catalog:utils
         version: 6.1.2
@@ -478,7 +478,7 @@ importers:
         version: link:../vite
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
       tinyglobby:
         specifier: catalog:utils
         version: 0.2.17
@@ -499,13 +499,13 @@ importers:
         version: link:../inspector
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
-        version: 8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+        version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
       '@vite-pwa/workbox-swkit':
         specifier: catalog:pwa
-        version: 8.0.13
+        version: 8.0.14
       '@vite-pwa/workbox-window':
         specifier: catalog:pwa
-        version: 8.0.13
+        version: 8.0.14
       magicast:
         specifier: ^0.5.0
         version: 0.5.5
@@ -2352,8 +2352,8 @@ packages:
     engines: {node: '>=20.19.0'}
     hasBin: true
 
-  '@vite-pwa/workbox-build@8.0.13':
-    resolution: {integrity: sha512-4MF4p1hc+nVfcETXFo0HGVosmRaLZgIdhxhfPbLY51gG5YZFt/sEfznwSZdnjztDSLuTWJJryuMhBXh77RsGcw==}
+  '@vite-pwa/workbox-build@8.0.14':
+    resolution: {integrity: sha512-qU/ln/pyC6+EOZHJ9b4jgiC52Bb2BU9E7xcU9visYBelhAcnYvIAHrHP0mQ65PTd4Wk4HdWw9pMSrZZB9kpBaQ==}
     engines: {node: '>=22.14.0'}
     peerDependencies:
       '@rspack/core': ^1.0.0 || ^2.0.0
@@ -2373,11 +2373,11 @@ packages:
       webpack:
         optional: true
 
-  '@vite-pwa/workbox-swkit@8.0.13':
-    resolution: {integrity: sha512-MH9KKR/XNIbjCRvgy8yCGv3AHc+dHAmG+GdA6jGo+jKZsK62cdoa/MhXhwxp893Tn6NuNzUH1QJZmNIt1cmjNQ==}
+  '@vite-pwa/workbox-swkit@8.0.14':
+    resolution: {integrity: sha512-6o2S7GXS0NEfbty47JJdSl+OoTnb5xbCmCqSf+gGv+kJzL0TaGzrEN2x2gJBiXpQQs7vmC4tV1W1LFf4GmFcog==}
 
-  '@vite-pwa/workbox-window@8.0.13':
-    resolution: {integrity: sha512-jb74txMXdS/laitdtIpsj/p+ersyTkHKg2dRpOv2HCB5fFoy96QKZnKQcI64Oh33Sr/kjyQNOgQ1pY/XZvD3NQ==}
+  '@vite-pwa/workbox-window@8.0.14':
+    resolution: {integrity: sha512-KhQ/+B70udMwluP8AhZDyWb59TfJmYIqoDVeCBeTuU496yYK4nfIvysxIp7BlDkZf8VUO7SWqYlYptlrWmPU4Q==}
 
   '@vitejs/devtools-kit@0.7.6':
     resolution: {integrity: sha512-VtnTo296ypQyksFcPgrUyDDxh/SuAa/18uWEitbODcJIu5eilMFQyaSzsLKgp0HQPsxo/Kfzbfl5gowNGfjwqQ==}
@@ -3391,8 +3391,8 @@ packages:
   ico-endec@0.1.6:
     resolution: {integrity: sha512-ZdLU38ZoED3g1j3iEyzcQj+wAkY2xfWNkymszfJPoxucIUhK7NayQ+/C4Kv0nDFMIsbtbEHldv3V8PU494/ueQ==}
 
-  idb@8.0.3:
-    resolution: {integrity: sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==}
+  idb@8.0.4:
+    resolution: {integrity: sha512-jd0ITCrN+Zah4J7R/Z2jnR3W7A4BXDAjmo62MwWuSjxCiueUAf7X5rbodEdidWzeknwXHmLpdZkoiiCppNi30Q==}
 
   identifier-regex@1.1.0:
     resolution: {integrity: sha512-SLX4H/vtcYlYnL7XqnuJKHU7Z8517TgsW9nmQiGOgMCjQ8V/deLYu6bEmbGoXe7WMMhc9+EUGyFFneHja8KabA==}
@@ -4209,8 +4209,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  serialize-javascript@7.1.2:
-    resolution: {integrity: sha512-GL2BWwVa6JydKO6l/ljVgjAZF4QJ3S7dWDWi53s5GZT8PJzD2fNxi67HANQGKAqPrwEpL5ba7gUBGi0Ls/sEoQ==}
+  serialize-javascript@7.1.4:
+    resolution: {integrity: sha512-FqlEuoTq/zRmA4Lg6aOqyH3lCHbUtCB0bmHCeFniX2GBdDqMJM3FwdvEhlE5Pim1dlt2FfBdVPmUNNiGhhKqpw==}
     engines: {node: '>=20.0.0'}
 
   seroval-plugins@1.6.12:
@@ -6266,7 +6266,7 @@ snapshots:
       chokidar: 5.0.0
       colorette: 2.0.20
       consola: 3.4.2
-      magic-string: 1.4.3
+      magic-string: 1.4.5
       pathe: 2.0.3
       perfect-debounce: 2.1.0
       tinyglobby: 0.2.17
@@ -6373,7 +6373,7 @@ snapshots:
       '@unocss/config': 66.11.0
       '@unocss/core': 66.11.0
       chokidar: 5.0.0
-      magic-string: 1.4.3
+      magic-string: 1.4.5
       pathe: 2.0.3
       tinyglobby: 0.2.17
       unplugin-utils: 0.3.2
@@ -6384,7 +6384,7 @@ snapshots:
   '@unocss/rule-utils@66.11.0':
     dependencies:
       '@unocss/core': 66.11.0
-      magic-string: 1.4.3
+      magic-string: 1.4.5
 
   '@unocss/transformer-attributify-jsx@66.11.0(@oxc-project/types@0.155.0)(rolldown@1.2.15)':
     dependencies:
@@ -6416,7 +6416,7 @@ snapshots:
       '@unocss/core': 66.11.0
       '@unocss/inspector': 66.11.0(@devframes/agentic@1.0.0)(cac@7.1.0)(srvx@1.0.5)
       chokidar: 5.0.0
-      magic-string: 1.4.3
+      magic-string: 1.4.5
       pathe: 2.0.3
       tinyglobby: 0.2.17
       unplugin-utils: 0.3.2
@@ -6438,14 +6438,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@vite-pwa/workbox-build@8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@6.4.3)':
+  '@vite-pwa/workbox-build@8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@6.4.3)':
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      '@vite-pwa/workbox-swkit': 8.0.13
-      '@vite-pwa/workbox-window': 8.0.13
-      magic-string: 1.4.3
+      '@vite-pwa/workbox-swkit': 8.0.14
+      '@vite-pwa/workbox-window': 8.0.14
+      magic-string: 1.4.5
       proper-tags: 2.0.2
-      serialize-javascript: 7.1.2
+      serialize-javascript: 7.1.4
       tinyglobby: 0.2.17
       valibot: 1.5.0(typescript@6.0.3)
       verkit: 0.5.0
@@ -6456,14 +6456,14 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vite-pwa/workbox-build@8.0.13(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)':
+  '@vite-pwa/workbox-build@8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)':
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      '@vite-pwa/workbox-swkit': 8.0.13
-      '@vite-pwa/workbox-window': 8.0.13
-      magic-string: 1.4.3
+      '@vite-pwa/workbox-swkit': 8.0.14
+      '@vite-pwa/workbox-window': 8.0.14
+      magic-string: 1.4.5
       proper-tags: 2.0.2
-      serialize-javascript: 7.1.2
+      serialize-javascript: 7.1.4
       tinyglobby: 0.2.17
       valibot: 1.5.0(typescript@6.0.3)
       verkit: 0.5.0
@@ -6474,11 +6474,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vite-pwa/workbox-swkit@8.0.13':
+  '@vite-pwa/workbox-swkit@8.0.14':
     dependencies:
-      idb: 8.0.3
+      idb: 8.0.4
 
-  '@vite-pwa/workbox-window@8.0.13':
+  '@vite-pwa/workbox-window@8.0.14':
     dependencies:
       '@types/trusted-types': 2.0.7
 
@@ -7587,7 +7587,7 @@ snapshots:
 
   ico-endec@0.1.6: {}
 
-  idb@8.0.3: {}
+  idb@8.0.4: {}
 
   identifier-regex@1.1.0:
     dependencies:
@@ -8544,7 +8544,7 @@ snapshots:
 
   semver@7.8.5: {}
 
-  serialize-javascript@7.1.2: {}
+  serialize-javascript@7.1.4: {}
 
   seroval-plugins@1.6.12(seroval@1.6.12):
     dependencies:
