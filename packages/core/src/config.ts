@@ -361,6 +361,10 @@ export async function resolvePwaConfiguration<
           `You are using ${errStyle('cyan', strategies)} option without ${errStyle('cyan', 'swSrc')} option.\n`,
         ].join('\n'))
       }
+
+      const { mode } = rest.injectManifest ?? {}
+      const resolvedMinify = minify !== undefined ? minify : mode === 'production'
+
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
       const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
         path.resolve(process.cwd(), swSrcName),
@@ -398,14 +402,14 @@ export async function resolvePwaConfiguration<
             useCredentials,
             manifest,
             manifestFilename,
-            minify,
+            minify: resolvedMinify,
             updateViaCache,
             pwaAssets: resolvedPwaAssets,
           }, {
             buildSW: Object.assign(rest.injectManifest ?? {}, {
               swDest: filename,
               swType,
-              minify,
+              minify: resolvedMinify,
               maximumFileSizeToCacheInBytes,
               throwMaximumFileSizeToCacheInBytes,
               additionalManifestEntries,
@@ -431,12 +435,13 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
           injectManifest: Object.assign(rest.injectManifest ?? {}, {
             swDest: filename,
+            minify: resolvedMinify,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,
