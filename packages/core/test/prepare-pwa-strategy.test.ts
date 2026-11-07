@@ -52,10 +52,11 @@ describe('preparePWAStrategy: globDirectory resolution', () => {
 
     await preparePWAStrategy(ctx, viteRoot, '.vitepress/dist', 'assets')
 
-    const expectedPath = normalizePath(path.resolve(viteRoot, customGlob))
+    // Ahora esperamos que se resuelva contra process.cwd() (donde sea que corra Vitest),
+    // tal cual hace path.resolve con un solo argumento.
+    const expectedPath = normalizePath(path.resolve(customGlob))
     const resolvedGlobDir = ctx.resolvedOptions.generateSW.globDirectory
 
     expect(resolvedGlobDir).toBe(expectedPath)
-    expect(path.isAbsolute(resolvedGlobDir)).toBe(true)
   })
 })

@@ -161,7 +161,7 @@ export async function preparePWAStrategy<
     })
     Object.assign(options, {
       globDirectory: options.globDirectory
-        ? normalizePath(path.resolve(cwd, options.globDirectory))
+        ? normalizePath(path.resolve(options.globDirectory))
         : normalizePath(outputPath),
     })
     if (!('dontCacheBustURLsMatching' in options)) {
