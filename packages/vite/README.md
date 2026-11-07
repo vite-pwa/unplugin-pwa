@@ -73,6 +73,25 @@ yarn add @unplugin-pwa/vite -D
 pnpm add @unplugin-pwa/vite -D
 ```
 
+### 🐐 Strict Dependency Isolation (Monorepos & Custom setups)
+
+If you are using a package manager with strict dependency isolation (e.g., `pnpm` with `hoist=false` or Yarn PnP), you might encounter `[UNRESOLVED_IMPORT]` errors during the build process.
+
+Because strict isolation prevents transitive dependencies from being accessible from the root of your project, the underlying bundler (Vite/Rolldown) may not be able to resolve the internal packages required to build the client assets and the Service Worker.
+
+To resolve this, you must explicitly declare the dependencies in the application package that runs the build:
+
+* Add `@vite-pwa/workbox-window` for the virtual modules or `injectRegister` asset.
+* Add `@vite-pwa/workbox-swkit` for `generateSW`, or for `buildSW` when the service worker imports its modules.
+
+```bash
+# Using pnpm
+pnpm add -D @vite-pwa/workbox-window @vite-pwa/workbox-swkit
+
+# Using yarn
+yarn add -D @vite-pwa/workbox-window @vite-pwa/workbox-swkit
+```
+
 ## 🦄 Usage
 
 Add `VitePWA` plugin to `vite.config.js / vite.config.ts` and configure it:
