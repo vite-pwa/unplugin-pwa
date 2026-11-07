@@ -251,6 +251,10 @@ export function DevPlugin<
     },
   }
 
+  if (ctx.disableTransformIndexHtmlPluginHooks) {
+    delete plugin.transformIndexHtml
+  }
+
   return plugin
 }
 

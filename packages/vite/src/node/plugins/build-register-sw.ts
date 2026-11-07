@@ -28,7 +28,7 @@ export function BuildRegisterSWPlugin<
     return await injectGenerateRegisterSW(html, ctx, false, false)
   }
 
-  return {
+  const plugin = <Plugin>{
     name: 'unplugin-pwa:build:register-sw',
     enforce: 'post',
     apply: 'build',
@@ -41,7 +41,6 @@ export function BuildRegisterSWPlugin<
       async handler(html) {
         return await transformIndexHtmlHandler(html)
       },
-      // @ts-expect-error deprecated since Vite 4
       enforce: 'post',
       async transform(html: string) {
         return await transformIndexHtmlHandler(html)
@@ -82,4 +81,9 @@ export function BuildRegisterSWPlugin<
       }
     },
   }
+
+  if (ctx.disableTransformIndexHtmlPluginHooks) {
+    delete plugin.transformIndexHtml
+  }
+  return plugin
 }

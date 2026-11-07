@@ -29,7 +29,7 @@ export function AssetsPlugin<
 
     return await transformIndexHtmlHandler(html, ctx)
   }
-  return <Plugin>{
+  const plugin = <Plugin>{
     name: 'unplugin-pwa:pwa-assets',
     sharedDuringBuild: true,
     enforce: 'post',
@@ -101,6 +101,12 @@ export function AssetsPlugin<
       server.environments.client.hot.on(DEV_READY_NAME, createWSResponseHandler(ctx, server))
     },
   }
+
+  if (ctx.disableTransformIndexHtmlPluginHooks) {
+    delete plugin.transformIndexHtml
+  }
+
+  return plugin
 }
 
 async function transformIndexHtmlHandler(
