@@ -1,0 +1,61 @@
+import path from 'node:path'
+import { describe, expect, it } from 'vitest'
+import { preparePWAStrategy } from '../src/helpers'
+
+const normalizePath = (p: string) => p.replace(/\\/g, '/')
+
+describe('preparePWAStrategy: globDirectory resolution', () => {
+  const createMockCtx = (strategy: 'generate-sw' | 'inject-manifest', options: any = {}) => ({
+    strategy,
+    resolvedOptions: {
+      base: '/',
+      [strategy === 'generate-sw' ? 'generateSW' : 'injectManifest']: options,
+    },
+  } as any)
+
+  it('should resolve default globDirectory to absolute path when invoked from repository root', async () => {
+    const repoRoot = path.resolve('/mock-repo')
+    const viteRoot = path.resolve(repoRoot, 'docs')
+    const outDir = '.vitepress/dist'
+
+    const ctx = createMockCtx('generate-sw')
+
+    await preparePWAStrategy(ctx, viteRoot, outDir, 'assets')
+
+    const expectedPath = normalizePath(path.resolve(viteRoot, outDir))
+    const resolvedGlobDir = ctx.resolvedOptions.generateSW.globDirectory
+
+    expect(resolvedGlobDir).toBe(expectedPath)
+    expect(path.isAbsolute(resolvedGlobDir)).toBe(true)
+  })
+
+  it('should resolve default globDirectory to absolute path when invoked from docs dir', async () => {
+    const docsRoot = path.resolve('/mock-repo/docs')
+    const outDir = '.vitepress/dist'
+
+    const ctx = createMockCtx('generate-sw')
+
+    await preparePWAStrategy(ctx, docsRoot, outDir, 'assets')
+
+    const expectedPath = normalizePath(path.resolve(docsRoot, outDir))
+    const resolvedGlobDir = ctx.resolvedOptions.generateSW.globDirectory
+
+    expect(resolvedGlobDir).toBe(expectedPath)
+    expect(path.isAbsolute(resolvedGlobDir)).toBe(true)
+  })
+
+  it('should preserve and resolve absolute path for an explicit globDirectory control case', async () => {
+    const viteRoot = path.resolve('/mock-repo/docs')
+    const customGlob = 'custom-dist'
+
+    const ctx = createMockCtx('generate-sw', { globDirectory: customGlob })
+
+    await preparePWAStrategy(ctx, viteRoot, '.vitepress/dist', 'assets')
+
+    const expectedPath = normalizePath(path.resolve(viteRoot, customGlob))
+    const resolvedGlobDir = ctx.resolvedOptions.generateSW.globDirectory
+
+    expect(resolvedGlobDir).toBe(expectedPath)
+    expect(path.isAbsolute(resolvedGlobDir)).toBe(true)
+  })
+})
