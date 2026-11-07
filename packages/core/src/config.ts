@@ -363,7 +363,11 @@ export async function resolvePwaConfiguration<
       }
 
       const { mode } = rest.injectManifest ?? {}
-      const resolvedMinify = minify !== undefined ? minify : mode === 'production'
+      // Without sourcemap, if the mode is omitted, we assume true (minify)
+      // as long as we are NOT in development
+      const resolvedMinify = minify !== undefined
+        ? minify
+        : (mode === 'production' || !resolverOptions.isDev)
 
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
       const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
