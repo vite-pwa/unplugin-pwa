@@ -136,6 +136,7 @@
   },
   "dependencies": {
     "@vite-pwa/workbox-build": "catalog:pwa",
+    "@vite-pwa/workbox-window": "catalog:pwa",
     "hookable": "catalog:utils"
   },
   "devDependencies": {
