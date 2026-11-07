@@ -52,7 +52,7 @@ catalogs:
   eslint:
     '@antfu/eslint-config': ^9.5.1
     eslint: ^10.13.0
-    eslint-plugin-antfu: ^3.2.3
+    eslint-plugin-antfu: ^3.3.1
   test:
     '@types/lodash-es': ^4.17.12
     '@vitest/coverage-v8': ^5.0.5
@@ -62,9 +62,9 @@ catalogs:
 
   pwa:
     '@vite-pwa/assets-generator': ^2.0.0
-    '@vite-pwa/workbox-build': ^8.0.13
-    '@vite-pwa/workbox-window': ^8.0.13
-    '@vite-pwa/workbox-swkit': ^8.0.13
+    '@vite-pwa/workbox-build': ^8.0.14
+    '@vite-pwa/workbox-window': ^8.0.14
+    '@vite-pwa/workbox-swkit': ^8.0.14
 
   inspector:
     '@iconify-json/mdi': ^1.2.3
@@ -86,7 +86,7 @@ catalogs:
   solid-js:
     solid-js: ^1.9.17
   svelte:
-    svelte: ^5.57.2
+    svelte: ^5.57.3
   types:
     '@types/node': 24.19.2
     '@types/trusted-types': ^2.0.7
@@ -99,11 +99,11 @@ catalogs:
     '@rolldown/pluginutils': ^1.0.1
     '@sentry/vite-plugin': ^5.4.1
     hookable: ^6.1.2
-    magic-string: ^1.4.3
+    magic-string: ^1.4.4
     magicast: ^0.5.5
     playwright-core: 1.64.1
     publint: ^0.3.25
-    rolldown: ^1.2.14
+    rolldown: ^1.2.15
     taze: 21.1.0
     tinyglobby: ^0.2.17
     typedoc: ^0.28.20

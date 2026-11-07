@@ -309,8 +309,13 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = false,
         workboxRuntimeCompatible = true,
+        sourcemap,
+        mode,
         ...generateSWOptions
       } = generateSW ?? workbox ?? {}
+
+      const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -327,7 +332,7 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
@@ -336,7 +341,9 @@ export async function resolvePwaConfiguration<
             workboxRuntimeCompatible,
             swDest: filename,
             swType,
-            minify,
+            minify: resolvedMinify,
+            mode,
+            sourcemap,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,
@@ -354,6 +361,14 @@ export async function resolvePwaConfiguration<
           `You are using ${errStyle('cyan', strategies)} option without ${errStyle('cyan', 'swSrc')} option.\n`,
         ].join('\n'))
       }
+
+      const { mode } = rest.injectManifest ?? {}
+      // Without sourcemap, if the mode is omitted, we assume true (minify)
+      // as long as we are NOT in development
+      const resolvedMinify = minify !== undefined
+        ? minify
+        : (mode === 'production' || !resolverOptions.isDev)
+
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
       const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
         path.resolve(process.cwd(), swSrcName),
@@ -391,14 +406,14 @@ export async function resolvePwaConfiguration<
             useCredentials,
             manifest,
             manifestFilename,
-            minify,
+            minify: resolvedMinify,
             updateViaCache,
             pwaAssets: resolvedPwaAssets,
           }, {
             buildSW: Object.assign(rest.injectManifest ?? {}, {
               swDest: filename,
               swType,
-              minify,
+              minify: resolvedMinify,
               maximumFileSizeToCacheInBytes,
               throwMaximumFileSizeToCacheInBytes,
               additionalManifestEntries,
@@ -424,12 +439,13 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
           injectManifest: Object.assign(rest.injectManifest ?? {}, {
             swDest: filename,
+            minify: resolvedMinify,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,
@@ -443,8 +459,13 @@ export async function resolvePwaConfiguration<
       const {
         inlineWorkboxRuntime = true,
         workboxRuntimeCompatible = true,
+        sourcemap,
+        mode,
         ...buildSWOptions
       } = rest.buildSW ?? {}
+
+      const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
       return checkOptions(
         resolverOptions.isDev,
         pwaOptions,
@@ -461,7 +482,7 @@ export async function resolvePwaConfiguration<
           useCredentials,
           manifest,
           manifestFilename,
-          minify,
+          minify: resolvedMinify,
           updateViaCache,
           pwaAssets: resolvedPwaAssets,
         }, {
@@ -470,7 +491,9 @@ export async function resolvePwaConfiguration<
             workboxRuntimeCompatible,
             swDest: filename,
             swType,
-            minify,
+            minify: resolvedMinify,
+            mode,
+            sourcemap,
             maximumFileSizeToCacheInBytes,
             throwMaximumFileSizeToCacheInBytes,
             additionalManifestEntries,

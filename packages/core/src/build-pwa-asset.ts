@@ -57,6 +57,18 @@ export async function buildPwaAsset<
     swType = 'module'
   }
 
+  let mode: string | undefined | null
+  if (strategy === 'generate-sw') {
+    mode = ctx.resolvedOptions.generateSW?.mode
+  }
+  else if (strategy === 'build-sw') {
+    mode = ctx.resolvedOptions.buildSW?.mode
+  }
+  else if (strategy === 'inject-manifest') {
+    mode = ctx.resolvedOptions.injectManifest?.mode
+  }
+
+  const isDevMode = ctx.devEnvironment || mode === 'development'
   const devEnabled = ctx.resolvedOptions.devOptions?.enabled === true
 
   const base = ctx.devEnvironment ? useBase : buildBase
@@ -64,6 +76,7 @@ export async function buildPwaAsset<
   return await buildPwaAssetWithRolldown(
     code,
     {
+      'process.env.NODE_ENV': JSON.stringify(isDevMode ? 'development' : 'production'),
       'import.meta.PWA_ESM_FALLBACK_SW': JSON.stringify(ctx.resolvedOptions.swType === 'classic-and-module'),
       'import.meta.PWA_SELF_DESTROYING_SW': JSON.stringify(ctx.strategy === 'self-destroy-sw'),
       'import.meta.PWA_SW_URL': JSON.stringify(`${base}${swDestPath}`),
