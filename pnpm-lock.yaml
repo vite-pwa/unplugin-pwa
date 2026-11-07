@@ -380,6 +380,9 @@ importers:
       '@vite-pwa/workbox-build':
         specifier: catalog:pwa
         version: 8.0.14(magicast@0.5.5)(rolldown@1.2.15)(typescript@6.0.3)(vite@8.3.5)
+      '@vite-pwa/workbox-window':
+        specifier: catalog:pwa
+        version: 8.0.14
       hookable:
         specifier: catalog:utils
         version: 6.1.2

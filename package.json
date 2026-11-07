@@ -35,6 +35,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
+    "pack:all": "pnpm -r --filter=\"./packages/**/\" pack",
     "test": "pnpm -r --filter=\"./packages/**/\" run test",
     "test:ci": "pnpm -r --filter=\"./packages/**/\" run test:ci && pnpm run test:typescript",
     "test:typecheck": "pnpm -r --filter=\"./packages/**/\" run test:typecheck",
