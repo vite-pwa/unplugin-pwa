@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import core from '@unplugin-pwa/core/package.json' with { type: 'json' }
 import vite from '@unplugin-pwa/vite/package.json' with { type: 'json' }
@@ -146,4 +147,5 @@ async function init() {
 
 init().catch((e) => {
   console.error(e)
+  process.exitCode = 1
 })
