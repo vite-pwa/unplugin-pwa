@@ -54,6 +54,13 @@ export type VitePWAPluginContext<
    * Enable this flag when using meta frameworks to expose vite devtools at virtual modules: transformIndexHtml missing.
    */
   inspectorRequiresViteDevtools?: true
+  /**
+   * Some frameworks complain about registering `transformIndexHtmlPlugin` hook at Vite plugins.
+   * This flag will disable the hook and the plugin will not register it.
+   * This will break the PWA plugin for frameworks that require this hook to transform the index.html.
+   * Use this only if your framework complains about registering the hook, and you know what you're doing.
+   */
+  disableTransformIndexHtmlPluginHooks?: true
 }
 
 /**
