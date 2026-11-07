@@ -8,16 +8,18 @@ describe('config: minify resolution fallback', () => {
   }
 
   it('should default minify to true when mode is production', async () => {
-    for (const strategy of ['generateSW', 'buildSW']) {
+    for (const strategy of ['generateSW', 'buildSW', 'injectManifest']) {
       const config = await resolvePwaConfiguration({
         strategies: strategy,
         ...(strategy === 'generateSW' ? { generateSW: { mode: 'production' } } : {}),
         ...(strategy === 'buildSW' ? { buildSW: { mode: 'production' } } : {}),
+        ...(strategy === 'injectManifest' ? { injectManifest: { swSrc: 'sw.js', mode: 'production' } } : {}),
       } as any, mockResolver)
 
-      const resolvedStrategyConfig
-        = strategy === 'generateSW'
-          ? config.generateSW
+      const resolvedStrategyConfig = strategy === 'generateSW'
+        ? config.generateSW
+        : strategy === 'injectManifest'
+          ? config.injectManifest
           : config.buildSW
 
       expect(resolvedStrategyConfig?.minify).toBe(true)
@@ -41,5 +43,14 @@ describe('config: minify resolution fallback', () => {
     }, mockResolver)
 
     expect(config.generateSW?.minify).toBe(false)
+  })
+
+  it('should default minify to true for injectManifest when mode is omitted in production build', async () => {
+    const config = await resolvePwaConfiguration({
+      strategies: 'injectManifest',
+      injectManifest: { swSrc: 'sw.js' },
+    } as any, mockResolver)
+
+    expect(config.injectManifest?.minify).toBe(true)
   })
 })
