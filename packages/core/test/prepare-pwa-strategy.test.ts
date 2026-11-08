@@ -60,3 +60,17 @@ describe('preparePWAStrategy: globDirectory resolution', () => {
     expect(resolvedGlobDir).toBe(expectedPath)
   })
 })
+
+describe('preparePWAStrategy: swSrc resolution', () => {
+  it('should resolve a relative swSrc against the root', async () => {
+    const root = path.resolve('/mock-repo/app')
+    const ctx = {
+      strategy: 'inject-manifest',
+      resolvedOptions: { base: '/', injectManifest: { swSrc: 'public/sw.js' } },
+    } as any
+
+    await preparePWAStrategy(ctx, root, 'dist', 'assets')
+
+    expect(ctx.resolvedOptions.injectManifest.swSrc).toBe(normalizePath(path.resolve(root, 'public/sw.js')))
+  })
+})

@@ -218,6 +218,25 @@ describe('resolvePwaConfiguration', () => {
       expect(result.injectManifest).toMatchObject({ swSrc: 'public/sw.js', swDest: 'sw.js' })
     })
 
+    it('resolves swSrc against the root resolver option', async () => {
+      const isWrongInjectManifest = vi.fn(() => false)
+      const root = path.resolve('/project')
+      await resolve(
+        { strategies: 'injectManifest', injectManifest: { swSrc: 'public/sw.js' } },
+        { isWrongInjectManifest, root },
+      )
+      expect(isWrongInjectManifest).toHaveBeenCalledWith(path.join(root, 'public/sw.js').replace(/\\/g, '/'))
+    })
+
+    it('resolves swSrc against the cwd option by default', async () => {
+      const isWrongInjectManifest = vi.fn(() => false)
+      await resolve(
+        { strategies: 'injectManifest', injectManifest: { swSrc: 'public/sw.js' } },
+        { isWrongInjectManifest },
+      )
+      expect(isWrongInjectManifest).toHaveBeenCalledWith(path.join(emptyDir, 'public/sw.js').replace(/\\/g, '/'))
+    })
+
     it('reads swSrc from the loaded configuration file', async () => {
       const result = await resolve({ path: path.join(tmp, 'inject-manifest.mjs') })
       expect(result.strategy).toBe('inject-manifest')

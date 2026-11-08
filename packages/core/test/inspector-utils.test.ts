@@ -77,4 +77,14 @@ describe('prepareServiceWorkerData', () => {
     expect(data.dependencies).toEqual(['src/a.ts'])
     expect(data.chunks).toEqual(['/dev-sw.js', 'src/a.ts'])
   })
+
+  it('inject-manifest: removes an absolute swSrc from dependencies', () => {
+    const ctx = createCtx({
+      strategy: 'inject-manifest',
+      sources: new Set(['/project/src/sw.ts', '/project/src/a.ts']),
+    })
+    ctx.resolvedOptions.injectManifest.swSrc = '/project/src/sw.ts'
+
+    expect(prepareServiceWorkerData(ctx).dependencies).toEqual(['src/a.ts'])
+  })
 })

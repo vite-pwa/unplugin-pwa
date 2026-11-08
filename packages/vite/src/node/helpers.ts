@@ -204,9 +204,10 @@ export async function preparePWAContextDefaults<
       ctx.consumerOptions,
       {
         isDev: ctx.devEnvironment,
+        root: config.root,
         isWrongInjectManifest: (swSrc) => {
           const swSrcDir = normalizePath(path.dirname(swSrc))
-          const publicDir = normalizePath(path.resolve(process.cwd(), config.publicDir || 'public'))
+          const publicDir = normalizePath(path.resolve(config.root, config.publicDir || 'public'))
 
           return !(swSrcDir === publicDir)
         },
@@ -244,9 +245,9 @@ export async function preparePWAContextDefaults<
   ctx.strategy = ctx.resolvedOptions.strategy!
   ctx.useImportRegister = false
   ctx.publicDir = config.publicDir
-  ctx.outDir = config.build.outDir
+  let outDir = path.resolve(config.root, config.build.outDir)
+  ctx.outDir = normalizePath(path.relative(process.cwd(), outDir))
   ctx.base = config.base
-  let outDir = ctx.outDir// 'dist'
   let immutableAssets = config.build.assetsDir ?? 'assets'
   let cwd = config.root
   if (ctx.configurePWAOptions) {

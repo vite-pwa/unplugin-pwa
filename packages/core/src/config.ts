@@ -240,6 +240,12 @@ export interface ResolverOptions {
    * - otherwise must return false
    */
   isWrongInjectManifest: (swSrc: string) => boolean | Promise<boolean>
+  /**
+   * The project root used to resolve a relative `injectManifest.swSrc`.
+   *
+   * @default the `cwd` option, or `process.cwd()`
+   */
+  root?: string
 }
 
 /**
@@ -371,7 +377,7 @@ export async function resolvePwaConfiguration<
 
       const isTS = swSrcName.endsWith('.ts') || swSrcName.endsWith('.mts')
       const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
-        path.resolve(process.cwd(), swSrcName),
+        path.resolve(resolverOptions.root ?? path.resolve(process.cwd(), pwaOptions.cwd || '.'), swSrcName),
       ))
       if (invalidStrategy) {
         const isWarning = resolverOptions.isDev && !(config.devOptions?.enabled === true)

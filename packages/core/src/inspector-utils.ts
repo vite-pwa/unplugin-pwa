@@ -45,7 +45,7 @@ export function prepareServiceWorkerData<
       const swName = `${ctx.base}${ctx.dev.options.swNames.name}`
       chunks = chunks.map(c => c === swName ? c : normalizePath(path.relative(root, c)))
     }
-    const filename = ctx.resolvedOptions.injectManifest!.swSrc
+    const filename = normalizePath(path.relative(root, path.resolve(root, ctx.resolvedOptions.injectManifest!.swSrc!)))
     dependencies = dependencies.filter(c => c !== filename)
   }
 

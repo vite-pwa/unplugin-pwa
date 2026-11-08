@@ -7,7 +7,10 @@ import { VitePWA } from '@unplugin-pwa/vite'
 import { build, createServer } from 'vite'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-describe('injectManifest', () => {
+describe.each([
+  ['the root is the cwd', true],
+  ['the root is not the cwd', false],
+])('injectManifest when %s', (_, chdir) => {
   const cwd = process.cwd()
   let root: string
 
@@ -16,7 +19,9 @@ describe('injectManifest', () => {
     await mkdir(join(root, 'public'))
     await writeFile(join(root, 'index.html'), '<!doctype html><html><head><title>pwa</title></head><body></body></html>')
     await writeFile(join(root, 'public', 'sw.js'), 'self.__WB_MANIFEST\n')
-    process.chdir(root)
+    if (chdir) {
+      process.chdir(root)
+    }
   })
 
   afterEach(async () => {
@@ -24,7 +29,7 @@ describe('injectManifest', () => {
     await rm(root, { recursive: true, force: true })
   })
 
-  it('should build the injectManifest strategy', async () => {
+  it('should build the service worker', async () => {
     await build({
       root,
       configFile: false,
@@ -37,18 +42,29 @@ describe('injectManifest', () => {
     expect(await readFile(sw, 'utf-8')).toContain('index.html')
   })
 
-  it('should start the dev server with the injectManifest strategy', async () => {
+  it('should serve the service worker in dev', async () => {
     const server = await createServer({
       root,
       configFile: false,
       logLevel: 'silent',
-      server: { ws: false },
+      server: { host: '127.0.0.1', port: 0, ws: false },
       plugins: [VitePWA({
         strategies: 'injectManifest',
         injectManifest: { swSrc: 'public/sw.js' },
         devOptions: { enabled: true },
       })],
     })
-    await server.close()
+    try {
+      await server.listen()
+      const response = await fetch(new URL('/sw.js', server.resolvedUrls!.local[0]))
+      expect(response.status).toBe(200)
+      expect(response.headers.get('content-type')).toContain('javascript')
+      const sw = await response.text()
+      expect(sw).toContain('index.html')
+      expect(sw).not.toContain('self.__WB_MANIFEST')
+    }
+    finally {
+      await server.close()
+    }
   })
 })
