@@ -206,7 +206,7 @@ export async function preparePWAContextDefaults<
         isDev: ctx.devEnvironment,
         isWrongInjectManifest: (swSrc) => {
           const swSrcDir = normalizePath(path.dirname(swSrc))
-          const publicDir = normalizePath(path.resolve(process.cwd(), ctx.viteConfig.publicDir || 'public'))
+          const publicDir = normalizePath(path.resolve(process.cwd(), config.publicDir || 'public'))
 
           return !(swSrcDir === publicDir)
         },
