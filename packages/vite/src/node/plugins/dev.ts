@@ -55,7 +55,7 @@ export function DevPlugin<
           return
         }
 
-        await prepareSwNamesAndGlobDirectory(ctx)
+        await prepareSwNamesAndGlobDirectory(ctx, ctx.viteConfig.root)
       }
     },
     transformIndexHtml: {

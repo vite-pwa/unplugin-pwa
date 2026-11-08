@@ -2,7 +2,6 @@ import type { PWAPluginContext } from '../context-types'
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { pathToFileURL } from 'node:url'
 
 function tryStatSync(file: string): fs.Stats | undefined {
   try {
@@ -14,11 +13,10 @@ function tryStatSync(file: string): fs.Stats | undefined {
   }
 }
 
-function findNearestNodeModules(basedir: string): string | null {
+function findNearestPackageDir(basedir: string): string | null {
   while (basedir) {
-    const pkgPath = path.join(basedir, 'node_modules')
-    if (tryStatSync(pkgPath)?.isDirectory()) {
-      return pkgPath
+    if (tryStatSync(path.join(basedir, 'package.json'))?.isFile()) {
+      return basedir
     }
 
     const nextBasedir = path.dirname(basedir)
@@ -30,21 +28,23 @@ function findNearestNodeModules(basedir: string): string | null {
   return null
 }
 
-function resolveTempFolder(): string {
-  const base = pathToFileURL(`${process.cwd()}/`).href
+function resolveTempFolder(root: string): string {
+  if (typeof process.versions.deno === 'string') {
+    return path.resolve(root, '.pwa-dev-dist')
+  }
 
-  const nodeModulesDir
-    = typeof process.versions.deno === 'string'
-      ? undefined
-      : findNearestNodeModules(base)
-
-  return nodeModulesDir
-    ? path.resolve(nodeModulesDir, '.pwa-dev-dist')
-    : path.resolve(process.cwd(), base, '.pwa-dev-dist')
+  return path.resolve(findNearestPackageDir(root) ?? root, 'node_modules', '.pwa-dev-dist')
 }
 
+/**
+ * Prepares the temp folder for the development service worker.
+ *
+ * @param ctx The PWA plugin context.
+ * @param root The project root used to find the nearest package.
+ */
 export async function prepareTempFolder(
   ctx: PWAPluginContext<any, any, any>,
+  root: string = process.cwd(),
 ) {
   const internalOptions = ctx.dev.options!
   const tempFolderResolver = ctx.resolvedOptions.devOptions?.resolveTempFolder
@@ -52,7 +52,7 @@ export async function prepareTempFolder(
     ? internalOptions.tempFolder
     : tempFolderResolver
       ? await tempFolderResolver()
-      : resolveTempFolder()
+      : resolveTempFolder(path.resolve(root))
 
   fs.rmSync(tempFolder, { force: true, recursive: true })
 

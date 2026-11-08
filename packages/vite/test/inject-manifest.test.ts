@@ -17,6 +17,7 @@ describe.each([
   beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), 'unplugin-pwa-vite-'))
     await mkdir(join(root, 'public'))
+    await writeFile(join(root, 'package.json'), '{}')
     await writeFile(join(root, 'index.html'), '<!doctype html><html><head><title>pwa</title></head><body></body></html>')
     await writeFile(join(root, 'public', 'sw.js'), 'self.__WB_MANIFEST\n')
     if (chdir) {
@@ -62,6 +63,7 @@ describe.each([
       const sw = await response.text()
       expect(sw).toContain('index.html')
       expect(sw).not.toContain('self.__WB_MANIFEST')
+      expect(existsSync(join(root, 'node_modules', '.pwa-dev-dist'))).toBe(true)
     }
     finally {
       await server.close()
