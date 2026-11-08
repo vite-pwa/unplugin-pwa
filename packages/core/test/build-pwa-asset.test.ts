@@ -1,15 +1,12 @@
-import { describe, expect, it } from 'vitest'
+import { mkdtemp, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import process from 'node:process'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { buildPwaAsset } from '../src/build-pwa-asset'
 
-describe('build-pwa-asset: NODE_ENV injection', () => {
-  const dummyCode = `
-    export const env = process.env.NODE_ENV;
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('WORKBOX DEBUG LOG');
-    }
-  `
-
-  const createMockContext = (mode: string, devEnvironment: boolean): any => ({
+function createMockContext(mode: string, devEnvironment: boolean): any {
+  return {
     consumerOptions: {},
     resolvedOptions: {
       strategy: 'generate-sw',
@@ -22,7 +19,16 @@ describe('build-pwa-asset: NODE_ENV injection', () => {
     },
     devEnvironment,
     dev: { options: { swType: 'classic' } },
-  })
+  }
+}
+
+describe('build-pwa-asset: NODE_ENV injection', () => {
+  const dummyCode = `
+    export const env = process.env.NODE_ENV;
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('WORKBOX DEBUG LOG');
+    }
+  `
 
   it('should inject production NODE_ENV and remove debug logs when mode is production', async () => {
     const ctx = createMockContext('production', false)
@@ -51,5 +57,34 @@ describe('build-pwa-asset: NODE_ENV injection', () => {
 
     expect(result).toMatch(/[`'"]development[`'"]/)
     expect(result).toContain('WORKBOX DEBUG LOG')
+  })
+})
+
+describe('build-pwa-asset: dependency resolution', () => {
+  const cwd = process.cwd()
+  let emptyRoot: string
+
+  beforeEach(async () => {
+    emptyRoot = await mkdtemp(join(tmpdir(), 'unplugin-pwa-'))
+    process.chdir(emptyRoot)
+  })
+
+  afterEach(async () => {
+    process.chdir(cwd)
+    await rm(emptyRoot, { recursive: true, force: true })
+  })
+
+  it('should bundle @vite-pwa/workbox-window when it is not installed in the project root', async () => {
+    const code = `
+      import { isServiceWorkerModuleSupported } from '@vite-pwa/workbox-window/esm-sw-detector'
+      export async function register() {
+        const { Workbox } = await import('@vite-pwa/workbox-window')
+        return isServiceWorkerModuleSupported() && new Workbox('/sw.js')
+      }
+    `
+    const result = await buildPwaAsset(code, createMockContext('production', false))
+
+    expect(result).not.toMatch(/(?:from|import\()\s*["']@vite-pwa\/workbox-window/)
+    expect(result).toContain('messageSkipWaiting')
   })
 })

@@ -2,6 +2,7 @@ import type { SWType } from '@vite-pwa/workbox-build/types'
 import type { OutputOptions, RolldownBuild, RolldownOutput } from 'rolldown'
 import type { Bundler, PWAPluginContext } from './context-types'
 import type { VitePWAStrategy } from './types'
+import { fileURLToPath } from 'node:url'
 import { resolveSWNames } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
 
 export type DependenciesResolved = NonNullable<Pick<import('rolldown').Plugin, 'resolveId' | 'load'>>
@@ -138,6 +139,16 @@ async function buildPwaAssetWithRolldown(
       load: resolver.load,
     })
   }
+
+  plugins.push({
+    name: 'pwa-asset-workbox-window-resolver',
+    resolveId: {
+      filter: { id: /^@vite-pwa\/workbox-window(?:\/|$)/ },
+      handler(id) {
+        return this.resolve(id, fileURLToPath(import.meta.url), { skipSelf: true })
+      },
+    },
+  })
 
   const bundle = await rolldown({
     input,
