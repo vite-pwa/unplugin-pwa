@@ -12,6 +12,7 @@ export function BuildSWPlugin<
   UserStrategy extends VitePWAStrategy,
   T extends SWType,
 >(ctx: VitePWAPluginContext<ViteBundler, UserStrategy, T>): Plugin {
+  let bundleCompleted = false
   return {
     name: 'unplugin-pwa:build:sw',
     enforce: 'post',
@@ -24,7 +25,8 @@ export function BuildSWPlugin<
       sequential: true,
       order: 'post',
       async handler(error) {
-        if (error) {
+        // closeBundle is called without the error when an output hook fails
+        if (error || !bundleCompleted) {
           return
         }
 
@@ -40,6 +42,22 @@ export function BuildSWPlugin<
         if (!ctx.resolvedOptions.disable) {
           await ctx.runBuild()
         }
+      },
+    },
+    buildStart() {
+      bundleCompleted = false
+    },
+    generateBundle: {
+      order: 'post',
+      handler() {
+        bundleCompleted = (this.environment?.config ?? ctx.viteConfig).build.write === false
+      },
+    },
+    writeBundle: {
+      sequential: true,
+      order: 'post',
+      handler() {
+        bundleCompleted = true
       },
     },
     async buildEnd(error) {
