@@ -48,16 +48,10 @@ export async function prepareSwNamesAndGlobDirectory<
     const internalDevOptions = ctx.dev.options!
     const folder = internalDevOptions.tempFolder
     const root = process.cwd()
-    let relativeSwDest: string | undefined
-    let devSWDest: string
-    if (path.isAbsolute(ctx.outDir)) {
-      devSWDest = normalizePath(path.relative(root, path.resolve(folder, options.swDest)))
-    }
-    else {
-      const outputFolder = path.resolve(process.cwd(), ctx.outDir)
-      relativeSwDest = path.relative(outputFolder, options.swDest)
-      devSWDest = normalizePath(path.relative(root, path.resolve(folder, relativeSwDest)))
-    }
+    const relativeSwDest = path.isAbsolute(options.swDest)
+      ? path.relative(path.resolve(root, ctx.outDir), options.swDest)
+      : options.swDest
+    const devSWDest = normalizePath(path.relative(root, path.resolve(folder, relativeSwDest)))
 
     const {
       swDest,
