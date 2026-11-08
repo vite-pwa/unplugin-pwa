@@ -12,6 +12,34 @@ import { createGenerateRegisterSW } from './create-generate-register-sw-script'
 import { createWebManifestHtmlLink } from './create-web-manifest-html-link'
 import { isDualServiceWorker } from './dual-sw-utilities'
 
+const INJECT_MANIFEST_OPTIONS: Record<keyof InjectManifestStrategyOptions, true> = {
+  additionalManifestEntries: true,
+  additionalManifestEntriesGenerator: true,
+  bundlerLogLevel: true,
+  dontCacheBustURLsMatching: true,
+  failOnDuplicateManifestEntries: true,
+  globDirectory: true,
+  globFollow: true,
+  globIgnores: true,
+  globPatterns: true,
+  globStrict: true,
+  injectionPoint: true,
+  logLevel: true,
+  manifestTransforms: true,
+  maximumFileSizeToCacheInBytes: true,
+  modifyURLPrefix: true,
+  swDest: true,
+  swSrc: true,
+  templatedURLs: true,
+  throwMaximumFileSizeToCacheInBytes: true,
+}
+
+function pickInjectManifestOptions(options: object): InjectManifestStrategyOptions {
+  return Object.fromEntries(
+    Object.entries(options).filter(([key]) => Object.hasOwn(INJECT_MANIFEST_OPTIONS, key)),
+  ) as InjectManifestStrategyOptions
+}
+
 export function preparePWAContext<
   B extends Bundler,
   UserStrategy extends VitePWAStrategy,
@@ -138,7 +166,7 @@ export function preparePWAContext<
     injectManifest: () => import('@vite-pwa/workbox-build/inject-manifest').then(({
       injectManifest: runInjectManifest,
     }) => runInjectManifest(
-      ctx.resolvedOptions.injectManifest as InjectManifestStrategyOptions,
+      pickInjectManifestOptions(ctx.resolvedOptions.injectManifest ?? {}),
     )),
     selfDestroyingSW: () => import('@vite-pwa/workbox-build/self-destroying-sw').then(({
       selfDestroyingSW: runSelfDestroyingSW,
@@ -220,7 +248,7 @@ export function preparePWAContext<
     injectManifest: options => import('@vite-pwa/workbox-build/inject-manifest').then(({
       injectManifest: runInjectManifest,
     }) => runInjectManifest(
-      Object.assign({}, ctx.resolvedOptions.injectManifest ?? {}, options) as InjectManifestStrategyOptions,
+      pickInjectManifestOptions(Object.assign({}, ctx.resolvedOptions.injectManifest ?? {}, options)),
     )),
     selfDestroyingSW: options => import('@vite-pwa/workbox-build/self-destroying-sw').then(({
       selfDestroyingSW: runSelfDestroyingSW,
