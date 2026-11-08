@@ -204,7 +204,7 @@ function checkOptions<
     case 'build-sw': {
       message = checkInjectRegister(
         'build-sw',
-        consumerOptions.injectRegister!,
+        resolvedOptions.injectRegister!,
         resolvedOptions.buildSW!.swType as SWType,
         color,
         warning,
@@ -318,7 +318,7 @@ export async function resolvePwaConfiguration<
 
       return checkOptions(
         resolverOptions.isDev,
-        pwaOptions,
+        config,
         Object.assign({}, strategyOptions, {
           strategy: 'generate-sw',
           swType,
@@ -354,7 +354,7 @@ export async function resolvePwaConfiguration<
     }
     case 'injectManifest':
     case 'inject-manifest': {
-      const swSrcName = pwaOptions.injectManifest?.swSrc
+      const swSrcName = rest.injectManifest?.swSrc
       if (!swSrcName) {
         throw new Error([
           `\n${errStyle(['red', 'bold'], '[Vite PWA]')} ${errStyle('red', 'WRONG CONFIGURATION')}:`,
@@ -374,7 +374,7 @@ export async function resolvePwaConfiguration<
         path.resolve(process.cwd(), swSrcName),
       ))
       if (invalidStrategy) {
-        const isWarning = resolverOptions.isDev && !(pwaOptions?.devOptions?.enabled === true)
+        const isWarning = resolverOptions.isDev && !(config.devOptions?.enabled === true)
         const warning = isWarning ? `, ${errStyle('yellow', 'running build command will fail')}` : ''
         const color = isWarning ? 'yellow' : 'red'
         const message = [
@@ -392,7 +392,7 @@ export async function resolvePwaConfiguration<
 
         return checkOptions(
           resolverOptions.isDev,
-          pwaOptions,
+          config,
           Object.assign({}, rest, {
             strategy: 'build-sw',
             swType,
@@ -425,7 +425,7 @@ export async function resolvePwaConfiguration<
 
       return checkOptions(
         resolverOptions.isDev,
-        pwaOptions,
+        config,
         Object.assign({}, rest, {
           strategy: 'inject-manifest',
           swType,
@@ -468,7 +468,7 @@ export async function resolvePwaConfiguration<
 
       return checkOptions(
         resolverOptions.isDev,
-        pwaOptions,
+        config,
         Object.assign({}, rest, {
           strategy: 'build-sw',
           swType,
