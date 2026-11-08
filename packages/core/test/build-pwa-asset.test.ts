@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from 'node:fs/promises'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import process from 'node:process'
@@ -86,5 +86,21 @@ describe('build-pwa-asset: dependency resolution', () => {
 
     expect(result).not.toMatch(/(?:from|import\()\s*["']@vite-pwa\/workbox-window/)
     expect(result).toContain('messageSkipWaiting')
+  })
+
+  it('should keep framework imports external when they are installed in the project root', async () => {
+    const vueDir = join(emptyRoot, 'node_modules', 'vue')
+    await mkdir(vueDir, { recursive: true })
+    await writeFile(join(vueDir, 'package.json'), JSON.stringify({ name: 'vue', type: 'module', main: 'index.js' }))
+    await writeFile(join(vueDir, 'index.js'), `export const shallowRef = v => ({ value: v, __bundled_vue__: true })`)
+
+    const code = `
+      import { shallowRef } from 'vue'
+      export const needRefresh = shallowRef(false)
+    `
+    const result = await buildPwaAsset(code, createMockContext('production', false))
+
+    expect(result).toMatch(/from\s*["']vue["']/)
+    expect(result).not.toContain('__bundled_vue__')
   })
 })
