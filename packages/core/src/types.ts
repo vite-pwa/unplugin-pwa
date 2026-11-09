@@ -757,7 +757,7 @@ export interface DevOptions {
    *
    * Use it with caution, it should be used only by framework integrations.
    *
-   * @default resolve(viteConfig.root, 'node_modules/.pwa-dev-dist')
+   * @default `node_modules/.pwa-dev-dist` in the nearest package from the Vite root
    */
   resolveTempFolder?: () => string | Promise<string>
   /**

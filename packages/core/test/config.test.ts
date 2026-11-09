@@ -27,6 +27,7 @@ beforeAll(() => {
   write('named.mjs', 'export const config = { name: "from-named-config" }\n')
   write('merge.mjs', 'export default () => ({ name: "file", nested: { a: 1, b: 2 }, onlyInFile: true })\n')
   write('pwa.config.mjs', 'export default {}\n')
+  write('inject-manifest.mjs', 'export default { strategies: "injectManifest", injectManifest: { swSrc: "public/sw.js" } }\n')
   write('pwa.config.js', 'export default {}\n')
 })
 
@@ -217,6 +218,31 @@ describe('resolvePwaConfiguration', () => {
       expect(result.injectManifest).toMatchObject({ swSrc: 'public/sw.js', swDest: 'sw.js' })
     })
 
+    it('resolves swSrc against the root resolver option', async () => {
+      const isWrongInjectManifest = vi.fn(() => false)
+      const root = path.resolve('/project')
+      await resolve(
+        { strategies: 'injectManifest', injectManifest: { swSrc: 'public/sw.js' } },
+        { isWrongInjectManifest, root },
+      )
+      expect(isWrongInjectManifest).toHaveBeenCalledWith(path.join(root, 'public/sw.js').replace(/\\/g, '/'))
+    })
+
+    it('resolves swSrc against the cwd option by default', async () => {
+      const isWrongInjectManifest = vi.fn(() => false)
+      await resolve(
+        { strategies: 'injectManifest', injectManifest: { swSrc: 'public/sw.js' } },
+        { isWrongInjectManifest },
+      )
+      expect(isWrongInjectManifest).toHaveBeenCalledWith(path.join(emptyDir, 'public/sw.js').replace(/\\/g, '/'))
+    })
+
+    it('reads swSrc from the loaded configuration file', async () => {
+      const result = await resolve({ path: path.join(tmp, 'inject-manifest.mjs') })
+      expect(result.strategy).toBe('inject-manifest')
+      expect(result.injectManifest).toMatchObject({ swSrc: 'public/sw.js' })
+    })
+
     it.each(['src/sw.ts', 'src/sw.mts'])('throws for %s (TypeScript should use buildSW)', async (swSrc) => {
       await expect(
         resolve({ strategies: 'injectManifest', injectManifest: { swSrc } }),
@@ -264,6 +290,52 @@ describe('resolvePwaConfiguration', () => {
         inlineWorkboxRuntime: true,
         workboxRuntimeCompatible: true,
       })
+    })
+  })
+
+  describe('loaded configuration checks', () => {
+    const write = (name: string, config: Record<string, any>) => {
+      const file = path.join(tmp, name)
+      fs.writeFileSync(file, `export default ${JSON.stringify(config)}\n`)
+      return file
+    }
+
+    it('throws in dev for an invalid injectManifest when devOptions is enabled in the configuration file', async () => {
+      const file = write('checks-dev-options.mjs', {
+        strategies: 'injectManifest',
+        devOptions: { enabled: true },
+        injectManifest: { swSrc: 'src/sw.ts' },
+      })
+      await expect(resolve({ path: file }, { isDev: true })).rejects.toThrow(/TypeScript/)
+    })
+
+    it('throws in dev for an invalid inject register when devOptions is enabled in the configuration file', async () => {
+      const file = write('checks-dev-options-register.mjs', {
+        swType: 'classic-and-module',
+        injectRegister: 'inline',
+        devOptions: { enabled: true },
+      })
+      await expect(resolve({ path: file }, { isDev: true })).rejects.toThrow(/WRONG CONFIGURATION/)
+    })
+
+    it('reports the strategies from the configuration file', async () => {
+      const file = write('checks-strategies.mjs', {
+        strategies: 'injectManifest',
+        injectManifest: { swSrc: 'public/sw.js', swType: 'classic-and-module' },
+      })
+      const error = await resolve({ path: file }).catch(e => e as Error)
+      expect(error).toBeInstanceOf(Error)
+      expect(error.message).toMatch(/injectManifest\S* with \S*classic-and-module/)
+    })
+
+    it('checks the injectRegister from the configuration file for buildSW', async () => {
+      const file = write('checks-inject-register.mjs', {
+        strategies: 'buildSW',
+        swType: 'classic-and-module',
+        injectRegister: 'inline',
+        buildSW: { swSrc: 'src/sw.ts' },
+      })
+      await expect(resolve({ path: file })).rejects.toThrow(/WRONG CONFIGURATION/)
     })
   })
 

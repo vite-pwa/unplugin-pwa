@@ -4,7 +4,6 @@ import type { Plugin } from 'vite'
 import type { ViteBundler, VitePWAPluginContext } from '../vite-context'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import process from 'node:process'
 import { generateWebManifest } from '@unplugin-pwa/core/generate-web-manifest'
 import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
 import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
@@ -74,7 +73,7 @@ export function DevMiddlewarePlugin<
       })
 
       if (ctx.strategy === 'inject-manifest' && ctx.injectManifestSWAtPublicDir()) {
-        const swSrc = normalizePath(path.resolve(process.cwd(), ctx.resolvedOptions.injectManifest!.swSrc as string))
+        const swSrc = normalizePath(path.resolve(ctx.viteConfig.root, ctx.resolvedOptions.injectManifest!.swSrc as string))
         const swSrcPath = normalizePath(path.dirname(swSrc))
         server.middlewares.use(async (req, res, next) => {
           const url = req.url

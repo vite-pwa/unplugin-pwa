@@ -11,6 +11,9 @@ vi.mock('../src/create-web-manifest-html-link', () => ({
 vi.mock('@vite-pwa/workbox-build/build/vite/generate-sw', () => ({
   generateSW: vi.fn(async (options: any) => ({ called: 'generateSW', options })),
 }))
+vi.mock('@vite-pwa/workbox-build/inject-manifest', () => ({
+  injectManifest: vi.fn(async (options: any) => ({ called: 'injectManifest', options })),
+}))
 
 function createCtx(overrides: Record<string, any> = {}, resolvedOptions: Record<string, any> = {}): any {
   return preparePWAContext({
@@ -136,6 +139,31 @@ describe('build helpers', () => {
     const result: any = await ctx.dev.generateSW({ swDest: 'dev-sw.js' })
     expect(result.options).toEqual({ swDest: 'dev-sw.js' })
     expect(ctx.resolvedOptions.generateSW.swDest).toBe('sw.js')
+  })
+})
+
+describe('injectManifest', () => {
+  const injectManifest = {
+    swSrc: 'public/sw.js',
+    swDest: 'dist/sw.js',
+    globDirectory: 'dist',
+    globPatterns: ['**/*.js'],
+    minify: true,
+    mode: 'production',
+    sourcemap: false,
+  }
+
+  it.each(['build', 'dev'] as const)('ctx.%s.injectManifest only passes workbox injectManifest options', async (target) => {
+    const ctx = createCtx({ strategy: 'inject-manifest' }, { injectManifest })
+    const result = await ctx[target].injectManifest({ globStrict: false })
+
+    expect(result.options).toEqual({
+      swSrc: 'public/sw.js',
+      swDest: 'dist/sw.js',
+      globDirectory: 'dist',
+      globPatterns: ['**/*.js'],
+      ...(target === 'dev' ? { globStrict: false } : {}),
+    })
   })
 })
 

@@ -13,6 +13,7 @@ import { prepareTempFolder } from './prepare-temp-folder'
  * **NOTE**: if the PWA plugin context has `swNames.hasNames` set to `true` at the dev options, this function will return immediately.
  *
  * @param ctx The PWA Vite plugin context.
+ * @param projectRoot The project root used to resolve the temp folder.
  */
 export async function prepareSwNamesAndGlobDirectory<
   B extends Bundler,
@@ -20,6 +21,7 @@ export async function prepareSwNamesAndGlobDirectory<
   T extends SWType,
 >(
   ctx: PWAPluginContext<B, UserStrategy, T>,
+  projectRoot?: string,
 ) {
   if (ctx.dev.options.swNames.hasNames) {
     return
@@ -42,20 +44,14 @@ export async function prepareSwNamesAndGlobDirectory<
   }
 
   if (options) {
-    await prepareTempFolder(ctx)
+    await prepareTempFolder(ctx, projectRoot)
     const internalDevOptions = ctx.dev.options!
     const folder = internalDevOptions.tempFolder
     const root = process.cwd()
-    let relativeSwDest: string | undefined
-    let devSWDest: string
-    if (path.isAbsolute(ctx.outDir)) {
-      devSWDest = normalizePath(path.relative(root, path.resolve(folder, options.swDest)))
-    }
-    else {
-      const outputFolder = path.resolve(process.cwd(), ctx.outDir)
-      relativeSwDest = path.relative(outputFolder, options.swDest)
-      devSWDest = normalizePath(path.relative(root, path.resolve(folder, relativeSwDest)))
-    }
+    const relativeSwDest = path.isAbsolute(options.swDest)
+      ? path.relative(path.resolve(root, ctx.outDir), options.swDest)
+      : options.swDest
+    const devSWDest = normalizePath(path.relative(root, path.resolve(folder, relativeSwDest)))
 
     const {
       swDest,

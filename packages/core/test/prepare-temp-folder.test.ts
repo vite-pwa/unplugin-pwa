@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import process from 'node:process'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { prepareTempFolder } from '../src/dev/prepare-temp-folder'
@@ -52,13 +53,10 @@ describe('prepareTempFolder', () => {
     expect(ctx.dev.options.tempFolder).toBe('/resolved/custom/dir')
   })
 
-  it('finds nearest node_modules and resolves temp folder', async () => {
-    // We simulate finding the node_modules by returning a valid Stats object
+  it('resolves the temp folder in node_modules of the nearest package of the root', async () => {
+    const pkgDir = path.resolve('/mock/project')
     vi.mocked(fs.statSync).mockImplementation((file) => {
-      if (file.toString().includes('node_modules')) {
-        return { isDirectory: () => true } as fs.Stats
-      }
-      return undefined as any
+      return file.toString() === path.join(pkgDir, 'package.json') ? { isFile: () => true } as fs.Stats : undefined as any
     })
 
     const ctx = {
@@ -66,11 +64,20 @@ describe('prepareTempFolder', () => {
       resolvedOptions: { devOptions: {} },
     } as any
 
-    await prepareTempFolder(ctx)
+    await prepareTempFolder(ctx, '/mock/project/app')
 
-    expect(ctx.dev.options.tempFolder).toBeDefined()
-    // Verify that the resulting string contains the Deno path or the expected fallback
-    expect(ctx.dev.options.tempFolder).toContain('.pwa-dev-dist')
+    expect(ctx.dev.options.tempFolder).toBe(path.join(pkgDir, 'node_modules', '.pwa-dev-dist'))
+  })
+
+  it('resolves the temp folder in node_modules of the root without a package', async () => {
+    const ctx = {
+      dev: { options: {} },
+      resolvedOptions: { devOptions: {} },
+    } as any
+
+    await prepareTempFolder(ctx, '/mock/other')
+
+    expect(ctx.dev.options.tempFolder).toBe(path.resolve('/mock/other', 'node_modules', '.pwa-dev-dist'))
   })
 
   it('ignores errors during statSync (covers catch block and break logic)', async () => {
