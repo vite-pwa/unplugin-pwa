@@ -29,7 +29,7 @@ export function resolveFrom(base: string, value: string): string {
 }
 
 export function resolveSWSrc(base: string, value: string): string {
-  return normalizePath(path.isAbsolute(value) ? path.relative(base, value) : value)
+  return normalizePath(path.resolve(base, value))
 }
 
 export function isAbsolute(url: string) {

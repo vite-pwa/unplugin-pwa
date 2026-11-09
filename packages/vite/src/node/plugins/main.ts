@@ -16,7 +16,6 @@ export function MainPlugin<
   UserStrategy extends VitePWAStrategy,
   T extends SWType,
 >(ctx: VitePWAPluginContext<ViteBundler, UserStrategy, T>): Plugin {
-  let forClient = false
   return {
     name: 'unplugin-pwa:main',
     enforce: 'pre',
@@ -71,28 +70,16 @@ export function MainPlugin<
         },
       }
     }, */
-    configEnvironment(_name, config) {
-      if (ctx.envApi) {
-        forClient = config.consumer === 'client'
-      }
-    },
     apply: (_, { command, isPreview }) => {
       ctx.isPreview = isPreview === true
       ctx.devEnvironment = !(command === 'build') && !ctx.isPreview
       return true
     },
     async configResolved(config) {
-      if (ctx.envApi) {
-        // don't override if already configured
-        if (forClient && !ctx.viteConfig) {
-          ctx.viteConfig = config
-        }
-      }
-      else {
-        // don't override if already configured
-        if (!config.build.ssr && !ctx.viteConfig) {
-          ctx.viteConfig = config
-        }
+      const forClient = !config.build.ssr
+      // don't override if already configured
+      if (forClient && !ctx.viteConfig) {
+        ctx.viteConfig = config
       }
 
       if (ctx.externalConfigurationLoader) {
