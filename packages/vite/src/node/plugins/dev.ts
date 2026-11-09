@@ -170,10 +170,9 @@ export function DevPlugin<
           }
 
           // assets stored with ctx.base
-          return await fs.readFile(
-            swAssetsPaths.get(swId) ?? swAssetsPaths.get(`${ctx.base}${swId.startsWith('/') ? swId.slice(1) : swId}`)!,
-            'utf8',
-          )
+          const sw = swAssetsPaths.get(swId) ?? swAssetsPaths.get(`${ctx.base}${swId.startsWith('/') ? swId.slice(1) : swId}`)
+
+          return sw ? await fs.readFile(sw, 'utf8') : undefined
         }
 
         // TODO: remove pair we only need an id (every impl. returning the same pair)
