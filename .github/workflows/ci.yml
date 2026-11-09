@@ -99,7 +99,7 @@ jobs:
             ${{ runner.os }}-playwright-bin-v1-
 
       - name: Install Playwright
-        run: pnpm playwright install chromium
+        run: pnpm exec playwright install chromium
 
       - name: Build
         run: pnpm run build
