@@ -22,6 +22,7 @@ export default defineConfig({
       includeAssets: ['favicon.svg'],
       // filename: customSW ? 'custom-sw.js' : 'sw.js',
       minify: false,
+      injectRegister: false,
       manifest: {
         name: 'PWA Router',
         short_name: 'PWA Router',
