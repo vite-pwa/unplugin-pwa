@@ -72,6 +72,8 @@ test('TypeScript (no injection point): The service worker is registered', async 
     key = 'assets'
     expect(cacheContents[key]).toBeDefined()
     urls = cacheContents[key].map(url => url.slice('http://localhost:4173/'.length))
+    // eslint-disable-next-line no-console
+    console.log('Assets urls:', urls)
     expect(urls.length).toEqual(1)
     expect(urls.some(url => url.startsWith('assets/index-') || url.startsWith('assets/index.'))).toEqual(true)
 
