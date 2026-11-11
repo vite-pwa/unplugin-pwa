@@ -11,7 +11,10 @@ import path from 'node:path'
 import process from 'node:process'
 import { pathToFileURL } from 'node:url'
 import { errStyle } from '@vite-pwa/workbox-build/utils/colors'
-import { normalizePath } from '@vite-pwa/workbox-build/utils/resolve-sw-names'
+import {
+  extractSwDestNameFromSource,
+  normalizePath,
+} from '@vite-pwa/workbox-build/utils/resolve-sw-names'
 import { resolvePWAAssetsOptions } from './pwa-assets/options'
 
 function deepMergeObject(magicast: any, object: any) {
@@ -248,6 +251,24 @@ export interface ResolverOptions {
   root?: string
 }
 
+function resolveSWFilename(
+  resolverOptions: ResolverOptions,
+  outDir: string,
+  swSrc?: string,
+  filename?: string,
+): string {
+  const useFilename = filename || (swSrc ? extractSwDestNameFromSource(swSrc as string) : 'sw.js')
+  const root = resolverOptions.root || process.cwd()
+  const outFolder = path.resolve(root, outDir)
+  filename = path.resolve(outFolder, useFilename)
+
+  return normalizePath(
+    path.isAbsolute(filename)
+      ? path.relative(path.resolve(root, outFolder), filename)
+      : filename,
+  )
+}
+
 /**
  * Resolves the PWA configuration based on the provided options and resolver options.
  *
@@ -278,7 +299,7 @@ export async function resolvePwaConfiguration<
   ))
   const {
     pwaAssets,
-    filename = 'sw.js',
+    filename: consumerFilename,
     strategies = 'generateSW',
     swType = 'classic',
     includeManifest = true,
@@ -321,6 +342,13 @@ export async function resolvePwaConfiguration<
       } = generateSW ?? workbox ?? {}
 
       const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
+      const filename = resolveSWFilename(
+        resolverOptions,
+        pwaOptions.outDir || 'dist',
+        undefined,
+        consumerFilename,
+      )
 
       return checkOptions(
         resolverOptions.isDev,
@@ -379,6 +407,12 @@ export async function resolvePwaConfiguration<
       const invalidStrategy = isTS || await resolverOptions.isWrongInjectManifest(normalizePath(
         path.resolve(resolverOptions.root ?? path.resolve(process.cwd(), pwaOptions.cwd || '.'), swSrcName),
       ))
+      const filename = resolveSWFilename(
+        resolverOptions,
+        pwaOptions.outDir || 'dist',
+        swSrcName,
+        consumerFilename,
+      )
       if (invalidStrategy) {
         const isWarning = resolverOptions.isDev && !(config.devOptions?.enabled === true)
         const warning = isWarning ? `, ${errStyle('yellow', 'running build command will fail')}` : ''
@@ -471,6 +505,13 @@ export async function resolvePwaConfiguration<
       } = rest.buildSW ?? {}
 
       const resolvedMinify = minify !== undefined ? minify : (mode === 'production' || sourcemap !== false)
+
+      const filename = resolveSWFilename(
+        resolverOptions,
+        pwaOptions.outDir || 'dist',
+        rest.buildSW!.swSrc as string,
+        consumerFilename,
+      )
 
       return checkOptions(
         resolverOptions.isDev,
