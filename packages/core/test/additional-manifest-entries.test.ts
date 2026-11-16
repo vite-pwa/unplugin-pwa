@@ -10,7 +10,7 @@ vi.mock('../src/generate-web-manifest', () => ({
   generateWebManifest: vi.fn(() => '{"name":"app"}'),
 }))
 
-const md5 = (value: string) => createHash('md5').update(value).digest('hex')
+const md5 = (value: string | Buffer) => createHash('md5').update(value).digest('hex')
 const mapFile = (url: string) => `/public/${url}`
 
 function createCtx(resolvedOptions: Record<string, any> = {}, consumerOptions: Record<string, any> = {}): any {
@@ -116,8 +116,8 @@ describe('additionalManifestEntriesFactory', () => {
       encoding ? files[path].toString(encoding) : files[path]) as any)
     const ctx = createCtx({ includeAssets: ['a.png', 'b.png'], manifest: {} })
     expect(await collect(ctx)).toEqual([
-      { url: 'a.png', revision: createHash('md5').update(files['/public/a.png']).digest('hex') },
-      { url: 'b.png', revision: createHash('md5').update(files['/public/b.png']).digest('hex') },
+      { url: 'a.png', revision: md5(files['/public/a.png']) },
+      { url: 'b.png', revision: md5(files['/public/b.png']) },
     ])
   })
 
