@@ -106,7 +106,13 @@ describe('additionalManifestEntriesFactory', () => {
     expect(entries[0].revision).toBe(md5(`content:/public/${urls[0]}`))
   })
 
-  it('hashes the bytes of binary files, not their utf-8 decoding', async () => {
+  const pngs = [{ src: 'a.png' }, { src: 'b.png' }]
+  it.each([
+    ['includeManifestIcons', { includeManifestIcons: true, manifest: { icons: pngs } }, { manifest: { icons: pngs } }],
+    ['includeManifestShortcutIcons', { includeManifestShortcutIcons: true, manifest: { shortcuts: [{ icons: pngs }] } }, {}],
+    ['includeManifestScreenshots', { includeManifestScreenshots: true, manifest: { screenshots: pngs } }, {}],
+    ['includeAssets', { includeAssets: ['a.png', 'b.png'], manifest: {} }, {}],
+  ])('%s: hashes the bytes of binary files, not their utf-8 decoding', async (_label, resolvedOptions, consumerOptions) => {
     // 0x80 and 0x81 are both invalid utf-8 and would decode to the same U+FFFD
     const files: Record<string, Buffer> = {
       '/public/a.png': Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x80]),
@@ -114,7 +120,7 @@ describe('additionalManifestEntriesFactory', () => {
     }
     vi.mocked(readFile).mockImplementation((async (path: string, encoding?: BufferEncoding) =>
       encoding ? files[path].toString(encoding) : files[path]) as any)
-    const ctx = createCtx({ includeAssets: ['a.png', 'b.png'], manifest: {} })
+    const ctx = createCtx(resolvedOptions, consumerOptions)
     expect(await collect(ctx)).toEqual([
       { url: 'a.png', revision: md5(files['/public/a.png']) },
       { url: 'b.png', revision: md5(files['/public/b.png']) },
