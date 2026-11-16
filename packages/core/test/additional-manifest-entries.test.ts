@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer'
 import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -103,6 +104,21 @@ describe('additionalManifestEntriesFactory', () => {
     const entries = await collect(ctx)
     expect(entries.map(e => e.url)).toEqual(urls)
     expect(entries[0].revision).toBe(md5(`content:/public/${urls[0]}`))
+  })
+
+  it('hashes the bytes of binary files, not their utf-8 decoding', async () => {
+    // 0x80 and 0x81 are both invalid utf-8 and would decode to the same U+FFFD
+    const files: Record<string, Buffer> = {
+      '/public/a.png': Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x80]),
+      '/public/b.png': Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x81]),
+    }
+    vi.mocked(readFile).mockImplementation((async (path: string, encoding?: BufferEncoding) =>
+      encoding ? files[path].toString(encoding) : files[path]) as any)
+    const ctx = createCtx({ includeAssets: ['a.png', 'b.png'], manifest: {} })
+    expect(await collect(ctx)).toEqual([
+      { url: 'a.png', revision: createHash('md5').update(files['/public/a.png']).digest('hex') },
+      { url: 'b.png', revision: createHash('md5').update(files['/public/b.png']).digest('hex') },
+    ])
   })
 
   it('keeps a stable order: manifest, icons, shortcuts, screenshots, assets, consumer', async () => {
