@@ -33,7 +33,7 @@ overrides:
   rolldown: 'catalog:utils'
   devframe: 'catalog:inspector'
   sharp: ^0.35.5
-  semver: ^7.8.5
+  semver: ^7.8.6
   vue: 'catalog:vue'
   why-is-node-running: 'catalog:utils'
 
@@ -48,17 +48,17 @@ allowBuilds:
 
 catalogs:
   build:
-    tsdown: ^0.23.4
+    tsdown: ^0.23.7
   eslint:
     '@antfu/eslint-config': ^9.5.1
     eslint: ^10.14.0
     eslint-plugin-antfu: ^3.3.1
   test:
     '@types/lodash-es': ^4.17.12
-    '@vitest/coverage-v8': ^5.0.5
-    '@vitest/ui': ^5.0.5
+    '@vitest/coverage-v8': ^5.1.0
+    '@vitest/ui': ^5.1.0
     lodash-es: ^4.18.1
-    vitest: ^5.0.5
+    vitest: ^5.1.0
 
   pwa:
     '@vite-pwa/assets-generator': ^2.0.0
@@ -95,15 +95,15 @@ catalogs:
   utils:
     '@antfu/ni': ^25.0.0
     '@arethetypeswrong/core': ^0.18.5
-    '@playwright/test': 1.64.1
-    '@rolldown/pluginutils': ^1.0.1
+    '@playwright/test': 1.65.0
+    '@rolldown/pluginutils': ^1.1.0
     '@sentry/vite-plugin': ^5.4.1
     hookable: ^6.1.2
     magic-string: ^1.4.5
     magicast: ^0.5.5
-    playwright-core: 1.64.1
+    playwright-core: 1.65.0
     publint: ^0.3.25
-    rolldown: ~1.2.18
+    rolldown: ~1.3.1
     taze: 21.1.0
     tinyglobby: ^0.2.17
     typedoc: ^0.28.20
@@ -112,7 +112,7 @@ catalogs:
     why-is-node-running: 3.2.3
 
   vite:
-    vite: ^8.3.7
+    vite: ^8.3.8
   vite5:
     vite: npm:vite@5.3.6
   vite6:
@@ -130,7 +130,7 @@ catalogs:
     vite-plugin-inspect: npm:vite-plugin-inspect@0.7.42
   vue:
     '@vitejs/plugin-vue': ^6.0.10
-    vue: ^3.5.44
+    vue: ^3.5.45
     vue-tsc: ^3.3.14
 
 minimumReleaseAgeExclude:
