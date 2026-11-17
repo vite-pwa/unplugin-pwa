@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer'
-import { createHash } from 'node:crypto'
+import { hash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { additionalManifestEntriesFactory } from '../src/additional-manifest-entries'
@@ -10,7 +10,7 @@ vi.mock('../src/generate-web-manifest', () => ({
   generateWebManifest: vi.fn(() => '{"name":"app"}'),
 }))
 
-const md5 = (value: string | Buffer) => createHash('md5').update(value).digest('hex')
+const md5 = (value: string | Buffer) => hash('md5', value, 'hex')
 const mapFile = (url: string) => `/public/${url}`
 
 function createCtx(resolvedOptions: Record<string, any> = {}, consumerOptions: Record<string, any> = {}): any {
