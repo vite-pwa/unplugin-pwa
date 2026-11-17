@@ -16,6 +16,10 @@ export default defineConfig({
     'vite@6',
     'vite@7',
     'vite-plugin-inspect@11',
+    // unpin rolldown once Vite 8.4 released
+    // we need both, Vite and Rolldown:
+    // using Vite 8.3 with Rolldown 1.3 can cause Vite apps to generated wrong builds
+    'rolldown',
   ],
   githubActions: {
     style: 'sha',
