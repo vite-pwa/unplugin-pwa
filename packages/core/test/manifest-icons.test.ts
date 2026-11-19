@@ -2,10 +2,11 @@ import type { IconResource, ManifestOptions } from '../src/types'
 import { Buffer } from 'node:buffer'
 import { hash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { additionalManifestEntriesFactory } from '../src/additional-manifest-entries'
 import { generateWebManifest } from '../src/generate-web-manifest'
-import { normalizeManifest } from '../src/helpers'
+import { normalizeManifest, prepareAdditionalManifestEntriesGenerator } from '../src/helpers'
 
 vi.mock('node:fs/promises', () => ({ readFile: vi.fn() }))
 
@@ -254,6 +255,32 @@ describe('manifest icons: precaching', () => {
       { url: 'a.png', revision: md5(files['/public/a.png']) },
       { url: 'b.png', revision: md5(files['/public/b.png']) },
     ])
+  })
+
+  it.each(iconCollections)('%s: uses the production mapper for a non-root build base and relative sources', async (_name, createManifest, option) => {
+    const publicDir = path.resolve('public')
+    const basedPath = path.join(publicDir, 'icons', 'based.png')
+    const relativePath = path.join(publicDir, 'icons', 'relative.png')
+    const files = {
+      [basedPath]: Buffer.from('based icon'),
+      [relativePath]: Buffer.from('relative icon'),
+    }
+    vi.mocked(readFile).mockImplementation(async file => files[String(file)])
+    const manifest = createManifest([{ src: '/app/icons/based.png' }, { src: 'icons/relative.png' }])
+    const ctx = createCtx({ buildBase: '/app/', [option]: true, manifest }, { manifest })
+    ctx.publicDir = publicDir
+
+    const entries = []
+    for await (const entry of prepareAdditionalManifestEntriesGenerator(ctx)())
+      entries.push(entry)
+
+    expect(entries).toEqual([
+      { url: '/app/icons/based.png', revision: md5(files[basedPath]) },
+      { url: 'icons/relative.png', revision: md5(files[relativePath]) },
+    ])
+    expect(readFile).toHaveBeenCalledTimes(2)
+    expect(readFile).toHaveBeenNthCalledWith(1, basedPath)
+    expect(readFile).toHaveBeenNthCalledWith(2, relativePath)
   })
 })
 
