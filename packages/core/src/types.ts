@@ -327,6 +327,33 @@ export interface VitePWAOptions<
    */
   includeManifestIcons: boolean
   /**
+   * Include file-handler icons from `manifest.file_handlers[].icons` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestIcons`.
+   *
+   * @default false
+   */
+  includeManifestFileHandlerIcons: boolean
+  /**
+   * Include localized icons from `manifest.icons_localized` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestIcons`.
+   *
+   * @default false
+   */
+  includeManifestLocalizedIcons: boolean
+  /**
+   * Include localized shortcut icons from `manifest.shortcuts[].icons_localized` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestShortcutIcons`.
+   *
+   * @default false
+   */
+  includeManifestShortcutLocalizedIcons: boolean
+  /**
    * By default, the screenshots listed on `manifest` option won't be included
    * on the service worker *precache* if present under Vite's `publicDir`
    * option directory.

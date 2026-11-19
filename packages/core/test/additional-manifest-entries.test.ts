@@ -86,6 +86,74 @@ describe('additionalManifestEntriesFactory', () => {
     ])
   })
 
+  const additionalIconCollections = [
+    [
+      'includeManifestFileHandlerIcons',
+      {
+        file_handlers: [
+          { icons: [{ src: 'file1.png' }, {}] },
+          { action: '/no-icons' },
+          { icons: [] },
+          { icons: [{ src: 'file2.png' }] },
+        ],
+      },
+      ['file1.png', 'file2.png'],
+    ],
+    [
+      'includeManifestLocalizedIcons',
+      { icons_localized: { fr: [{ src: 'fr.png' }, {}], en: [], de: [{ src: 'de.png' }] } },
+      ['fr.png', 'de.png'],
+    ],
+    [
+      'includeManifestShortcutLocalizedIcons',
+      {
+        shortcuts: [
+          { icons_localized: { fr: [{ src: 's1-fr.png' }, {}], en: [], de: [{ src: 's1-de.png' }] } },
+          { name: 'no-icons' },
+          { icons_localized: {} },
+          { icons_localized: { fr: [{ src: 's2-fr.png' }] } },
+        ],
+      },
+      ['s1-fr.png', 's1-de.png', 's2-fr.png'],
+    ],
+  ] as const
+
+  it.each(additionalIconCollections)('%s: works when every existing include option is disabled', async (option, manifest, urls) => {
+    const ctx = createCtx({
+      includeManifest: false,
+      includeManifestIcons: false,
+      includeManifestShortcutIcons: false,
+      includeManifestScreenshots: false,
+      includeAssets: undefined,
+      [option]: true,
+      manifest,
+    })
+
+    expect(await collect(ctx)).toEqual(urls.map(url => ({
+      url,
+      revision: md5(`content:/public/${url}`),
+    })))
+  })
+
+  it.each(additionalIconCollections)('%s: does not include icons when disabled, even if existing icon options are enabled', async (option, manifest) => {
+    const ctx = createCtx({
+      includeManifestIcons: true,
+      includeManifestShortcutIcons: true,
+      includeManifestScreenshots: true,
+      [option]: false,
+      manifest,
+    })
+
+    expect(await collect(ctx)).toEqual([])
+    expect(readFile).not.toHaveBeenCalled()
+  })
+
+  it.each(additionalIconCollections)('%s: handles absent manifests and collections', async (option) => {
+    expect(await collect(createCtx({ [option]: true, manifest: false }))).toEqual([])
+    expect(await collect(createCtx({ [option]: true, manifest: {} }))).toEqual([])
+    expect(readFile).not.toHaveBeenCalled()
+  })
+
   it('includeManifestScreenshots: yields every screenshot', async () => {
     const ctx = createCtx({
       includeManifestScreenshots: true,
@@ -110,6 +178,9 @@ describe('additionalManifestEntriesFactory', () => {
   it.each([
     ['includeManifestIcons', { includeManifestIcons: true, manifest: { icons: pngs } }, { manifest: { icons: pngs } }],
     ['includeManifestShortcutIcons', { includeManifestShortcutIcons: true, manifest: { shortcuts: [{ icons: pngs }] } }, {}],
+    ['includeManifestFileHandlerIcons', { includeManifestFileHandlerIcons: true, manifest: { file_handlers: [{ icons: pngs }] } }, {}],
+    ['includeManifestLocalizedIcons', { includeManifestLocalizedIcons: true, manifest: { icons_localized: { fr: pngs } } }, {}],
+    ['includeManifestShortcutLocalizedIcons', { includeManifestShortcutLocalizedIcons: true, manifest: { shortcuts: [{ icons_localized: { fr: pngs } }] } }, {}],
     ['includeManifestScreenshots', { includeManifestScreenshots: true, manifest: { screenshots: pngs } }, {}],
     ['includeAssets', { includeAssets: ['a.png', 'b.png'], manifest: {} }, {}],
   ])('%s: hashes the bytes of binary files, not their utf-8 decoding', async (_label, resolvedOptions, consumerOptions) => {
@@ -127,7 +198,7 @@ describe('additionalManifestEntriesFactory', () => {
     ])
   })
 
-  it('keeps a stable order: manifest, icons, shortcuts, screenshots, assets, consumer', async () => {
+  it('keeps a stable order: manifest, icons, shortcuts, additional icon collections, screenshots, assets, consumer', async () => {
     const consumerGenerator = async function* () {
       yield 'consumer.js'
     }
@@ -136,11 +207,16 @@ describe('additionalManifestEntriesFactory', () => {
         includeManifest: true,
         includeManifestIcons: true,
         includeManifestShortcutIcons: true,
+        includeManifestFileHandlerIcons: true,
+        includeManifestLocalizedIcons: true,
+        includeManifestShortcutLocalizedIcons: true,
         includeManifestScreenshots: true,
         includeAssets: ['asset.svg'],
         manifest: {
           icons: [{ src: 'icon.png' }],
-          shortcuts: [{ icons: [{ src: 'shortcut.png' }] }],
+          shortcuts: [{ icons: [{ src: 'shortcut.png' }], icons_localized: { fr: [{ src: 'shortcut-fr.png' }] } }],
+          file_handlers: [{ icons: [{ src: 'file.png' }] }],
+          icons_localized: { fr: [{ src: 'icon-fr.png' }] },
           screenshots: [{ src: 'shot.png' }],
         },
       },
@@ -154,6 +230,9 @@ describe('additionalManifestEntriesFactory', () => {
       'manifest.webmanifest',
       'icon.png',
       'shortcut.png',
+      'file.png',
+      'icon-fr.png',
+      'shortcut-fr.png',
       'shot.png',
       'asset.svg',
       'consumer.js',
