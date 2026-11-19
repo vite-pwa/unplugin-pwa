@@ -103,45 +103,4 @@ describe('additionalManifestEntriesFactory', () => {
       { url: 'b.png', revision: md5(files['/public/b.png']) },
     ])
   })
-
-  it('keeps a stable order: manifest, icons, shortcuts, additional icon collections, screenshots, assets, consumer', async () => {
-    const consumerGenerator = async function* () {
-      yield 'consumer.js'
-    }
-    const ctx = createCtx(
-      {
-        includeManifest: true,
-        includeManifestIcons: true,
-        includeManifestShortcutIcons: true,
-        includeManifestFileHandlerIcons: true,
-        includeManifestLocalizedIcons: true,
-        includeManifestShortcutLocalizedIcons: true,
-        includeManifestScreenshots: true,
-        includeAssets: ['asset.svg'],
-        manifest: {
-          icons: [{ src: 'icon.png' }],
-          shortcuts: [{ icons: [{ src: 'shortcut.png' }], icons_localized: { fr: [{ src: 'shortcut-fr.png' }] } }],
-          file_handlers: [{ icons: [{ src: 'file.png' }] }],
-          icons_localized: { fr: [{ src: 'icon-fr.png' }] },
-          screenshots: [{ src: 'shot.png' }],
-        },
-      },
-      {
-        manifest: { icons: [{ src: 'icon.png' }] },
-        additionalManifestEntriesGenerator: consumerGenerator,
-      },
-    )
-    const urls = (await collect(ctx)).map(e => typeof e === 'string' ? e : e.url)
-    expect(urls).toEqual([
-      'manifest.webmanifest',
-      'icon.png',
-      'shortcut.png',
-      'file.png',
-      'icon-fr.png',
-      'shortcut-fr.png',
-      'shot.png',
-      'asset.svg',
-      'consumer.js',
-    ])
-  })
 })

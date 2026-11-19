@@ -282,6 +282,64 @@ describe('manifest icons: precaching', () => {
     expect(readFile).toHaveBeenNthCalledWith(1, basedPath)
     expect(readFile).toHaveBeenNthCalledWith(2, relativePath)
   })
+
+  const mixedManifest: Partial<ManifestOptions> = {
+    icons: [{ src: 'icon.png' }],
+    shortcuts: [{ name: 'Open', url: '/open', icons: [{ src: 'shortcut.png' }], icons_localized: { fr: [{ src: 'shortcut-fr.png' }] } }],
+    file_handlers: [{ action: '/open', accept: {}, icons: [{ src: 'file.png' }] }],
+    icons_localized: { fr: [{ src: 'icon-fr.png' }] },
+    screenshots: [{ src: 'shot.png', sizes: '640x480' }],
+  }
+  const consumerOptions: PWAContext['consumerOptions'] = {
+    manifest: mixedManifest,
+    async* additionalManifestEntriesGenerator(): AsyncGenerator<string, undefined, void> {
+      yield 'consumer.js'
+    },
+  }
+
+  it.each([
+    { label: 'string', includeAssets: 'asset.svg' },
+    { label: 'array', includeAssets: ['asset.svg'] },
+  ])('keeps icon revisions and ordering alongside other entries with $label assets', async ({ includeAssets }) => {
+    const ctx = createCtx({
+      includeManifest: true,
+      includeManifestIcons: true,
+      includeManifestShortcutIcons: true,
+      includeManifestFileHandlerIcons: true,
+      includeManifestLocalizedIcons: true,
+      includeManifestShortcutLocalizedIcons: true,
+      includeManifestScreenshots: true,
+      includeAssets,
+      manifest: mixedManifest,
+    }, consumerOptions)
+
+    expect(await collect(ctx)).toEqual([
+      { url: 'manifest.webmanifest', revision: md5(generateWebManifest(ctx)) },
+      ...['icon.png', 'shortcut.png', 'file.png', 'icon-fr.png', 'shortcut-fr.png', 'shot.png', 'asset.svg'].map(url => ({
+        url,
+        revision: md5(`content:/public/${url}`),
+      })),
+      'consumer.js',
+    ])
+    expect(readFile).toHaveBeenCalledTimes(7)
+  })
+
+  it('preserves consumer entries without reading icons when every include option is disabled', async () => {
+    const ctx = createCtx({
+      includeManifest: false,
+      includeManifestIcons: false,
+      includeManifestShortcutIcons: false,
+      includeManifestFileHandlerIcons: false,
+      includeManifestLocalizedIcons: false,
+      includeManifestShortcutLocalizedIcons: false,
+      includeManifestScreenshots: false,
+      includeAssets: undefined,
+      manifest: mixedManifest,
+    }, consumerOptions)
+
+    expect(await collect(ctx)).toEqual(['consumer.js'])
+    expect(readFile).not.toHaveBeenCalled()
+  })
 })
 
 describe('manifest icons: serialization', () => {
