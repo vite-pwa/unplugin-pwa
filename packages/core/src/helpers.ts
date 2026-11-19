@@ -7,6 +7,7 @@ import type {
 } from '@vite-pwa/workbox-build/types'
 import type { Bundler, ExtractStrategy, PWAPluginContext } from './context-types'
 import type {
+  IconResource,
   ResolvedBuildSW,
   ResolvedGenerateSW,
   ResolvedInjectManifest,
@@ -53,8 +54,15 @@ export function prepareAdditionalManifestEntriesGenerator(
   })
 }
 
+function normalizeIcons(icons?: IconResource[]) {
+  icons?.forEach((icon) => {
+    if (Array.isArray(icon.purpose))
+      icon.purpose = icon.purpose.join(' ')
+  })
+}
+
 /**
- * Loads the default manifest and normalizes the manifest icons' purpose and scope_extensions.
+ * Loads the default manifest and normalizes all icon collections' purpose and scope_extensions.
  *
  * **NOTE**: this function calls `prepareManifest` to load the default manifest.
  *
@@ -67,26 +75,13 @@ export function normalizeManifest(
   const manifest = ctx.resolvedOptions.manifest
   // convert icons' purpose
   if (manifest) {
-    if (manifest.icons) {
-      manifest.icons = manifest.icons.map((icon) => {
-        if (icon.purpose && Array.isArray(icon.purpose))
-          icon.purpose = icon.purpose.join(' ')
-
-        return icon
-      })
-    }
-    if (manifest.shortcuts) {
-      manifest.shortcuts.forEach((shortcut) => {
-        if (shortcut.icons) {
-          shortcut.icons = shortcut.icons.map((icon) => {
-            if (icon.purpose && Array.isArray(icon.purpose))
-              icon.purpose = icon.purpose.join(' ')
-
-            return icon
-          })
-        }
-      })
-    }
+    normalizeIcons(manifest.icons)
+    Object.values(manifest.icons_localized ?? {}).forEach(normalizeIcons)
+    manifest.shortcuts?.forEach((shortcut) => {
+      normalizeIcons(shortcut.icons)
+      Object.values(shortcut.icons_localized ?? {}).forEach(normalizeIcons)
+    })
+    manifest.file_handlers?.forEach(handler => normalizeIcons(handler.icons))
 
     if (manifest.scope_extensions) {
       manifest.scope_extensions = manifest.scope_extensions.map((scopeExtension) => {
