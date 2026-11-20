@@ -19,6 +19,7 @@ export default defineConfig({
       strategies: 'inject-manifest',
       // includeAssets: ['favicon.ico', 'favicon.svg'],
       includeManifestIcons: false,
+      registerType: 'autoUpdate',
       minify: false,
       manifest: {
         icons: [
