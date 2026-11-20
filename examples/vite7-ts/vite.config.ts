@@ -33,6 +33,7 @@ export default defineConfig({
       strategies: 'build-sw',
       includeAssets: ['favicon.ico', 'favicon.svg'],
       // includeManifestIcons: true,
+      registerType: 'autoUpdate',
       minify: false,
       injectRegister: false,
       manifest: {

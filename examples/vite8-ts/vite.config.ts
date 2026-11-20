@@ -43,6 +43,7 @@ export default defineConfig({
       // disable: true,
       swType: 'classic-and-module',
       strategies: 'build-sw',
+      registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'favicon.svg'],
       // includeManifestIcons: true,
       minify: false,

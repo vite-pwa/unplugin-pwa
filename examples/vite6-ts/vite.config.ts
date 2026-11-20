@@ -34,6 +34,7 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'favicon.svg'],
       // includeManifestIcons: true,
       minify: false,
+      registerType: 'autoUpdate',
       injectRegister: false,
       manifest: {
         icons: [
