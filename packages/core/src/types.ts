@@ -327,6 +327,33 @@ export interface VitePWAOptions<
    */
   includeManifestIcons: boolean
   /**
+   * Include file-handler icons from `manifest.file_handlers[].icons` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestIcons`.
+   *
+   * @default false
+   */
+  includeManifestFileHandlerIcons: boolean
+  /**
+   * Include localized icons from `manifest.icons_localized` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestIcons`.
+   *
+   * @default false
+   */
+  includeManifestLocalizedIcons: boolean
+  /**
+   * Include localized shortcut icons from `manifest.shortcuts[].icons_localized` in the
+   * service worker *precache* when present under Vite's `publicDir` option directory.
+   *
+   * This option is independent of `includeManifestShortcutIcons`.
+   *
+   * @default false
+   */
+  includeManifestShortcutLocalizedIcons: boolean
+  /**
    * By default, the screenshots listed on `manifest` option won't be included
    * on the service worker *precache* if present under Vite's `publicDir`
    * option directory.
@@ -472,16 +499,44 @@ export interface IconResource {
   src: string
   type?: string
   /**
+   * Accessible name of the image.
+   */
+  label?: string
+  /**
    * **NOTE**: string values for backward compatibility with the old type.
    */
   purpose?: StringLiteralUnion<IconPurpose> | IconPurpose[]
 }
 
 /**
+ * A localized string, optionally with an explicit text direction and language.
+ *
+ * @see https://w3c.github.io/manifest/#localizing-text-values
+ */
+export type ManifestLocalizedText = string | {
+  value: string
+  dir?: 'auto' | 'ltr' | 'rtl'
+  lang?: string
+}
+
+/**
+ * Localized manifest and shortcut members, keyed by BCP 47 language tags.
+ *
+ * @see https://w3c.github.io/manifest/#x_localized-members
+ * @see https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/*_localized
+ */
+export interface ManifestLocalizedFields {
+  name_localized?: Record<string, ManifestLocalizedText>
+  short_name_localized?: Record<string, ManifestLocalizedText>
+  description_localized?: Record<string, ManifestLocalizedText>
+  icons_localized?: Record<string, IconResource[]>
+}
+
+/**
  * @see https://developer.mozilla.org/en-US/docs/Web/Manifest/shortcuts
  * @see https://w3c.github.io/manifest/#shortcuts-member
  */
-export interface ManifestShortcut {
+export interface ManifestShortcut extends ManifestLocalizedFields {
   name: string
   short_name?: string
   url: string
@@ -501,7 +556,23 @@ export interface ManifestScreenshot {
   type?: string
 }
 
-export interface ManifestOptions {
+/**
+ * A related application identified by its URL, platform-specific ID, or both.
+ *
+ * @see https://wicg.github.io/manifest-incubations/#external-application-resource
+ */
+export type ManifestRelatedApplication = {
+  platform: string
+  url?: string
+  id?: string
+  min_version?: string
+  fingerprints?: {
+    type: string
+    value: string
+  }[]
+} & ({ url: string } | { id: string })
+
+export interface ManifestOptions extends ManifestLocalizedFields {
   /**
    * @default _npm_package_name_
    */
@@ -528,6 +599,9 @@ export interface ManifestOptions {
   file_handlers: {
     action: string
     accept: Record<string, string[]>
+    name?: string
+    icons?: IconResource[]
+    launch_type?: 'single-client' | 'multiple-clients'
   }[]
   /**
    * @default `routerBase`
@@ -566,6 +640,15 @@ export interface ManifestOptions {
    */
   theme_color: string
   /**
+   * Color overrides used when the operating system uses a dark theme.
+   *
+   * @see https://w3c.github.io/manifest/#color_scheme_dark-member
+   */
+  color_scheme_dark?: {
+    theme_color?: string
+    background_color?: string
+  }
+  /**
    * @default `ltr`
    */
   dir: 'ltr' | 'rtl'
@@ -579,12 +662,9 @@ export interface ManifestOptions {
   publicPath: string
   /**
    * @default []
+   * @see https://wicg.github.io/manifest-incubations/#related_applications-member
    */
-  related_applications: {
-    platform: string
-    url: string
-    id?: string
-  }[]
+  related_applications: ManifestRelatedApplication[]
   /**
    * @default false
    */
@@ -620,6 +700,17 @@ export interface ManifestOptions {
    * @see https://w3c.github.io/web-share-target/level-2/#share_target-member
    */
   share_target: ManifestShareTarget
+  /**
+   * Identifies the application as a note-taking app.
+   *
+   * @see https://wicg.github.io/manifest-incubations/#note_taking-member
+   */
+  note_taking?: {
+    /**
+     * URL to open when creating a new note, within the application's scope.
+     */
+    new_note_url?: string
+  }
   /**
    * @see https://github.com/WICG/pwa-url-handler/blob/main/handle_links/explainer.md#handle_links-manifest-member
    */

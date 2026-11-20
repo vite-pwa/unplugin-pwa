@@ -12,9 +12,15 @@ export function additionalManifestEntriesFactory(
       includeManifestIcons,
       includeAssets,
       includeManifestShortcutIcons,
+      includeManifestFileHandlerIcons,
+      includeManifestLocalizedIcons,
+      includeManifestShortcutLocalizedIcons,
       includeManifestScreenshots,
     } = ctx.resolvedOptions
-    if (includeManifest || includeManifestIcons || includeAssets || includeManifestScreenshots || includeManifestShortcutIcons) {
+    if (
+      includeManifest || includeManifestIcons || includeAssets || includeManifestScreenshots || includeManifestShortcutIcons
+      || includeManifestFileHandlerIcons || includeManifestLocalizedIcons || includeManifestShortcutLocalizedIcons
+    ) {
       const manifest = ctx.resolvedOptions.manifest
       const [{ hash }, { readFile }] = await Promise.all([
         import('node:crypto'),
@@ -58,6 +64,44 @@ export function additionalManifestEntriesFactory(
                   yield {
                     url: icons.src,
                     revision: hash('md5', await readFile(mapFile(icons.src)), 'hex'),
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (includeManifestFileHandlerIcons) {
+          for (const handler of manifest.file_handlers ?? []) {
+            for (const icon of handler.icons ?? []) {
+              if (icon.src) {
+                yield {
+                  url: icon.src,
+                  revision: hash('md5', await readFile(mapFile(icon.src)), 'hex'),
+                }
+              }
+            }
+          }
+        }
+        if (includeManifestLocalizedIcons) {
+          for (const icons of Object.values(manifest.icons_localized ?? {})) {
+            for (const icon of icons) {
+              if (icon.src) {
+                yield {
+                  url: icon.src,
+                  revision: hash('md5', await readFile(mapFile(icon.src)), 'hex'),
+                }
+              }
+            }
+          }
+        }
+        if (includeManifestShortcutLocalizedIcons) {
+          for (const shortcut of manifest.shortcuts ?? []) {
+            for (const icons of Object.values(shortcut.icons_localized ?? {})) {
+              for (const icon of icons) {
+                if (icon.src) {
+                  yield {
+                    url: icon.src,
+                    revision: hash('md5', await readFile(mapFile(icon.src)), 'hex'),
                   }
                 }
               }

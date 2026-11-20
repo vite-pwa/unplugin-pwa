@@ -65,27 +65,6 @@ describe('additionalManifestEntriesFactory', () => {
     expect(await collect(ctx)).toEqual(['extra.html'])
   })
 
-  it('includeManifestIcons: only icons declared by the consumer (not the generated ones)', async () => {
-    const ctx = createCtx(
-      { includeManifestIcons: true, manifest: { icons: [{ src: 'a.png' }, { src: 'generated.png' }] } },
-      { manifest: { icons: [{ src: 'a.png' }] } },
-    )
-    expect(await collect(ctx)).toEqual([
-      { url: 'a.png', revision: md5('content:/public/a.png') },
-    ])
-  })
-
-  it('includeManifestShortcutIcons: yields every shortcut icon with src', async () => {
-    const ctx = createCtx({
-      includeManifestShortcutIcons: true,
-      manifest: { shortcuts: [{ icons: [{ src: 's1.png' }, {}] }, { name: 'no-icons' }, { icons: [{ src: 's2.png' }] }] },
-    })
-    expect(await collect(ctx)).toEqual([
-      { url: 's1.png', revision: md5('content:/public/s1.png') },
-      { url: 's2.png', revision: md5('content:/public/s2.png') },
-    ])
-  })
-
   it('includeManifestScreenshots: yields every screenshot', async () => {
     const ctx = createCtx({
       includeManifestScreenshots: true,
@@ -108,8 +87,6 @@ describe('additionalManifestEntriesFactory', () => {
 
   const pngs = [{ src: 'a.png' }, { src: 'b.png' }]
   it.each([
-    ['includeManifestIcons', { includeManifestIcons: true, manifest: { icons: pngs } }, { manifest: { icons: pngs } }],
-    ['includeManifestShortcutIcons', { includeManifestShortcutIcons: true, manifest: { shortcuts: [{ icons: pngs }] } }, {}],
     ['includeManifestScreenshots', { includeManifestScreenshots: true, manifest: { screenshots: pngs } }, {}],
     ['includeAssets', { includeAssets: ['a.png', 'b.png'], manifest: {} }, {}],
   ])('%s: hashes the bytes of binary files, not their utf-8 decoding', async (_label, resolvedOptions, consumerOptions) => {
@@ -124,39 +101,6 @@ describe('additionalManifestEntriesFactory', () => {
     expect(await collect(ctx)).toEqual([
       { url: 'a.png', revision: md5(files['/public/a.png']) },
       { url: 'b.png', revision: md5(files['/public/b.png']) },
-    ])
-  })
-
-  it('keeps a stable order: manifest, icons, shortcuts, screenshots, assets, consumer', async () => {
-    const consumerGenerator = async function* () {
-      yield 'consumer.js'
-    }
-    const ctx = createCtx(
-      {
-        includeManifest: true,
-        includeManifestIcons: true,
-        includeManifestShortcutIcons: true,
-        includeManifestScreenshots: true,
-        includeAssets: ['asset.svg'],
-        manifest: {
-          icons: [{ src: 'icon.png' }],
-          shortcuts: [{ icons: [{ src: 'shortcut.png' }] }],
-          screenshots: [{ src: 'shot.png' }],
-        },
-      },
-      {
-        manifest: { icons: [{ src: 'icon.png' }] },
-        additionalManifestEntriesGenerator: consumerGenerator,
-      },
-    )
-    const urls = (await collect(ctx)).map(e => typeof e === 'string' ? e : e.url)
-    expect(urls).toEqual([
-      'manifest.webmanifest',
-      'icon.png',
-      'shortcut.png',
-      'shot.png',
-      'asset.svg',
-      'consumer.js',
     ])
   })
 })

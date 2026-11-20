@@ -161,6 +161,9 @@ describe('resolvePwaConfiguration', () => {
         includeManifest: true,
         includeManifestIcons: true,
         includeManifestShortcutIcons: true,
+        includeManifestFileHandlerIcons: false,
+        includeManifestLocalizedIcons: false,
+        includeManifestShortcutLocalizedIcons: false,
         includeManifestScreenshots: false,
         disable: false,
         injectRegister: 'auto',
@@ -290,6 +293,43 @@ describe('resolvePwaConfiguration', () => {
         inlineWorkboxRuntime: true,
         workboxRuntimeCompatible: true,
       })
+    })
+  })
+
+  describe.each([
+    ['generateSW', { strategies: 'generateSW' }, {}],
+    ['injectManifest', { strategies: 'injectManifest', injectManifest: { swSrc: 'public/sw.js' } }, {}],
+    ['buildSW', { strategies: 'buildSW', buildSW: { swSrc: 'src/sw.ts' } }, {}],
+    ['injectManifest fallback', { strategies: 'injectManifest', injectManifest: { swSrc: 'src/sw.ts' } }, { isDev: true }],
+  ])('%s: additional icon precache options', (_name, options, resolver) => {
+    afterEach(() => vi.restoreAllMocks())
+
+    it('defaults all additional icon options to false', async () => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+      expect(await resolve(options, resolver)).toMatchObject({
+        includeManifestFileHandlerIcons: false,
+        includeManifestLocalizedIcons: false,
+        includeManifestShortcutLocalizedIcons: false,
+      })
+    })
+
+    it.each([
+      'includeManifestFileHandlerIcons',
+      'includeManifestLocalizedIcons',
+      'includeManifestShortcutLocalizedIcons',
+    ])('preserves %s independently of all other icon options', async (option) => {
+      vi.spyOn(console, 'warn').mockImplementation(() => {})
+      const iconOptions = {
+        includeManifestIcons: false,
+        includeManifestShortcutIcons: false,
+        includeManifestFileHandlerIcons: false,
+        includeManifestLocalizedIcons: false,
+        includeManifestShortcutLocalizedIcons: false,
+        [option]: true,
+      }
+
+      expect(await resolve({ ...options, ...iconOptions }, resolver)).toMatchObject(iconOptions)
     })
   })
 
