@@ -330,10 +330,12 @@ function createSwitchServiceWorkerResponseHandler(
       additionalInvalidation.push(`${ctx.base}${FILE_SW_REGISTER}`)
     }
 
+    const switchedModules = new Set([...VIRTUAL_MODULES, ...internalDevOptions.swAssetsPaths.keys()])
+
     if (ctx.envApi) {
       const moduleGraph = server.environments.client.moduleGraph
       const envApiModules: ReturnType<typeof moduleGraph.getModuleById>[] = []
-      for (const m of internalDevOptions.swAssetsPaths.keys()) {
+      for (const m of switchedModules) {
         // we need to invalidate resolved virtual modules
         const mod = VIRTUAL_MODULES.includes(m)
           ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
@@ -351,7 +353,7 @@ function createSwitchServiceWorkerResponseHandler(
     else {
       const moduleGraph = server.moduleGraph
       const envApiModules: ReturnType<typeof moduleGraph.getModuleById>[] = []
-      for (const m of internalDevOptions.swAssetsPaths.keys()) {
+      for (const m of switchedModules) {
         // we need to invalidate resolved virtual modules
         const mod = VIRTUAL_MODULES.includes(m)
           ? moduleGraph.getModuleById(VIRTUAL_MODULES_RESOLVED_PREFIX + m)
