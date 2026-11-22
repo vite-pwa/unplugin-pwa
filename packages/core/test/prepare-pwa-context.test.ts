@@ -48,6 +48,7 @@ describe('preparePWAContext: dev defaults', () => {
     expect(ctx.dev.options.swNames.hasNames).toBe(false)
     expect(ctx.dev.options.swAssetKeys).toBeInstanceOf(Set)
     expect(ctx.dev.options.swAssetsPaths).toBeInstanceOf(Map)
+    expect(ctx.dev.options.virtualModules).toBeInstanceOf(Map)
   })
 
   it('takes swType from consumer devOptions', () => {

@@ -4,17 +4,6 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { VIRTUAL_MODULES } from '@unplugin-pwa/core/constants'
 
-const virtualModulesByDevOptions = new WeakMap<object, Map<string, Promise<string>>>()
-
-function getVirtualModules(devOptions: object) {
-  let modules = virtualModulesByDevOptions.get(devOptions)
-  if (!modules) {
-    modules = new Map()
-    virtualModulesByDevOptions.set(devOptions, modules)
-  }
-  return modules
-}
-
 export async function generateVirtualModule(
   ctx: PWAPluginContext<any, any, any>,
   source = 'register',
@@ -29,7 +18,7 @@ export async function generateVirtualModule(
 
   const internalDevOptions = ctx.dev.options!
   const swAssetsPaths = internalDevOptions.swAssetsPaths
-  const virtualModules = getVirtualModules(internalDevOptions)
+  const virtualModules = internalDevOptions.virtualModules
   if (!internalDevOptions.registerVirtualSWGenerated) {
     virtualModules.clear()
     for (const id of VIRTUAL_MODULES)

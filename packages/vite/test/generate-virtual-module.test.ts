@@ -17,6 +17,7 @@ function createContext(deferred = false) {
       options: {
         registerVirtualSWGenerated: false,
         swAssetsPaths: new Map<string, string>(),
+        virtualModules: new Map<string, Promise<string>>(),
       },
     },
     customPwaAssetResolver: (_type: string, source: string) => {

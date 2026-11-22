@@ -184,6 +184,7 @@ export function preparePWAContext<
       swType: ctx.consumerOptions.devOptions?.type ?? 'classic',
       swAssetKeys: new Set(),
       swAssetsPaths: new Map(),
+      virtualModules: new Map(),
       tempFolder: undefined!,
       swNames: {
         hasNames: false,
