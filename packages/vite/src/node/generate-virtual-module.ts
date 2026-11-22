@@ -4,6 +4,17 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { VIRTUAL_MODULES } from '@unplugin-pwa/core/constants'
 
+const virtualModulesByDevOptions = new WeakMap<object, Map<string, Promise<string>>>()
+
+function getVirtualModules(devOptions: object) {
+  let modules = virtualModulesByDevOptions.get(devOptions)
+  if (!modules) {
+    modules = new Map()
+    virtualModulesByDevOptions.set(devOptions, modules)
+  }
+  return modules
+}
+
 export async function generateVirtualModule(
   ctx: PWAPluginContext<any, any, any>,
   source = 'register',
@@ -18,18 +29,32 @@ export async function generateVirtualModule(
 
   const internalDevOptions = ctx.dev.options!
   const swAssetsPaths = internalDevOptions.swAssetsPaths
+  const virtualModules = getVirtualModules(internalDevOptions)
   if (!internalDevOptions.registerVirtualSWGenerated) {
+    virtualModules.clear()
     for (const id of VIRTUAL_MODULES)
       swAssetsPaths.delete(id)
     internalDevOptions.registerVirtualSWGenerated = true
   }
 
   const key = `virtual:pwa-register${source === 'register' ? '' : `/${source}`}`
-  let code = swAssetsPaths.get(key)
-  if (code === undefined) {
-    code = await ctx.customPwaAssetResolver('virtual-register-sw', source)
-    swAssetsPaths.set(key, code)
+  let generated = virtualModules.get(key)
+  if (!generated) {
+    const pending: Promise<string> = ctx.customPwaAssetResolver('virtual-register-sw', source).then(
+      (code) => {
+        if (virtualModules.get(key) === pending)
+          swAssetsPaths.set(key, code)
+        return code
+      },
+      (error) => {
+        if (virtualModules.get(key) === pending)
+          virtualModules.delete(key)
+        throw error
+      },
+    )
+    virtualModules.set(key, pending)
+    generated = pending
   }
 
-  return code
+  return await generated
 }
