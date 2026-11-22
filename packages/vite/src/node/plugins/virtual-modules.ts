@@ -22,12 +22,15 @@ export function VirtualModulesPlugin<
     name: 'unplugin-pwa:virtual-modules',
     enforce: 'pre',
     sharedDuringBuild: true,
+    applyToEnvironment(environment) {
+      return environment.config.consumer === 'client'
+    },
     resolveId: {
       filter: { id: [prefixRegex('virtual:pwa-register'), exactRegex(DEV_SW_VIRTUAL_VIRTUAL)] },
-      handler(id) {
-        /* if (!ctx.envApi && ctx.bundler === 'vite-legacy' && ctx.viteConfig.build.ssr) {
+      handler(id, _importer, options) {
+        if (!ctx.envApi && (options?.ssr || ctx.viteConfig.build.ssr)) {
           return
-        } */
+        }
 
         // resolve this at build time: won't be resolved by dev plugin
         if (!ctx.devEnvironment && id === DEV_SW_VIRTUAL_VIRTUAL) {

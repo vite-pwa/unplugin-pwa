@@ -109,6 +109,7 @@ export interface PWABuildDevContext<
     navigateFallbackAllowlist?: RegExp[]
     swAssetKeys: Set<string>
     swAssetsPaths: Map<string, string>
+    virtualModules: Map<string, Promise<string>>
     tempFolder: string
     /**
      * Hook to allow remove prefixes: for example _nuxt/
