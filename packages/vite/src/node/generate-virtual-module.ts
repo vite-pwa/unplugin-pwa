@@ -2,6 +2,7 @@ import type { PWAPluginContext } from '@unplugin-pwa/core/context-types'
 import { promises as fs } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { VIRTUAL_MODULES } from '@unplugin-pwa/core/constants'
 
 export async function generateVirtualModule(
   ctx: PWAPluginContext<any, any, any>,
@@ -16,13 +17,19 @@ export async function generateVirtualModule(
   }
 
   const internalDevOptions = ctx.dev.options!
-  const key = `virtual:pwa-register${source === 'register' ? '' : `/${source}`}`
+  const swAssetsPaths = internalDevOptions.swAssetsPaths
   if (!internalDevOptions.registerVirtualSWGenerated) {
-    const code = await ctx.customPwaAssetResolver('virtual-register-sw', source)
-    internalDevOptions.swAssetsPaths.set(key, code)
+    for (const id of VIRTUAL_MODULES)
+      swAssetsPaths.delete(id)
     internalDevOptions.registerVirtualSWGenerated = true
-    return code
   }
 
-  return internalDevOptions.swAssetsPaths.get(key)!
+  const key = `virtual:pwa-register${source === 'register' ? '' : `/${source}`}`
+  let code = swAssetsPaths.get(key)
+  if (code === undefined) {
+    code = await ctx.customPwaAssetResolver('virtual-register-sw', source)
+    swAssetsPaths.set(key, code)
+  }
+
+  return code
 }
